@@ -10,7 +10,7 @@ openai
 google-genai
 
 # Vector Database
-pinecone-client
+pinecone
 
 # Web Scraping & Search
 tavily-python

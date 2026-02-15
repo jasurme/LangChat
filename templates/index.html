@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangChat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        /* Custom "Apple-esque" easing for smoother animations */
+        .ease-apple {
+            transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        /* Markdown Styling */
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3 {
+            font-weight: 600;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #1c1917;
+        }
+
+        .markdown-content h1 {
+            font-size: 1.5em;
+        }
+
+        .markdown-content h2 {
+            font-size: 1.3em;
+        }
+
+        .markdown-content h3 {
+            font-size: 1.15em;
+        }
+
+        .markdown-content p {
+            margin-bottom: 1em;
+            line-height: 1.7;
+        }
+
+        .markdown-content code {
+            background: #f5f5f4;
+            padding: 0.2em 0.4em;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+            font-family: 'Monaco', 'Courier New', monospace;
+            color: #dc2626;
+        }
+
+        .markdown-content pre {
+            background: #1e1e1e;
+            padding: 1em;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+
+        .markdown-content pre code {
+            background: transparent;
+            padding: 0;
+            color: #d4d4d4;
+            font-size: 0.875em;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+            margin-left: 1.5em;
+            margin-bottom: 1em;
+        }
+
+        .markdown-content li {
+            margin-bottom: 0.5em;
+        }
+
+        .markdown-content a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        .markdown-content blockquote {
+            border-left: 3px solid #d6d3d1;
+            padding-left: 1em;
+            color: #57534e;
+            margin: 1em 0;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .message-wrapper:hover .action-buttons {
+            opacity: 1;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: 1px solid #e7e5e4;
+            border-radius: 0.375rem;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #78716c;
+            font-size: 0.875rem;
+        }
+
+        .action-btn:hover {
+            background: #f5f5f4;
+            border-color: #d6d3d1;
+        }
+
+        .action-btn.active-like {
+            color: #16a34a;
+            border-color: #16a34a;
+            background: #f0fdf4;
+        }
+
+        .action-btn.active-dislike {
+            color: #dc2626;
+            border-color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .action-btn svg {
+            width: 1rem;
+            height: 1rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Code Block Copy Button */
+        .markdown-content pre {
+            position: relative;
+        }
+
+        .code-copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.375rem;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.2s ease;
+            color: #d4d4d4;
+            font-size: 0.75rem;
+        }
+
+        .markdown-content pre:hover .code-copy-btn {
+            opacity: 1;
+        }
+
+        .code-copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .code-copy-btn svg {
+            width: 0.875rem;
+            height: 0.875rem;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        /* Response Time */
+        .response-time {
+            font-size: 0.75rem;
+            color: #a8a29e;
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body class="bg-[#Fdfbf7] text-stone-800 font-sans h-screen flex flex-col overflow-hidden selection:bg-stone-200">
+
+    <div id="chat-container"
+        class="flex-1 overflow-y-auto w-full max-w-3xl mx-auto px-4 pt-10 pb-32 opacity-0 transition-opacity duration-700 ease-apple no-scrollbar">
+    </div>
+
+    <div id="hero-section"
+        class="absolute inset-0 flex flex-col items-center justify-center pb-48 transition-all duration-700 ease-apple z-0">
+
+        <div class="mb-60 text-center opacity-100 transition-opacity duration-500" id="hero-text">
+            <h1 class="text-4xl font-semibold tracking-tight text-stone-900 mb-2">How can I help?</h1>
+            <p class="text-stone-500">Ask anything.</p>
+        </div>
+
+    </div>
+
+    <div id="input-wrapper"
+        class="absolute inset-0 flex items-center justify-center transition-all duration-700 ease-apple z-10 p-4">
+        <div class="w-full max-w-2xl relative">
+
+            <form id="chat-form" class="relative group" onsubmit="handleFirstMessage(event)">
+                <input type="text" id="user-input"
+                    class="w-full bg-white border border-stone-200 text-stone-800 text-lg rounded-[2rem] px-6 py-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] focus:outline-none focus:ring-2 focus:ring-stone-200 focus:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 placeholder:text-stone-400"
+                    placeholder="ask..." autocomplete="off">
+
+                <button type="submit"
+                    class="absolute right-2 top-2 bottom-2 bg-stone-900 hover:bg-stone-700 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200 disabled:opacity-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                    </svg>
+                </button>
+            </form>
+
+            <div class="text-center mt-4 text-xs text-stone-400 opacity-0 transition-opacity duration-700"
+                id="footer-text">
+                Ask...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let hasStarted = false;
+        const chatContainer = document.getElementById('chat-container');
+        const heroSection = document.getElementById('hero-section');
+        const heroText = document.getElementById('hero-text');
+        const inputWrapper = document.getElementById('input-wrapper');
+        const footerText = document.getElementById('footer-text');
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+
+        async function handleFirstMessage(event) {
+            event.preventDefault();
+            const message = userInput.value.trim();
+            if (!message) return;
+
+            // 1. UI Transition: Move Input to Bottom
+            if (!hasStarted) {
+                hasStarted = true;
+
+                // Fade out the "How can I help" text
+                heroText.style.opacity = '0';
+
+                // Move input wrapper to bottom
+                // We change alignment from center to flex-end
+                // 1. REMOVE 'items-center' (vertical), but KEEP 'justify-center' (horizontal)
+                inputWrapper.classList.remove('items-center', 'absolute', 'inset-0');
+
+                // 2. ADD fixed positioning at the bottom
+                inputWrapper.classList.add('fixed', 'bottom-0', 'w-full', 'pb-8', 'z-20');
+
+                // Reveal chat container and footer
+                chatContainer.classList.remove('opacity-0');
+                footerText.classList.remove('opacity-0');
+
+                // Remove hero section from flow after transition
+                setTimeout(() => {
+                    heroSection.style.display = 'none';
+                }, 500);
+            }
+
+            // 2. Add User Message to UI
+            addMessageToChat('user', message);
+            userInput.value = '';
+
+            // 3. Send to Backend API
+            addLoadingIndicator();
+            const startTime = Date.now(); // Track start time
+
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user_input: message })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const endTime = Date.now(); // Track end time
+                const responseTime = ((endTime - startTime) / 1000).toFixed(2); // Convert to seconds
+
+                removeLoadingIndicator();
+                addMessageToChat('bot', data.response || "No response received.", responseTime);
+            } catch (error) {
+                removeLoadingIndicator();
+                addMessageToChat('bot', `Error: ${error.message}. Please check the console.`);
+                console.error('Chat API Error:', error);
+            }
+        }
+
+        function addMessageToChat(role, text, responseTime = null) {
+            const wrapper = document.createElement('div');
+            const isUser = role === 'user';
+
+            wrapper.className = `message-wrapper flex w-full mb-6 ${isUser ? 'justify-end' : 'justify-start'}`;
+
+            const contentContainer = document.createElement('div');
+            contentContainer.className = `flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[90%]`;
+
+            const bubble = document.createElement('div');
+            // User: Dark Stone, Bot: Transparent/Text only (Steve Jobs style) or Light Stone
+            if (isUser) {
+                bubble.className = "bg-[#f4f2eb] text-stone-900 px-5 py-3 rounded-2xl leading-relaxed";
+                bubble.innerText = text;
+            } else {
+                bubble.className = "text-stone-800 px-0 py-3 leading-relaxed font-normal markdown-content";
+                // Parse markdown for bot responses
+                bubble.innerHTML = marked.parse(text);
+
+                // Apply syntax highlighting to code blocks
+                bubble.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+
+                // Add copy buttons to code blocks
+                bubble.querySelectorAll('pre').forEach((pre) => {
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = 'code-copy-btn';
+                    copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                    </svg>`;
+
+                    copyBtn.addEventListener('click', () => {
+                        const code = pre.querySelector('code').textContent;
+                        navigator.clipboard.writeText(code);
+                        copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>`;
+                        setTimeout(() => {
+                            copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                            </svg>`;
+                        }, 1500);
+                    });
+
+                    pre.appendChild(copyBtn);
+                });
+            }
+
+            contentContainer.appendChild(bubble);
+
+            // Add action buttons
+            const actionButtons = document.createElement('div');
+            actionButtons.className = 'action-buttons';
+
+            if (isUser) {
+                // User message: only copy button (on the right)
+                actionButtons.innerHTML = `
+                    <button class="action-btn copy-btn" title="Copy">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                        </svg>
+                    </button>
+                `;
+            } else {
+                // Bot message: copy, thumbs up, thumbs down (on the left)
+                actionButtons.innerHTML = `
+                    <button class="action-btn copy-btn" title="Copy">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                        </svg>
+                    </button>
+                    <button class="action-btn like-btn" title="Good response">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5.004 9.5H5.25m.5 1.5v8.5" />
+                        </svg>
+                    </button>
+                    <button class="action-btn dislike-btn" title="Bad response">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.498 15.25H4.372c-1.026 0-1.945-.694-2.054-1.715a12.137 12.137 0 0 1-.068-1.285c0-2.848.992-5.464 2.649-7.521C5.287 4.247 5.886 4 6.504 4h4.016a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23h1.294M7.498 15.25c.618 0 .991.724.725 1.282A7.471 7.471 0 0 0 7.5 19.75 2.25 2.25 0 0 0 9.75 22a.75.75 0 0 0 .75-.75v-.633c0-.573.11-1.14.322-1.672.304-.76.93-1.33 1.653-1.715a9.04 9.04 0 0 0 2.86-2.4c.498-.634 1.226-1.08 2.032-1.08h.384m-10.253 1.5H9.7m8.075-9.75c.01.05.027.1.05.148.593 1.2.925 2.55.925 3.977 0 1.487-.36 2.89-.999 4.125m.023-8.25c-.076-.365.183-.75.575-.75h.908c.889 0 1.713.518 1.972 1.368.339 1.11.521 2.287.521 3.507 0 1.553-.295 3.036-.831 4.398-.306.774-1.086 1.227-1.923 1.227h-.24" />
+                        </svg>
+                    </button>
+                `;
+            }
+
+            // Add event listeners
+            const copyBtn = actionButtons.querySelector('.copy-btn');
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(text);
+                copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>`;
+                setTimeout(() => {
+                    copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                    </svg>`;
+                }, 1500);
+            });
+
+            if (!isUser) {
+                const likeBtn = actionButtons.querySelector('.like-btn');
+                const dislikeBtn = actionButtons.querySelector('.dislike-btn');
+
+                likeBtn.addEventListener('click', () => {
+                    if (likeBtn.classList.contains('active-like')) {
+                        likeBtn.classList.remove('active-like');
+                    } else {
+                        likeBtn.classList.add('active-like');
+                        dislikeBtn.classList.remove('active-dislike');
+                    }
+                });
+
+                dislikeBtn.addEventListener('click', () => {
+                    if (dislikeBtn.classList.contains('active-dislike')) {
+                        dislikeBtn.classList.remove('active-dislike');
+                    } else {
+                        dislikeBtn.classList.add('active-dislike');
+                        likeBtn.classList.remove('active-like');
+                    }
+                });
+            }
+
+            contentContainer.appendChild(actionButtons);
+
+            // Add response time for bot messages
+            if (!isUser && responseTime) {
+                const timeDisplay = document.createElement('div');
+                timeDisplay.className = 'response-time';
+                timeDisplay.textContent = `${responseTime}s`;
+                contentContainer.appendChild(timeDisplay);
+            }
+
+            wrapper.appendChild(contentContainer);
+            chatContainer.appendChild(wrapper);
+
+            // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function addLoadingIndicator() {
+            const div = document.createElement('div');
+            div.id = "loading-bubble";
+            div.className = "flex w-full mb-6 justify-start";
+            div.innerHTML = `
+                <div class="text-stone-400 px-0 py-2 animate-pulse">
+                    Thinking...
+                </div>
+            `;
+            chatContainer.appendChild(div);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function removeLoadingIndicator() {
+            const loading = document.getElementById('loading-bubble');
+            if (loading) loading.remove();
+        }
+    </script>
+</body>
+
+</html>

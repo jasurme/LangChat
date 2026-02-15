@@ -1,0 +1,17 @@
+Published Time: Thu, 12 Feb 2026 11:11:06 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# LangSmith reference
+
+The following sections provide API references and SDK documentation for LangSmith:
+
+  Reference documentation for the LangSmith Python SDK.   Reference documentation for the LangSmith JavaScript/TypeScript SDK.   Reference documentation for deploying LangGraph applications with Python.   Reference documentation for deploying LangGraph applications with JavaScript/TypeScript.   Complete REST API reference for LangSmith platform features.   API references for self-hosted and hybrid LangSmith deployments. 
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/reference.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

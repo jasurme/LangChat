@@ -1,0 +1,160 @@
+Published Time: Thu, 12 Feb 2026 10:48:25 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Oauth Callback Get
+
+> Handle OAuth callback redirect from OAuth providers.
+
+Processes the OAuth token exchange, then redirects to the frontend callback
+page for a consistent UI experience.
+
+## OpenAPI
+
+````yaml https://api.host.langchain.com/openapi.json get /v2/auth/callback/{provider_id}
+openapi: 3.1.0
+info:
+  title: LangSmith Deployment Control Plane API
+  description: >
+    The LangSmith Deployment Control Plane API is used to programmatically
+    create and manage
+
+    Agent Server deployments. For example, the APIs can be orchestrated to
+
+    create custom CI/CD workflows.
+
+    ## Host
+
+    https://api.host.langchain.com
+
+    ## Authentication
+
+    To authenticate with the LangSmith Deployment Control Plane API, set the
+    `X-Api-Key` header
+
+    to a valid [LangSmith API
+    key](https://docs.langchain.com/langsmith/create-account-api-key#create-an-api-key).
+
+    ## Versioning
+
+    Each endpoint path is prefixed with a version (e.g. `v1`, `v2`).
+
+    ## Quick Start
+
+    1. Call `POST /v2/deployments` to create a new Deployment. The response body
+    contains the Deployment ID (`id`) and the ID of the latest (and first)
+    revision (`latest_revision_id`).
+
+    1. Call `GET /v2/deployments/{deployment_id}` to retrieve the Deployment.
+    Set `deployment_id` in the URL to the value of Deployment ID (`id`).
+
+    1. Poll for revision `status` until `status` is `DEPLOYED` by calling `GET
+    /v2/deployments/{deployment_id}/revisions/{latest_revision_id}`.
+
+    1. Call `PATCH /v2/deployments/{deployment_id}` to update the deployment.
+  version: 0.1.0
+servers: []
+security: []
+paths:
+  /v2/auth/callback/{provider_id}:
+    get:
+      tags:
+        - Auth Service (v2)
+      summary: Oauth Callback Get
+      description: >-
+        Handle OAuth callback redirect from OAuth providers.
+
+        Processes the OAuth token exchange, then redirects to the frontend
+        callback
+
+        page for a consistent UI experience.
+      operationId: oauth_callback_get_v2_auth_callback__provider_id__get
+      parameters:
+        - name: provider_id
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Provider Id
+        - name: code
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Authorization code from OAuth provider
+            title: Code
+          description: Authorization code from OAuth provider
+        - name: state
+          in: query
+          required: false
+          schema:
+            type: string
+            description: State parameter containing auth_id
+            title: State
+          description: State parameter containing auth_id
+        - name: error
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Error code from OAuth provider
+            title: Error
+          description: Error code from OAuth provider
+        - name: error_description
+          in: query
+          required: false
+          schema:
+            type: string
+            description: Error description from OAuth provider
+            title: Error Description
+          description: Error description from OAuth provider
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - Bearer Auth: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+
+````

@@ -1,0 +1,30 @@
+Published Time: Thu, 12 Feb 2026 11:46:08 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Annotate traces and runs inline
+
+LangSmith allows you to manually annotate traces with feedback within the application. This can be useful for adding context to a trace, such as a user's comment or a note about a specific issue.
+You can annotate a trace either inline or by sending the trace to an annotation queue, which allows you to closely inspect and log feedbacks to runs one at a time.
+Feedback tags are associated with your [workspace](/langsmith/administration-overview#workspaces).
+
+ **You can attach user feedback to ANY intermediate run (span) of the trace, not just the root span.** This is useful for critiquing specific parts of the LLM application, such as the retrieval step or generation step of the RAG pipeline. 
+
+To annotate a trace inline, click on the `Annotate` in the upper right corner of trace view for any particular run that is part of the trace.
+
+![Image 1: Annotate trace inline](https://mintcdn.com/langchain-5e9cc07a/E8FdemkcQxROovD9/langsmith/images/annotate-trace-inline.png?fit=max&auto=format&n=E8FdemkcQxROovD9&q=85&s=193363baef8b46e592fa63b299b407af)
+
+This will open up a pane that allows you to choose from feedback tags associated with your workspace and add a score for particular tags. You can also add a standalone comment. Follow [this guide](./set-up-feedback-criteria) to set up feedback tags for your workspace.
+You can also set up new feedback criteria from within the pane itself.
+
+![Image 2: Annotation sidebar](https://mintcdn.com/langchain-5e9cc07a/E8FdemkcQxROovD9/langsmith/images/annotation-sidebar.png?fit=max&auto=format&n=E8FdemkcQxROovD9&q=85&s=6a16e79d91b435f6c5de94d0d58daa59)
+
+You can use the labeled keyboard shortcuts to streamline the annotation process.
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/annotate-traces-inline.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

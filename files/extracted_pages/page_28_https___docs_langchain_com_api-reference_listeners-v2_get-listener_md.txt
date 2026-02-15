@@ -1,0 +1,224 @@
+Published Time: Thu, 12 Feb 2026 11:00:08 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Get Listener
+
+> Get a listener by ID.
+
+## OpenAPI
+
+````yaml https://api.host.langchain.com/openapi.json get /v2/listeners/{listener_id}
+openapi: 3.1.0
+info:
+  title: LangSmith Deployment Control Plane API
+  description: >
+    The LangSmith Deployment Control Plane API is used to programmatically
+    create and manage
+
+    Agent Server deployments. For example, the APIs can be orchestrated to
+
+    create custom CI/CD workflows.
+
+    ## Host
+
+    https://api.host.langchain.com
+
+    ## Authentication
+
+    To authenticate with the LangSmith Deployment Control Plane API, set the
+    `X-Api-Key` header
+
+    to a valid [LangSmith API
+    key](https://docs.langchain.com/langsmith/create-account-api-key#create-an-api-key).
+
+    ## Versioning
+
+    Each endpoint path is prefixed with a version (e.g. `v1`, `v2`).
+
+    ## Quick Start
+
+    1. Call `POST /v2/deployments` to create a new Deployment. The response body
+    contains the Deployment ID (`id`) and the ID of the latest (and first)
+    revision (`latest_revision_id`).
+
+    1. Call `GET /v2/deployments/{deployment_id}` to retrieve the Deployment.
+    Set `deployment_id` in the URL to the value of Deployment ID (`id`).
+
+    1. Poll for revision `status` until `status` is `DEPLOYED` by calling `GET
+    /v2/deployments/{deployment_id}/revisions/{latest_revision_id}`.
+
+    1. Call `PATCH /v2/deployments/{deployment_id}` to update the deployment.
+  version: 0.1.0
+servers: []
+security: []
+paths:
+  /v2/listeners/{listener_id}:
+    get:
+      tags:
+        - Listeners (v2)
+      summary: Get Listener
+      description: Get a listener by ID.
+      operationId: get_listener_v2_listeners__listener_id__get
+      parameters:
+        - name: listener_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            title: Listener ID
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listener'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              example:
+                detail: >-
+                  Listeners cannot be created for LangSmith workspace ID
+                  '{workspace_id}'. Creating listeners is only allowed for
+                  LangSmith organizations with self-hosted enterprise plans.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                detail: Listener ID {listener_id} not found.
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - API Key: []
+        - Tenant ID: []
+        - Bearer Auth: []
+components:
+  schemas:
+    Listener:
+      properties:
+        version:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Version
+          description: The version of the listener.
+        compute_type:
+          type: string
+          const: k8s
+          title: Compute Type
+          description: >-
+            The compute type of the listener.
+
+This cannot be changed
+            (`PUT`) once the listener is created.
+        compute_id:
+          type: string
+          title: Compute Id
+          description: >-
+            User assigned unique ID of the compute infrastructure for the
+            listener.
+
+For example, if `compute_type` is `k8s`, then the
+            user may set this field to the Kubernetes cluster name. This cannot
+            be changed (`PUT`) once the listener is created.
+        compute_config:
+          $ref: '#/components/schemas/ListenerComputeConfig'
+        id:
+          type: string
+          format: uuid
+          title: ID
+          description: >-
+            System assigned ID of the listener.
+
+This is a read-only
+            field.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The creation time of the listener.
+
+This is a read-only field.
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: >-
+            The last update time of the listener.
+
+This is a read-only
+            field.
+      type: object
+      required:
+        - compute_type
+        - compute_id
+        - compute_config
+        - id
+        - created_at
+        - updated_at
+      title: Listener
+      description: Listener resource.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ListenerComputeConfig:
+      properties:
+        k8s_namespaces:
+          anyOf:
+            - items:
+                type: string
+              type: array
+            - type: 'null'
+          title: Kubernetes Namespaces
+          description: >-
+            A list of Kubernetes namespaces to which the listener is configured
+            for.
+
+Only applicable for `k8s` compute type.
+      type: object
+      title: ListenerComputeConfig
+      description: |-
+        Fields for a listener that are specific to `compute_type`.
+
+        
+
+        All fields are nullable, but are validated based on `compute_type`.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+
+````

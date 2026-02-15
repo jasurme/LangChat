@@ -1,0 +1,213 @@
+Integrations - Docs by LangChain
+===============
+
+[Skip to main content](https://docs.langchain.com/langsmith/get-started-integrations.md#content-area)
+
+[Docs by LangChain home page![Image 1: light logo](https://mintcdn.com/langchain-5e9cc07a/Xbr8HuVd9jPi6qTU/images/brand/langchain-docs-teal.svg?fit=max&auto=format&n=Xbr8HuVd9jPi6qTU&q=85&s=16111530672bf976cb54ef2143478342)![Image 2: dark logo](https://mintcdn.com/langchain-5e9cc07a/Xbr8HuVd9jPi6qTU/images/brand/langchain-docs-lilac.svg?fit=max&auto=format&n=Xbr8HuVd9jPi6qTU&q=85&s=b70fb1a2208670492ef94aef14b680be)](https://docs.langchain.com/)LangSmith
+
+Search...
+
+Ctrl K
+
+*   [Ask AI](https://chat.langchain.com/)
+*   [GitHub](https://github.com/langchain-ai)
+*   [Try LangSmith](https://smith.langchain.com/)
+*   [Try LangSmith](https://smith.langchain.com/)
+
+Search...
+
+Navigation
+
+Integrations
+
+Integrations
+
+[Get started](https://docs.langchain.com/langsmith/home)[Observability](https://docs.langchain.com/langsmith/observability)[Evaluation](https://docs.langchain.com/langsmith/evaluation)[Prompt engineering](https://docs.langchain.com/langsmith/prompt-engineering)[Deployment](https://docs.langchain.com/langsmith/deployments)[Platform setup](https://docs.langchain.com/langsmith/platform-setup)[Reference](https://docs.langchain.com/langsmith/reference)
+
+*   [Overview](https://docs.langchain.com/langsmith/observability)
+
+*   [Quickstart](https://docs.langchain.com/langsmith/observability-quickstart)
+
+*   [Concepts](https://docs.langchain.com/langsmith/observability-concepts)
+
+*   [Trace an LLM application](https://docs.langchain.com/langsmith/observability-llm-tutorial)
+
+##### Tracing setup
+
+*   Integrations 
+    *   [Overview](https://docs.langchain.com/langsmith/integrations)
+    *   LLM providers 
+    *   Agent frameworks 
+    *   Voice AI frameworks 
+    *   Developer tools 
+
+*   Manual instrumentation 
+*   [Threads](https://docs.langchain.com/langsmith/threads)
+
+##### Configuration & troubleshooting
+
+*   Project & environment settings 
+*   [Cost tracking](https://docs.langchain.com/langsmith/cost-tracking)
+*   Advanced tracing techniques 
+*   Data & privacy 
+*   Troubleshooting guides 
+
+##### Viewing & managing traces
+
+*   [Filter traces](https://docs.langchain.com/langsmith/filter-traces-in-application)
+*   [Configure run previews](https://docs.langchain.com/langsmith/configure-input-output-preview)
+*   [Query traces (SDK)](https://docs.langchain.com/langsmith/export-traces)
+*   [Compare traces](https://docs.langchain.com/langsmith/compare-traces)
+*   [Share or unshare a trace publicly](https://docs.langchain.com/langsmith/share-trace)
+*   [Retrieve traces via CLI](https://docs.langchain.com/langsmith/langsmith-fetch)
+*   [View server logs for a trace](https://docs.langchain.com/langsmith/platform-logs)
+*   [Bulk export trace data](https://docs.langchain.com/langsmith/data-export)
+
+##### Automations
+
+*   [Set up automation rules](https://docs.langchain.com/langsmith/rules)
+*   [Configure webhook notifications for rules](https://docs.langchain.com/langsmith/webhooks)
+
+##### Feedback & evaluation
+
+*   [Log user feedback using the SDK](https://docs.langchain.com/langsmith/attach-user-feedback)
+*   Set up online evaluators 
+
+##### Monitoring & alerting
+
+*   [Monitor projects with dashboards](https://docs.langchain.com/langsmith/dashboards)
+*   [Alerts](https://docs.langchain.com/langsmith/alerts)
+*   [Configure webhook notifications for alerts](https://docs.langchain.com/langsmith/alerts-webhook)
+*   [Insights](https://docs.langchain.com/langsmith/insights)
+
+##### Data type reference
+
+*   [Run (span) data format](https://docs.langchain.com/langsmith/run-data-format)
+*   [Feedback data format](https://docs.langchain.com/langsmith/feedback-data-format)
+*   [Trace query syntax](https://docs.langchain.com/langsmith/trace-query-syntax)
+
+[Tracing setup](https://docs.langchain.com/langsmith/integrations)
+
+[Integrations](https://docs.langchain.com/langsmith/integrations)
+
+Integrations
+============
+
+Copy page
+
+Copy page
+
+[LangSmith](https://smith.langchain.com/) provides integrations with for a growing set of popular [LLM providers](https://docs.langchain.com/langsmith/get-started-integrations.md#llm-providers) and [agent frameworks](https://docs.langchain.com/langsmith/get-started-integrations.md#agent-frameworks) as well as [Deep Agents](https://docs.langchain.com/oss/python/deepagents/overview), [LangChain](https://docs.langchain.com/oss/python/langchain/overview), and [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview). For setup and usage, refer to the guides listed on this page.
+[​](https://docs.langchain.com/langsmith/get-started-integrations.md#llm-providers)
+
+LLM providers
+--------------------------------------------------------------------------------------------------
+
+[![Image 3](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/bedrock.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=6641fab3c12388e739173903c86eb6c7)![Image 4](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/bedrock.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=7e7aecca4c58cdc2eafa010643b711a5)Amazon Bedrock](https://docs.langchain.com/langsmith/trace-bedrock)[![Image 5](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/anthropic.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=b95e6dd3e9dc79a963596143cbc26886)![Image 6](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/anthropic.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=0b658e55eb88404b8ac042fd07e23741)Anthropic](https://docs.langchain.com/langsmith/trace-anthropic)[![Image 7](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/deepseek.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=9c3599e7f5217e4930f0f91a022fa522)![Image 8](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/deepseek.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=f0c40441c0da204876ecb1d9568aa527)DeepSeek](https://docs.langchain.com/langsmith/trace-deepseek)[![Image 9](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/gemini.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=1d2378a24d097417b38310ed9eeedbeb)![Image 10](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/gemini.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=276d6f427ca4122711cb1dcd3986ad5c)Google Gemini](https://docs.langchain.com/langsmith/trace-with-google-gemini)[![Image 11](https://mintcdn.com/langchain-5e9cc07a/jKM-tvbl7XiR347g/images/brand/docs-favicon.png?fit=max&auto=format&n=jKM-tvbl7XiR347g&q=85&s=cfd5a8cabd430533885dd0e02048a362)LangChain](https://docs.langchain.com/langsmith/trace-with-langchain)[![Image 12](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/mistral.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=39120b8f79f3561859805a029f06b234)![Image 13](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/mistral.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=87ca21c6421d2177fe32de158bad94bf)Mistral](https://docs.langchain.com/langsmith/trace-with-mistral)[![Image 14](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/openai.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=18d7f9d36bba30a05e0edb273e806957)![Image 15](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/openai.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=0e4d238a84e4e4ec3262ed0dd0042452)OpenAI](https://docs.langchain.com/langsmith/trace-openai)
+
+**Using Langchain?** LangChain provides a unified interface to 100+ LLM providers, which allows you to switch between models by setting environment variables. [Initialize a model](https://docs.langchain.com/oss/python/langchain/models#initialize-a-model) and LangSmith will automatically trace your application.
+
+[​](https://docs.langchain.com/langsmith/get-started-integrations.md#agent-frameworks)
+
+Agent frameworks
+--------------------------------------------------------------------------------------------------------
+
+[![Image 16](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/autogen.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=22146d88e6b52b39f21dcd10397d6605)![Image 17](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/autogen.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=8617c0fe2d57a610ca0d8f05714392a6)AutoGen](https://docs.langchain.com/langsmith/trace-with-autogen)[![Image 18](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/claude.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=3565d35b01e96479434085028db21c6b)![Image 19](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/claude.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=064942550c5efde279a4bcf8eff0a992)Claude Agent SDK](https://docs.langchain.com/langsmith/trace-claude-agent-sdk)[![Image 20](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/crewai.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=ae5662f2a50fb2fac5ccb09f6ee3f06b)![Image 21](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/crewai.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=6b1d4144b864881f9eb48a0c148ccaf4)CrewAI](https://docs.langchain.com/langsmith/trace-with-crewai)[![Image 22](https://mintcdn.com/langchain-5e9cc07a/jKM-tvbl7XiR347g/images/brand/docs-favicon.png?fit=max&auto=format&n=jKM-tvbl7XiR347g&q=85&s=cfd5a8cabd430533885dd0e02048a362)Deep Agents](https://docs.langchain.com/langsmith/trace-deep-agents)[![Image 23](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/googleadk.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=a8ad232c1d97a7df7ba6e0d9c5240494)![Image 24](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/googleadk.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=b505baeee74040777a6c94e90f6b4c81)Google ADK](https://docs.langchain.com/langsmith/trace-with-google-adk)[![Image 25](https://mintcdn.com/langchain-5e9cc07a/jKM-tvbl7XiR347g/images/brand/docs-favicon.png?fit=max&auto=format&n=jKM-tvbl7XiR347g&q=85&s=cfd5a8cabd430533885dd0e02048a362)LangGraph](https://docs.langchain.com/langsmith/trace-with-langgraph)[![Image 26](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/mastra.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=d3d8b7cbb97b383b5f2fe77e9bfeca85)![Image 27](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/mastra.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=d71c2b54f8395089fc749377038871fe)Mastra](https://docs.langchain.com/langsmith/trace-with-mastra)[![Image 28](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/microsoft.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=121b97dae29702c879f7d3c0d5e19cd7)![Image 29](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/microsoft.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=b3de10b63aef4af45a2104034e62814e)Microsoft Agent Framework](https://docs.langchain.com/langsmith/trace-with-microsoft-agent-framework)[![Image 30](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/openai.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=18d7f9d36bba30a05e0edb273e806957)![Image 31](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/openai.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=0e4d238a84e4e4ec3262ed0dd0042452)OpenAI Agents](https://docs.langchain.com/langsmith/trace-with-openai-agents-sdk)[![Image 32](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/opentelemetry.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=e2cbcb36662d3488d56bb0e471a628a2)![Image 33](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/opentelemetry.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=8e2270bd762d3191567dc1c16d835f39)OpenTelemetry](https://docs.langchain.com/langsmith/trace-with-opentelemetry)[![Image 34](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/pydanticai.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=67a6414784499c6e2ea551a14f87ab02)![Image 35](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/pydanticai.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=8802f122657485788881d9ba8793c8c6)PydanticAI](https://docs.langchain.com/langsmith/trace-with-pydantic-ai)[![Image 36](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/microsoft.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=121b97dae29702c879f7d3c0d5e19cd7)![Image 37](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/microsoft.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=b3de10b63aef4af45a2104034e62814e)Semantic Kernel](https://docs.langchain.com/langsmith/trace-with-semantic-kernel)[![Image 38](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/vercel.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=7fef9f45936e51953ae8b3813e97d43d)![Image 39](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/dark/vercel.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=d588f867673a834ad3944d8b37c87c20)Vercel AI SDK](https://docs.langchain.com/langsmith/trace-with-vercel-ai-sdk)
+
+[​](https://docs.langchain.com/langsmith/get-started-integrations.md#voice-ai-frameworks)
+
+Voice AI frameworks
+--------------------------------------------------------------------------------------------------------------
+
+[![Image 40](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/livekit.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=40c9d069241fecbbe44cb29efc432375)![Image 41](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/livekit.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=b3e30034e510d790c568b1ca3adeb41f)Livekit](https://docs.langchain.com/langsmith/trace-with-livekit)[![Image 42](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/pipecat.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=967a47bd0157e297a54c3e1f9f12688f)![Image 43](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/pipecat.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=c6f3659106781a487973272c25f3e8fc)Pipecat](https://docs.langchain.com/langsmith/trace-with-pipecat)
+
+[​](https://docs.langchain.com/langsmith/get-started-integrations.md#developer-tools)
+
+Developer tools
+------------------------------------------------------------------------------------------------------
+
+[![Image 44](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/claude.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=3565d35b01e96479434085028db21c6b)![Image 45](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/claude.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=064942550c5efde279a4bcf8eff0a992)Claude Code](https://docs.langchain.com/langsmith/trace-claude-code)[![Image 46](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/instructor.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=ea684a80fc79b333d62792ac7ba5ca7e)![Image 47](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/instructor.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=6ca05b3708756a47cf31545f411a7b61)Instructor](https://docs.langchain.com/langsmith/trace-with-instructor)[![Image 48](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/temporal.svg?fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=3419fc133024941b448e7ea1e127e901)![Image 49](https://mintcdn.com/langchain-5e9cc07a/leLjarr4WY7BrwYC/images/providers/dark/temporal.svg?fit=max&auto=format&n=leLjarr4WY7BrwYC&q=85&s=342115f6713e37cfd05ee247eba0ab9c)Temporal](https://docs.langchain.com/langsmith/trace-with-temporal)
+
+* * *
+
+[Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/integrations.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+[Connect these docs](https://docs.langchain.com/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+
+Was this page helpful?
+
+Yes No
+
+[Trace an LLM application tutorial Previous](https://docs.langchain.com/langsmith/observability-llm-tutorial)[Trace Anthropic applications Next](https://docs.langchain.com/langsmith/trace-anthropic)
+
+Ctrl+I
+
+[Docs by LangChain home page![Image 50: light logo](https://mintcdn.com/langchain-5e9cc07a/Xbr8HuVd9jPi6qTU/images/brand/langchain-docs-teal.svg?fit=max&auto=format&n=Xbr8HuVd9jPi6qTU&q=85&s=16111530672bf976cb54ef2143478342)![Image 51: dark logo](https://mintcdn.com/langchain-5e9cc07a/Xbr8HuVd9jPi6qTU/images/brand/langchain-docs-lilac.svg?fit=max&auto=format&n=Xbr8HuVd9jPi6qTU&q=85&s=b70fb1a2208670492ef94aef14b680be)](https://docs.langchain.com/)
+
+[github](https://github.com/langchain-ai)[x](https://x.com/LangChain)[linkedin](https://www.linkedin.com/company/langchain)[youtube](https://www.youtube.com/@LangChain)
+
+Resources
+
+[Forum](https://forum.langchain.com/)[Changelog](https://changelog.langchain.com/)[LangChain Academy](https://academy.langchain.com/)[Trust Center](https://trust.langchain.com/)
+
+Company
+
+[Home](https://langchain.com/)[About](https://langchain.com/about)[Careers](https://langchain.com/careers)[Blog](https://blog.langchain.com/)
+
+[github](https://github.com/langchain-ai)[x](https://x.com/LangChain)[linkedin](https://www.linkedin.com/company/langchain)[youtube](https://www.youtube.com/@LangChain)
+
+[Powered by](https://www.mintlify.com/?utm_campaign=poweredBy&utm_medium=referral&utm_source=langchain-5e9cc07a)
+
+Assistant
+
+Responses are generated using AI and may contain mistakes.
+
+![Image 52](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/bedrock.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=1169fea2259bacf6b807d130fcdb034d)
+
+![Image 53](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/anthropic.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=3e5cb04088f797919332ffd4ed36f7af)
+
+![Image 54](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/deepseek.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=5e62d9081a4f2d1fa240f0d12d025931)
+
+![Image 55](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/gemini.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=5f08bd1f95ef7cc0793f7829848140d9)
+
+![Image 56](https://mintcdn.com/langchain-5e9cc07a/jKM-tvbl7XiR347g/images/brand/docs-favicon.png?w=1100&fit=max&auto=format&n=jKM-tvbl7XiR347g&q=85&s=3af744bce0ecdf0f7fc11beb1198cb97)
+
+![Image 57](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/mistral.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=cbf16a1412862e6057dd5fee9e5b24a6)
+
+![Image 58](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/openai.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=74695a6ba70b5712ee8d5948db75de84)
+
+![Image 59](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/autogen.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=082331888dd02e7c4b4ecc2a48bcabe6)
+
+![Image 60](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/claude.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=894df161eaa20d2523cdabb551cb249a)
+
+![Image 61](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/crewai.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=2e3513131ebf34b3b203fe306ffa47b0)
+
+![Image 62](https://mintcdn.com/langchain-5e9cc07a/jKM-tvbl7XiR347g/images/brand/docs-favicon.png?w=1100&fit=max&auto=format&n=jKM-tvbl7XiR347g&q=85&s=3af744bce0ecdf0f7fc11beb1198cb97)
+
+![Image 63](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/googleadk.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=49730b4f8ca74edd2f6bc173484fa25d)
+
+![Image 64](https://mintcdn.com/langchain-5e9cc07a/jKM-tvbl7XiR347g/images/brand/docs-favicon.png?w=1100&fit=max&auto=format&n=jKM-tvbl7XiR347g&q=85&s=3af744bce0ecdf0f7fc11beb1198cb97)
+
+![Image 65](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/mastra.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=f056accdd8ed2a35bf5b75f3b4f29a90)
+
+![Image 66](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/microsoft.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=527549ff81775df79763949d782cfcf9)
+
+![Image 67](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/openai.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=74695a6ba70b5712ee8d5948db75de84)
+
+![Image 68](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/opentelemetry.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=f6f4f2792a476f249bd8741ea9c1b187)
+
+![Image 69](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/pydanticai.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=a9009470959fb9ffb26cf62a007fa61f)
+
+![Image 70](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/microsoft.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=527549ff81775df79763949d782cfcf9)
+
+![Image 71](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/vercel.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=414a3f071b5ce09f159f524138be47c7)
+
+![Image 72](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/livekit.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=08d7d07b88e18ffc1b9703f9b5c7a0e4)
+
+![Image 73](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/pipecat.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=b8a0180a43f5c141390552483b39876c)
+
+![Image 74](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/claude.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=894df161eaa20d2523cdabb551cb249a)
+
+![Image 75](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/instructor.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=833b56e1241d2042da314370483b8933)
+
+![Image 76](https://mintcdn.com/langchain-5e9cc07a/x0V-OVA1TcEeY_HI/images/providers/light/temporal.svg?w=1100&fit=max&auto=format&n=x0V-OVA1TcEeY_HI&q=85&s=faf45cb65306a2797bc37c4d4cdb7c14)

@@ -1,0 +1,97 @@
+Published Time: Thu, 12 Feb 2026 05:58:48 GMT
+
+LangSmith SDK | LangChain Reference
+===============
+- [x] - [x] 
+
+[Skip to content](https://reference.langchain.com/python/langsmith/observability/sdk/#quick-reference)
+
+[![Image 1: logo](https://reference.langchain.com/python/static/brand/reference-light.svg)![Image 2: logo](https://reference.langchain.com/python/static/brand/reference-dark.svg)](https://reference.langchain.com/python/ "LangChain Reference")
+
+ LangChain Reference 
+
+ LangSmith SDK 
+
+[](https://reference.langchain.com/python/langsmith/observability/sdk/?q= "Share")
+
+Type to start searching
+
+[langchain-ai/docs * 236 * 1.9k](https://github.com/langchain-ai/docs "Go to repository")
+
+*   [Get started](https://reference.langchain.com/python/)
+*   [LangChain](https://reference.langchain.com/python/langchain/)
+*   [LangGraph](https://reference.langchain.com/python/langgraph/)
+*   [Deep Agents](https://reference.langchain.com/python/deepagents/)
+*   [Integrations](https://reference.langchain.com/python/integrations/)
+*   [LangSmith](https://reference.langchain.com/python/langsmith/)
+
+[![Image 3: logo](https://reference.langchain.com/python/static/brand/reference-light.svg)![Image 4: logo](https://reference.langchain.com/python/static/brand/reference-dark.svg)](https://reference.langchain.com/python/ "LangChain Reference") LangChain Reference  
+
+[langchain-ai/docs * 236 * 1.9k](https://github.com/langchain-ai/docs "Go to repository")
+
+*   [Get started](https://reference.langchain.com/python/)
+*   [LangChain](https://reference.langchain.com/python/langchain/)
+*   [LangGraph](https://reference.langchain.com/python/langgraph/)
+*   [Deep Agents](https://reference.langchain.com/python/deepagents/)
+*   [Integrations](https://reference.langchain.com/python/integrations/)
+*   - [x] [LangSmith](https://reference.langchain.com/python/langsmith/)  LangSmith  
+    *   - [x]  Observability & Evaluation   Observability & Evaluation  
+        *   - [x] [SDK](https://reference.langchain.com/python/langsmith/observability/sdk/)  SDK  
+            *   [Core APIs](https://reference.langchain.com/python/langsmith/observability/sdk/client/)
+            *   [Additional APIs](https://reference.langchain.com/python/langsmith/observability/sdk/schemas/)
+
+    *   - [x]  Deployment   Deployment  
+        *   [SDK](https://reference.langchain.com/python/langsmith/deployment/sdk/)
+        *   [RemoteGraph](https://reference.langchain.com/python/langsmith/deployment/remote_graph/)
+
+ Table of contents  
+*   [Quick Reference](https://reference.langchain.com/python/langsmith/observability/sdk/#quick-reference)
+*   [Core APIs](https://reference.langchain.com/python/langsmith/observability/sdk/#core-apis)
+*   [Additional APIs](https://reference.langchain.com/python/langsmith/observability/sdk/#additional-apis)
+
+[](https://github.com/langchain-ai/docs/tree/main/reference/python/docs/langsmith/observability/sdk/index.md "Edit this page")
+LangSmith SDK reference
+=======================
+
+[![Image 5: PyPI - Version](https://img.shields.io/pypi/v/langsmith?label=%20)](https://pypi.org/project/langsmith/#history)[![Image 6: PyPI - License](https://img.shields.io/pypi/l/langsmith)](https://opensource.org/licenses/MIT)[![Image 7: PyPI - Downloads](https://img.shields.io/pepy/dt/langsmith)](https://pypistats.org/packages/langsmith)
+
+Welcome to the LangSmith Python SDK reference docs! These pages detail the core interfaces you will use when building with LangSmith's Observability and Evaluations tools.
+
+For user guides, tutorials, and conceptual overviews, please visit the [LangSmith documentation](https://docs.langchain.com/langsmith/home).
+
+Quick Reference[¶](https://reference.langchain.com/python/langsmith/observability/sdk/#quick-reference "Copy anchor link to this section for reference")
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+| Class/function | Description |
+| --- | --- |
+| [`Client`](https://reference.langchain.com/python/langsmith/observability/sdk/client/) | Synchronous client for interacting with the LangSmith API. |
+| [`AsyncClient`](https://reference.langchain.com/python/langsmith/observability/sdk/async_client/) | Asynchronous client for interacting with the LangSmith API. |
+| [`traceable`](https://reference.langchain.com/python/langsmith/observability/sdk/run_helpers/) | Wrapper/decorator for tracing any function. |
+| [`@pytest.mark.langsmith`](https://reference.langchain.com/python/langsmith/observability/sdk/testing/) | LangSmith `pytest` integration. |
+| [`wrap_openai`](https://reference.langchain.com/python/langsmith/observability/sdk/wrappers/) | Wrapper for OpenAI client, adds LangSmith tracing. |
+| [`wrap_anthropic`](https://reference.langchain.com/python/langsmith/observability/sdk/wrappers/) | Wrapper for Anthropic client, adds LangSmith tracing. |
+
+Core APIs[¶](https://reference.langchain.com/python/langsmith/observability/sdk/#core-apis "Copy anchor link to this section for reference")
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+The primary interfaces for the LangSmith SDK.
+
+*   [`Client`](https://reference.langchain.com/python/langsmith/observability/sdk/client/): Synchronous client for the LangSmith API.
+*   [`AsyncClient`](https://reference.langchain.com/python/langsmith/observability/sdk/async_client/): Asynchronous client for the LangSmith API.
+*   [Run Helpers](https://reference.langchain.com/python/langsmith/observability/sdk/run_helpers/): Functions like `traceable`, `trace`, and tracing context management.
+*   [Run Trees](https://reference.langchain.com/python/langsmith/observability/sdk/run_trees/): Tree structure for representing runs and nested runs.
+*   [Evaluation](https://reference.langchain.com/python/langsmith/observability/sdk/evaluation/): Tools for evaluating functions and models on datasets.
+
+Additional APIs[¶](https://reference.langchain.com/python/langsmith/observability/sdk/#additional-apis "Copy anchor link to this section for reference")
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*   [Schemas](https://reference.langchain.com/python/langsmith/observability/sdk/schemas/): Data schemas and type definitions.
+*   [Utilities](https://reference.langchain.com/python/langsmith/observability/sdk/utils/): Utility classes including error types and thread pool executors.
+*   [Wrappers](https://reference.langchain.com/python/langsmith/observability/sdk/wrappers/): Tracing wrappers for popular LLM providers.
+*   [Anonymizer](https://reference.langchain.com/python/langsmith/observability/sdk/anonymizer/): Tools for anonymizing sensitive data.
+*   [Testing](https://reference.langchain.com/python/langsmith/observability/sdk/testing/): Testing utilities and pytest integration.
+*   [Expect API](https://reference.langchain.com/python/langsmith/observability/sdk/expect/): Assertions and expectations for testing.
+
+ Back to top 
+
+[](https://github.com/langchain-ai/langchain "LangChain on GitHub")[](https://www.langchain.com/join-community "LangChain Community Slack")[](https://twitter.com/LangChainAI "LangChain on Twitter / X")[](https://www.linkedin.com/company/langchain/ "LangChain on LinkedIn")[](https://www.youtube.com/@LangChain "LangChain on YouTube")

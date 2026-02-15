@@ -1,0 +1,66 @@
+LangChain Academy
+===============
+
+[](https://langchain.com/)
+
+[Home](https://academy.langchain.com/)[Docs](https://docs.langchain.com/)[Community](https://www.langchain.com/join-community)[LangSmith](https://www.smith.langchain.com/)[All Courses](https://docs.langchain.com/collections)
+
+[Sign In](https://docs.langchain.com/users/sign_in)
+
+[Register](https://docs.langchain.com/users/sign_up)
+
+LangChain Academy
+-----------------
+
+[](https://docs.langchain.com/oss/javascript/langchain/academy.md)[](https://docs.langchain.com/oss/javascript/langchain/academy.md)
+
+Level up with LangChain Academy
+-------------------------------
+
+Dive into self-paced, comprehensive courses designed to help you build relevant skills and knowledge to succeed with LangChain products.
+
+[Watch Intro Video](https://www.youtube.com/watch?v=4dh0b-gM1m0)
+
+[](https://docs.langchain.com/oss/javascript/langchain/academy.md)
+
+Course Categories
+-----------------
+
+*   [![Image 1](https://import.cdn.thinkific.com/967498/n4TVinpEQdupjjDMa1tt_LangChain%20Essentials%20course%20thumbnail.png) ### Quickstart](https://docs.langchain.com/collections/quickstart)
+*   [![Image 2](https://import.cdn.thinkific.com/967498/uwNVIY1TTKVbnk9He6nd_foundation.png) ### Foundation](https://docs.langchain.com/collections/foundation)
+*   [![Image 3](https://import.cdn.thinkific.com/967498/AzTLL0MQbKZQSmK3lCSG_ambient.png) ### Project](https://docs.langchain.com/collections/project)
+
+[](https://docs.langchain.com/oss/javascript/langchain/academy.md)
+
+Featured Courses
+----------------
+
+*   [![Image 4](https://import.cdn.thinkific.com/967498/AZfxHnW3QEKHzo1j8rA2_Deep%20Agents_Thumbnail.png) ### Project: Deep Agents Course Learn the fundamental characteristics of Deep Agents and how to implement your own Deep Agent for complex, long-running tasks.](https://docs.langchain.com/courses/deep-agents-with-langgraph)
+*   [![Image 5](https://import.cdn.thinkific.com/967498/lmBDMqDUQzm2vgvHbDVx_LangSmith%20Essentials%20course%20thumbnail.png) ### Quickstart: LangSmith Essentials Course Learn the essentials of LangSmith — the comprehensive platform for agent engineering that helps teams use live production data for continuous testing and improvement.](https://docs.langchain.com/courses/quickstart-langsmith-essentials)
+*   [![Image 6](https://import.cdn.thinkific.com/967498/6WK1lBERqOpAuz1jHJQQ_langsmithcourse.png) ### Foundation: Introduction to Agent Observability & Evaluations Course Learn the essentials of agent observability & evaluations with LangSmith — our platform for agent development. Continuously improve your agents with LangSmith's tools for observability, evaluation, and prompt engineering.](https://docs.langchain.com/courses/intro-to-langsmith)
+
+[See all courses](https://docs.langchain.com/collections)
+
+[](https://docs.langchain.com/oss/javascript/langchain/academy.md)
+
+Ready to start shipping reliable agents faster?
+-----------------------------------------------
+
+Observe, evaluate, and deploy agents with LangSmith, the agent engineering platform.
+
+[Book a demo](https://www.langchain.com/contact-sales)
+
+[](https://docs.langchain.com/oss/javascript/langchain/academy.md)
+
+Learn with the community
+------------------------
+
+Learn alongside other builders at in-person LangChain meetups. 
+
+Subscribe to our calendar to be the first to know about upcoming events near you.
+
+[Subscribe](https://luma.com/langchain)
+
+[](https://docs.langchain.com/oss/javascript/langchain/academy.md)
+
+ © Copyright LangChain Academy 2026

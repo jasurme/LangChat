@@ -1,0 +1,80 @@
+Published Time: Thu, 12 Feb 2026 11:46:49 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Create a prompt
+
+Navigate to the  in the left-hand sidebar or from the application homepage.
+
+![Image 1: Empty playground](https://mintcdn.com/langchain-5e9cc07a/aKRoUGXX6ygp4DlC/langsmith/images/empty-playground.png?fit=max&auto=format&n=aKRoUGXX6ygp4DlC&q=85&s=2bede4ae9332bdf43ae20580d5bb957d)
+
+## Compose your prompt
+
+On the left is an editable view of the prompt.
+
+The prompt is made up of messages, each of which has a "role" - including `system`, `human`, and `ai`.
+
+### Template format
+
+The default template format is `f-string`, but you can change the prompt template format to `mustache` by clicking on the settings icon next to the model -> prompt format -> template format. Learn more about template formats [here](/langsmith/prompt-engineering-concepts#f-string-vs-mustache).
+![Image 2: Template format](https://mintcdn.com/langchain-5e9cc07a/ImHGLQW1HnQYwnJV/langsmith/images/template-format.png?fit=max&auto=format&n=ImHGLQW1HnQYwnJV&q=85&s=417fa567135babb46d2bf080b7eb44f0)
+
+### Add a template variable
+
+The power of prompts comes from the ability to use variables in your prompt. You can use variables to add dynamic content to your prompt. Add a template variable in one of two ways:
+
+1. Add `{{variable_name}}` to your prompt (with one curly brace on each side for `f-string` and two for `mustache`). ![Image 3: Prompt with variable](https://mintcdn.com/langchain-5e9cc07a/H9jA2WRyA-MV4-H0/langsmith/images/prompt-with-variable.png?fit=max&auto=format&n=H9jA2WRyA-MV4-H0&q=85&s=b250a57ef0e0a40a56822af750d52810)
+
+2. Highlight text you want to templatize and click the tooltip button that shows up. Enter a name for your variable, and convert. ![Image 4: Convert to variable](https://mintlify.s3.us-west-1.amazonaws.com/langchain-5e9cc07a/langsmith/images/convert-to-variable.gif)
+
+When we add a variable, we see a place to enter sample inputs for our prompt variables. Fill these in with values to test the prompt. ![Image 5: Prompt inputs](https://mintcdn.com/langchain-5e9cc07a/H9jA2WRyA-MV4-H0/langsmith/images/prompt-inputs.png?fit=max&auto=format&n=H9jA2WRyA-MV4-H0&q=85&s=35674518c53e340d02719cbb7b5fd782)
+
+### Structured output
+
+Adding an output schema to your prompt will get output in a structured format. Learn more about structured output [here](/langsmith/prompt-engineering-concepts#structured-output). ![Image 6: Structured output](https://mintcdn.com/langchain-5e9cc07a/ImHGLQW1HnQYwnJV/langsmith/images/structured-output.png?fit=max&auto=format&n=ImHGLQW1HnQYwnJV&q=85&s=51cdef35a620c225896dbf2f3ab07528)
+
+### Tools
+
+You can also add a tool by clicking the `+ Tool` button at the bottom of the prompt editor. See [here](/langsmith/use-tools) for more information on how to use tools.
+
+ Use **[Polly](/langsmith/polly)** in the Playground to generate tools, create output schemas, and optimize your prompts with AI assistance. 
+
+## Run the prompt
+
+Click "Start" to run the prompt.
+
+![Image 7: Create a prompt run](https://mintcdn.com/langchain-5e9cc07a/aKRoUGXX6ygp4DlC/langsmith/images/create-a-prompt-run.png?fit=max&auto=format&n=aKRoUGXX6ygp4DlC&q=85&s=9dec20b94326e5c8b11775b56eca55b4)
+
+## Save your prompt
+
+To save your prompt, click the "Save" button, name your prompt, and decide if you want it to be "private" or "public". Private prompts are only visible to your workspace, while public prompts are discoverable to anyone.
+
+The model and configuration you select in the Playground settings will be saved with the prompt. When you reopen the prompt, the model and configuration will automatically load from the saved version. ![Image 8: Save prompt](https://mintcdn.com/langchain-5e9cc07a/Fr2lazPB4XVeEA7l/langsmith/images/save-prompt.png?fit=max&auto=format&n=Fr2lazPB4XVeEA7l&q=85&s=180e2c79fb9d1ee8d7869fc279e2d94a)
+
+ The first time you create a public prompt, you'll be asked to set a LangChain Hub handle. All your public prompts will be linked to this handle. In a shared workspace, this handle will be set for the whole workspace. 
+
+![Image 9: Public handle](https://mintcdn.com/langchain-5e9cc07a/Fr2lazPB4XVeEA7l/langsmith/images/public-handle.png?fit=max&auto=format&n=Fr2lazPB4XVeEA7l&q=85&s=56dbd809c50fb2abc816c73c599f0baf)
+
+## View your prompts
+
+You've just created your first prompt! View a table of your prompts in the prompts tab.
+
+![Image 10: Prompt table](https://mintcdn.com/langchain-5e9cc07a/H9jA2WRyA-MV4-H0/langsmith/images/prompt-table.png?fit=max&auto=format&n=H9jA2WRyA-MV4-H0&q=85&s=9f8f5567bb93a0add181a51531474796)
+
+## Add metadata
+
+To add metadata to your prompt, click the prompt and then click the "Edit" pencil icon next to the name. This brings you to where you can add additional information about the prompt, including a description, a README, and use cases. For public prompts this information will be visible to anyone who views your prompt in the LangChain Hub.
+
+![Image 11: Pencil](https://mintcdn.com/langchain-5e9cc07a/H9jA2WRyA-MV4-H0/langsmith/images/pencil.png?fit=max&auto=format&n=H9jA2WRyA-MV4-H0&q=85&s=e54ca6c0c8283b027f5848f79d1cf064) ![Image 12: Edit prompt](https://mintcdn.com/langchain-5e9cc07a/aKRoUGXX6ygp4DlC/langsmith/images/edit-prompt.png?fit=max&auto=format&n=aKRoUGXX6ygp4DlC&q=85&s=febb5f53b2f917cf3e5a2ff2566eaef4)
+
+# Next steps
+
+Now that you've created a prompt, you can use it in your application code. See [how to pull a prompt programmatically](/langsmith/manage-prompts-programmatically#pull-a-prompt).
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/create-a-prompt.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

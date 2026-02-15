@@ -1,0 +1,89 @@
+Published Time: Thu, 12 Feb 2026 11:48:22 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# How to filter experiments in the UI
+
+LangSmith lets you filter your previous experiments by feedback scores and metadata to make it easy to find only the experiments you care about.
+
+## Background: add metadata to your experiments
+
+When you run an experiment in the SDK, you can attach metadata to make it easier to filter in UI. This is helpful if you know what axes you want to drill down into when running experiments.
+
+In our example, we are going to attach metadata to our experiment around the model used, the model provider, and a known ID of the prompt:
+
+```python  theme={null}
+models = {
+    "openai-gpt-4.1": ChatOpenAI(model="gpt-4.1", temperature=0),
+    "openai-gpt-4.1-mini": ChatOpenAI(model="gpt-4.1-mini", temperature=0),
+    "anthropic-claude-3-sonnet-20240229": ChatAnthropic(temperature=0, model_name="claude-3-sonnet-20240229")
+}
+
+prompts = {
+    "singleminded": "always answer questions with the word banana.",
+    "fruitminded": "always discuss fruit in your answers.",
+    "basic": "you are a chatbot."
+}
+
+def answer_evaluator(run, example) -> dict:
+    llm = ChatOpenAI(model="gpt-4.1", temperature=0)
+    answer_grader = hub.pull("langchain-ai/rag-answer-vs-reference") | llm
+    score = answer_grader.invoke(
+        {
+            "question": example.inputs["question"],
+            "correct_answer": example.outputs["answer"],
+            "student_answer": run.outputs,
+        }
+    )
+    return {"key": "correctness", "score": score["Score"]}
+
+dataset_name = "Filterable Dataset"
+
+for model_type, model in models.items():
+    for prompt_type, prompt in prompts.items():
+        def predict(example):
+            return model.invoke(
+                [("system", prompt), ("user", example["question"])]
+            )
+
+        model_provider = model_type.split("-")[0]
+        model_name = model_type[len(model_provider) + 1:]
+
+        evaluate(
+            predict,
+            data=dataset_name,
+            evaluators=[answer_evaluator],
+            # ADD IN METADATA HERE!!
+            metadata={
+                "model_provider": model_provider,
+                "model_name": model_name,
+                "prompt_id": prompt_type
+            }
+        )
+```
+
+## Filter experiments in the UI
+
+In the UI, we see all experiments that have been run by default.
+
+![Image 1: Filter all experiments](https://mintcdn.com/langchain-5e9cc07a/0B2PFrFBMRWNccee/langsmith/images/filter-all-experiments.png?fit=max&auto=format&n=0B2PFrFBMRWNccee&q=85&s=0cb5b29f405286dadb8b6491709eb789)
+
+If we, say, have a preference for openai models, we can easily filter down and see scores within just openai models first:
+
+![Image 2: Filter openai](https://mintcdn.com/langchain-5e9cc07a/0B2PFrFBMRWNccee/langsmith/images/filter-openai.png?fit=max&auto=format&n=0B2PFrFBMRWNccee&q=85&s=e3a0c42e4eb37cae68d367dec75d0df1)
+
+We can stack filters, allowing us to filter out low scores on correctness to make sure we only compare relevant experiments:
+
+![Image 3: Filter feedback](https://mintcdn.com/langchain-5e9cc07a/0B2PFrFBMRWNccee/langsmith/images/filter-feedback.png?fit=max&auto=format&n=0B2PFrFBMRWNccee&q=85&s=c0e223bbe637a03a4c251896a5662f52)
+
+Finally, we can clear and reset filters. For example, if we see there is clear there's a winner with the `singleminded` prompt, we can change filtering settings to see if any other model providers' models work as well with it:
+
+![Image 4: Filter singleminded](https://mintcdn.com/langchain-5e9cc07a/0B2PFrFBMRWNccee/langsmith/images/filter-singleminded.png?fit=max&auto=format&n=0B2PFrFBMRWNccee&q=85&s=7a30d214745fcddc022e3c715267dfd2)
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/filter-experiments-ui.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

@@ -1,0 +1,23 @@
+Published Time: Thu, 12 Feb 2026 11:16:02 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# LLM integrations
+
+> Integrate with LLMs using LangChain JavaScript.
+
+ **You are currently on a page documenting the use of text completion models. Many of the latest and most popular models are [chat completion models](/oss/javascript/langchain/models).** Unless you are specifically using more advanced prompting techniques, you are probably looking for [this page instead](/oss/javascript/integrations/chat/). 
+
+[LLMs](/oss/javascript/langchain/models) are language models that takes a string as input and return a string as output.
+
+## All LLMs
+
+                           
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/llms/index.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

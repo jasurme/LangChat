@@ -1,0 +1,237 @@
+Published Time: Thu, 12 Feb 2026 11:01:22 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Update a Sandbox Pool
+
+> Update a Sandbox Pool's display name and/or replica count.
+
+You can update:
+- **name**: New display name (must be unique within the organization)
+- **replicas**: New replica count (scaling up is subject to quota limits)
+
+The template reference cannot be changed after creation.
+Set replicas to 0 to pause the pool without deleting it.
+
+## OpenAPI
+
+````yaml https://api.host.langchain.com/openapi.json patch /v2/sandboxes/pools/{name}
+openapi: 3.1.0
+info:
+  title: LangSmith Deployment Control Plane API
+  description: >
+    The LangSmith Deployment Control Plane API is used to programmatically
+    create and manage
+
+    Agent Server deployments. For example, the APIs can be orchestrated to
+
+    create custom CI/CD workflows.
+
+    ## Host
+
+    https://api.host.langchain.com
+
+    ## Authentication
+
+    To authenticate with the LangSmith Deployment Control Plane API, set the
+    `X-Api-Key` header
+
+    to a valid [LangSmith API
+    key](https://docs.langchain.com/langsmith/create-account-api-key#create-an-api-key).
+
+    ## Versioning
+
+    Each endpoint path is prefixed with a version (e.g. `v1`, `v2`).
+
+    ## Quick Start
+
+    1. Call `POST /v2/deployments` to create a new Deployment. The response body
+    contains the Deployment ID (`id`) and the ID of the latest (and first)
+    revision (`latest_revision_id`).
+
+    1. Call `GET /v2/deployments/{deployment_id}` to retrieve the Deployment.
+    Set `deployment_id` in the URL to the value of Deployment ID (`id`).
+
+    1. Poll for revision `status` until `status` is `DEPLOYED` by calling `GET
+    /v2/deployments/{deployment_id}/revisions/{latest_revision_id}`.
+
+    1. Call `PATCH /v2/deployments/{deployment_id}` to update the deployment.
+  version: 0.1.0
+servers: []
+security: []
+paths:
+  /v2/sandboxes/pools/{name}:
+    patch:
+      tags:
+        - Sandboxes (v2)
+      summary: Update a Sandbox Pool
+      description: >-
+        Update a Sandbox Pool's display name and/or replica count.
+
+        You can update:
+
+        - **name**: New display name (must be unique within the organization)
+
+        - **replicas**: New replica count (scaling up is subject to quota
+        limits)
+
+        The template reference cannot be changed after creation.
+
+        Set replicas to 0 to pause the pool without deleting it.
+      operationId: update_warmpool_v2_sandboxes_pools__name__patch
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+            description: Pool name
+            title: Name
+          description: Pool name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WarmPoolUpdate'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WarmPoolResponse'
+        '400':
+          description: Bad Request - Template deleted or validation error
+          content:
+            application/json:
+              example:
+                detail:
+                  error: ValidationError
+                  message: >-
+                    Template 'my-template' not found. The template may have been
+                    deleted.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                detail:
+                  error: NotFound
+                  message: Resource not found.
+        '409':
+          description: Conflict - Name already in use
+          content:
+            application/json:
+              example:
+                detail:
+                  error: Conflict
+                  message: Pool 'new-name' already exists
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - API Key: []
+        - Tenant ID: []
+        - Bearer Auth: []
+components:
+  schemas:
+    WarmPoolUpdate:
+      properties:
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Name
+          description: >-
+            New display name for the pool (max 63 chars, DNS-1035 format). Must
+            be unique within the organization.
+        replicas:
+          anyOf:
+            - type: integer
+              minimum: 0
+            - type: 'null'
+          title: Replicas
+          description: >-
+            Number of sandboxes to pre-provision (minimum 0). Set to 0 to pause
+            the pool without deleting it.
+      type: object
+      title: WarmPoolUpdate
+      description: |-
+        Request model for updating a Sandbox Pool.
+
+        You can update the display name and/or the replica count.
+        The template reference cannot be changed after creation.
+    WarmPoolResponse:
+      properties:
+        id:
+          anyOf:
+            - type: string
+              format: uuid
+            - type: 'null'
+          title: Id
+          description: Unique pool identifier
+        name:
+          type: string
+          title: Name
+        template_name:
+          type: string
+          title: Template Name
+        replicas:
+          type: integer
+          title: Replicas
+          description: Desired number of replicas
+        created_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Updated At
+      type: object
+      required:
+        - name
+        - template_name
+        - replicas
+      title: WarmPoolResponse
+      description: Response model for a Sandbox Pool.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+
+````

@@ -1,0 +1,260 @@
+Published Time: Thu, 12 Feb 2026 11:00:26 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Create a Volume
+
+> Create a new persistent volume in the tenant's sandbox namespace.
+
+This creates both a PersistentVolume (PV) and PersistentVolumeClaim (PVC).
+The volume can then be referenced in sandbox templates.
+
+Volume creation is subject to quota limits (count and total storage)
+configured via Metronome org config.
+
+If wait_for_ready is True (default), this blocks until the PVC is bound
+or the timeout is reached.
+
+## OpenAPI
+
+````yaml https://api.host.langchain.com/openapi.json post /v2/sandboxes/volumes
+openapi: 3.1.0
+info:
+  title: LangSmith Deployment Control Plane API
+  description: >
+    The LangSmith Deployment Control Plane API is used to programmatically
+    create and manage
+
+    Agent Server deployments. For example, the APIs can be orchestrated to
+
+    create custom CI/CD workflows.
+
+    ## Host
+
+    https://api.host.langchain.com
+
+    ## Authentication
+
+    To authenticate with the LangSmith Deployment Control Plane API, set the
+    `X-Api-Key` header
+
+    to a valid [LangSmith API
+    key](https://docs.langchain.com/langsmith/create-account-api-key#create-an-api-key).
+
+    ## Versioning
+
+    Each endpoint path is prefixed with a version (e.g. `v1`, `v2`).
+
+    ## Quick Start
+
+    1. Call `POST /v2/deployments` to create a new Deployment. The response body
+    contains the Deployment ID (`id`) and the ID of the latest (and first)
+    revision (`latest_revision_id`).
+
+    1. Call `GET /v2/deployments/{deployment_id}` to retrieve the Deployment.
+    Set `deployment_id` in the URL to the value of Deployment ID (`id`).
+
+    1. Poll for revision `status` until `status` is `DEPLOYED` by calling `GET
+    /v2/deployments/{deployment_id}/revisions/{latest_revision_id}`.
+
+    1. Call `PATCH /v2/deployments/{deployment_id}` to update the deployment.
+  version: 0.1.0
+servers: []
+security: []
+paths:
+  /v2/sandboxes/volumes:
+    post:
+      tags:
+        - Sandboxes (v2)
+      summary: Create a Volume
+      description: >-
+        Create a new persistent volume in the tenant's sandbox namespace.
+
+        This creates both a PersistentVolume (PV) and PersistentVolumeClaim
+        (PVC).
+
+        The volume can then be referenced in sandbox templates.
+
+        Volume creation is subject to quota limits (count and total storage)
+
+        configured via Metronome org config.
+
+        If wait_for_ready is True (default), this blocks until the PVC is bound
+
+        or the timeout is reached.
+      operationId: create_volume_v2_sandboxes_volumes_post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolumeCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolumeResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                detail:
+                  error: BadRequest
+                  message: Error description.
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              example:
+                detail:
+                  error: Conflict
+                  message: Resource already exists.
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '503':
+          description: Service Unavailable - Volume provisioning failed
+          content:
+            application/json:
+              example:
+                detail:
+                  error: ProvisioningFailed
+                  message: >-
+                    Volume 'my-vol' provisioning failed: ProvisioningFailed:
+                    storageclass.storage.k8s.io 'invalid-class' not found
+        '504':
+          description: Gateway Timeout - Volume did not become ready in time
+          content:
+            application/json:
+              example:
+                detail:
+                  error: Timeout
+                  message: >-
+                    Volume 'my-vol' did not become ready within 60 seconds. Last
+                    known status: phase=Pending
+      security:
+        - API Key: []
+        - Tenant ID: []
+        - Bearer Auth: []
+components:
+  schemas:
+    VolumeCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: >-
+            Name of the volume (max 63 chars, DNS-1035 format: lowercase
+            alphanumeric and hyphens, must start with letter)
+        size:
+          type: string
+          title: Size
+          description: Storage size (e.g., '1Gi', '10Gi')
+          examples:
+            - 1Gi
+            - 5Gi
+            - 10Gi
+        storage_class:
+          anyOf:
+            - type: string
+              const: standard
+            - type: 'null'
+          title: Storage Class
+          description: >-
+            Storage class name. Only 'standard' is allowed. Uses cluster default
+            if not specified.
+        wait_for_ready:
+          type: boolean
+          title: Wait For Ready
+          description: >-
+            Wait for volume to be bound before returning. If True, the request
+            blocks until the PVC is bound or times out.
+          default: true
+        timeout:
+          type: integer
+          maximum: 300
+          minimum: 5
+          title: Timeout
+          description: Timeout in seconds when wait_for_ready is True.
+          default: 60
+      type: object
+      required:
+        - name
+        - size
+      title: VolumeCreate
+      description: Request model for creating a PersistentVolume and PersistentVolumeClaim.
+    VolumeResponse:
+      properties:
+        id:
+          anyOf:
+            - type: string
+              format: uuid
+            - type: 'null'
+          title: Id
+          description: Unique volume identifier
+        name:
+          type: string
+          title: Name
+        size:
+          type: string
+          title: Size
+        storage_class:
+          type: string
+          title: Storage Class
+        created_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Updated At
+      type: object
+      required:
+        - name
+        - size
+        - storage_class
+      title: VolumeResponse
+      description: Response model for a Volume.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+
+````

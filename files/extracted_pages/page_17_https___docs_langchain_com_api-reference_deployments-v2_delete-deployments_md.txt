@@ -1,0 +1,140 @@
+Published Time: Thu, 12 Feb 2026 10:52:59 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Delete Deployments
+
+> Delete multiple deployments with partial success support.
+
+Returns:
+    - 200: All deployments deleted successfully
+    - 207: Some deployments deleted successfully, some failed
+
+## OpenAPI
+
+````yaml https://api.host.langchain.com/openapi.json delete /v2/deployments
+openapi: 3.1.0
+info:
+  title: LangSmith Deployment Control Plane API
+  description: >
+    The LangSmith Deployment Control Plane API is used to programmatically
+    create and manage
+
+    Agent Server deployments. For example, the APIs can be orchestrated to
+
+    create custom CI/CD workflows.
+
+    ## Host
+
+    https://api.host.langchain.com
+
+    ## Authentication
+
+    To authenticate with the LangSmith Deployment Control Plane API, set the
+    `X-Api-Key` header
+
+    to a valid [LangSmith API
+    key](https://docs.langchain.com/langsmith/create-account-api-key#create-an-api-key).
+
+    ## Versioning
+
+    Each endpoint path is prefixed with a version (e.g. `v1`, `v2`).
+
+    ## Quick Start
+
+    1. Call `POST /v2/deployments` to create a new Deployment. The response body
+    contains the Deployment ID (`id`) and the ID of the latest (and first)
+    revision (`latest_revision_id`).
+
+    1. Call `GET /v2/deployments/{deployment_id}` to retrieve the Deployment.
+    Set `deployment_id` in the URL to the value of Deployment ID (`id`).
+
+    1. Poll for revision `status` until `status` is `DEPLOYED` by calling `GET
+    /v2/deployments/{deployment_id}/revisions/{latest_revision_id}`.
+
+    1. Call `PATCH /v2/deployments/{deployment_id}` to update the deployment.
+  version: 0.1.0
+servers: []
+security: []
+paths:
+  /v2/deployments:
+    delete:
+      tags:
+        - Deployments (v2)
+      summary: Delete Deployments
+      description: |-
+        Delete multiple deployments with partial success support.
+
+        Returns:
+            - 200: All deployments deleted successfully
+            - 207: Some deployments deleted successfully, some failed
+      operationId: delete_deployments_v2_deployments_delete
+      parameters:
+        - name: deployment_ids
+          in: query
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+            maxItems: 100
+            title: Deployment Ids
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                detail: Deployment ID {deployment_id} not found.
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - API Key: []
+        - Tenant ID: []
+        - Bearer Auth: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+
+````

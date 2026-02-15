@@ -1,0 +1,20 @@
+Published Time: Thu, 12 Feb 2026 11:16:22 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Store integrations
+
+> Integrate with stores using LangChain JavaScript.
+
+## Overview
+
+LangChain provides a key-value store interface for storing and retrieving data by key. The key-value store interface in LangChain is primarily used for caching [embeddings](/oss/javascript/integrations/text_embedding).
+
+## Interface
+
+All [`BaseStores`](https://api.js.langchain.com/classes/langchain_core.stores.BaseStore.html) are **generic** and support the following interface, where `K` represents the key type and `V` represents the value type:
+
+* `mget(keys: K[]): Promise<(V | undefined)[]>`: get the values for multiple keys, returning `undefined` if a key does not exist
+* `mset(keyValuePairs: [K, V][]): Promise`: set the values for multiple keys * `mdelete(keys: K[]): Promise`: delete multiple keys * `yieldKeys(prefix?: string): AsyncGenerator`: asynchronously yield all keys in the store, optionally filtering by a prefix The generic nature of the interface allows you to use different types for keys and values. For example, `BaseStore` would store messages with string keys, while `BaseStore` would store arrays of numbers.  Base stores are designed to work with **multiple** key-value pairs at once for efficiency. This saves on network round-trips and may allow for more efficient batch operations in the underlying store.  ## Built-in stores for local development    ## Custom stores You can also implement your own custom store by extending the [`BaseStore`](https://reference.langchain.com/javascript/classes/_langchain_langgraph-checkpoint.BaseStore.html) class. See the [store interface documentation](https://api.js.langchain.com/classes/langchain_core.stores.BaseStore.html) for more details. ## All integrations      ***  [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/stores/index.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).  [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

@@ -1,0 +1,246 @@
+Published Time: Thu, 12 Feb 2026 11:00:17 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Create a Sandbox
+
+> Create a new SandboxClaim in tenant's namespace.
+
+If wait_for_ready is True (default), this will block until the sandbox
+is ready or the timeout is reached.
+
+The sandbox creation can fail for several reasons:
+- Image pull errors (invalid image, registry auth issues)
+- Container crashes (bad entrypoint, missing dependencies, health check failures)
+- Scheduling failures (no suitable nodes available)
+
+Sandbox creation is subject to quota limits (count, CPU, memory)
+configured via Metronome org config.
+
+On failure, the claim is automatically cleaned up and a descriptive error
+is returned.
+
+## OpenAPI
+
+````yaml https://api.host.langchain.com/openapi.json post /v2/sandboxes/boxes
+openapi: 3.1.0
+info:
+  title: LangSmith Deployment Control Plane API
+  description: >
+    The LangSmith Deployment Control Plane API is used to programmatically
+    create and manage
+
+    Agent Server deployments. For example, the APIs can be orchestrated to
+
+    create custom CI/CD workflows.
+
+    ## Host
+
+    https://api.host.langchain.com
+
+    ## Authentication
+
+    To authenticate with the LangSmith Deployment Control Plane API, set the
+    `X-Api-Key` header
+
+    to a valid [LangSmith API
+    key](https://docs.langchain.com/langsmith/create-account-api-key#create-an-api-key).
+
+    ## Versioning
+
+    Each endpoint path is prefixed with a version (e.g. `v1`, `v2`).
+
+    ## Quick Start
+
+    1. Call `POST /v2/deployments` to create a new Deployment. The response body
+    contains the Deployment ID (`id`) and the ID of the latest (and first)
+    revision (`latest_revision_id`).
+
+    1. Call `GET /v2/deployments/{deployment_id}` to retrieve the Deployment.
+    Set `deployment_id` in the URL to the value of Deployment ID (`id`).
+
+    1. Poll for revision `status` until `status` is `DEPLOYED` by calling `GET
+    /v2/deployments/{deployment_id}/revisions/{latest_revision_id}`.
+
+    1. Call `PATCH /v2/deployments/{deployment_id}` to update the deployment.
+  version: 0.1.0
+servers: []
+security: []
+paths:
+  /v2/sandboxes/boxes:
+    post:
+      tags:
+        - Sandboxes (v2)
+      summary: Create a Sandbox
+      description: >-
+        Create a new SandboxClaim in tenant's namespace.
+
+        If wait_for_ready is True (default), this will block until the sandbox
+
+        is ready or the timeout is reached.
+
+        The sandbox creation can fail for several reasons:
+
+        - Image pull errors (invalid image, registry auth issues)
+
+        - Container crashes (bad entrypoint, missing dependencies, health check
+        failures)
+
+        - Scheduling failures (no suitable nodes available)
+
+        Sandbox creation is subject to quota limits (count, CPU, memory)
+
+        configured via Metronome org config.
+
+        On failure, the claim is automatically cleaned up and a descriptive
+        error
+
+        is returned.
+      operationId: create_claim_v2_sandboxes_boxes_post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SandboxClaimCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxClaimResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              example:
+                detail:
+                  error: BadRequest
+                  message: Error description.
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              example:
+                detail:
+                  error: Timeout
+                  message: >-
+                    Sandbox 'my-sandbox' (sb-...) did not become ready within
+                    180 seconds. Last known status: initializing, starting
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              example:
+                detail:
+                  error: Conflict
+                  message: Resource already exists.
+        '422':
+          description: Unprocessable Entity - Sandbox Creation Failed
+          content:
+            application/json:
+              examples:
+                image_pull_error:
+                  summary: Image Pull Failed
+                  value:
+                    detail:
+                      error: ImagePull
+                      message: >-
+                        Failed to pull image 'invalid:latest': rpc error: code =
+                        NotFound
+                crash_loop:
+                  summary: Sandbox Crashed
+                  value:
+                    detail:
+                      error: CrashLoop
+                      message: >-
+                        Sandbox crashed with exit code 1 (Error) (restarted 3
+                        time(s)). Hint: Ensure the sandbox image implements the
+                        required runtime interface and starts correctly.
+        '503':
+          description: Service Unavailable - No nodes available
+          content:
+            application/json:
+              example:
+                detail:
+                  error: Unschedulable
+                  message: '0/3 nodes are available: insufficient memory.'
+      security:
+        - API Key: []
+        - Tenant ID: []
+        - Bearer Auth: []
+components:
+  schemas:
+    SandboxClaimCreate:
+      properties:
+        template_name:
+          type: string
+          title: Template Name
+          description: Name of the SandboxTemplate to use
+        name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Name
+          description: >-
+            Optional name for the claim (max 63 chars, DNS-1035 format:
+            lowercase alphanumeric and hyphens, must start with letter).
+            Auto-generated if not provided.
+        wait_for_ready:
+          type: boolean
+          title: Wait For Ready
+          description: Wait for sandbox to be ready before returning
+          default: true
+        timeout:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Timeout
+          description: >-
+            Timeout in seconds when waiting for ready. If not provided, uses
+            SANDBOX_WAIT_TIMEOUT_SECONDS from server config.
+      type: object
+      required:
+        - template_name
+      title: SandboxClaimCreate
+      description: Request model for creating a SandboxClaim.
+    SandboxClaimResponse:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: Id
+        name:
+          type: string
+          title: Name
+        template_name:
+          type: string
+          title: Template Name
+        dataplane_url:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Dataplane Url
+          description: Direct URL for data plane operations (execute, files, terminal)
+        created_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Updated At
+      type: object
+      required:
+        - id
+        - name
+        - template_name
+      title: SandboxClaimResponse
+      description: Response model for a SandboxClaim.
+
+````

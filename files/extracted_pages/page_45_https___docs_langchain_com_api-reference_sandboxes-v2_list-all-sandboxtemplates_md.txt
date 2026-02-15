@@ -1,0 +1,361 @@
+Published Time: Thu, 12 Feb 2026 11:01:16 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# List all SandboxTemplates
+
+> List all SandboxTemplates in the tenant's sandbox namespace.
+
+This endpoint queries the database for fast performance.
+Supports optional pagination via `limit` and `offset` query parameters.
+
+## OpenAPI
+
+````yaml https://api.host.langchain.com/openapi.json get /v2/sandboxes/templates
+openapi: 3.1.0
+info:
+  title: LangSmith Deployment Control Plane API
+  description: >
+    The LangSmith Deployment Control Plane API is used to programmatically
+    create and manage
+
+    Agent Server deployments. For example, the APIs can be orchestrated to
+
+    create custom CI/CD workflows.
+
+    ## Host
+
+    https://api.host.langchain.com
+
+    ## Authentication
+
+    To authenticate with the LangSmith Deployment Control Plane API, set the
+    `X-Api-Key` header
+
+    to a valid [LangSmith API
+    key](https://docs.langchain.com/langsmith/create-account-api-key#create-an-api-key).
+
+    ## Versioning
+
+    Each endpoint path is prefixed with a version (e.g. `v1`, `v2`).
+
+    ## Quick Start
+
+    1. Call `POST /v2/deployments` to create a new Deployment. The response body
+    contains the Deployment ID (`id`) and the ID of the latest (and first)
+    revision (`latest_revision_id`).
+
+    1. Call `GET /v2/deployments/{deployment_id}` to retrieve the Deployment.
+    Set `deployment_id` in the URL to the value of Deployment ID (`id`).
+
+    1. Poll for revision `status` until `status` is `DEPLOYED` by calling `GET
+    /v2/deployments/{deployment_id}/revisions/{latest_revision_id}`.
+
+    1. Call `PATCH /v2/deployments/{deployment_id}` to update the deployment.
+  version: 0.1.0
+servers: []
+security: []
+paths:
+  /v2/sandboxes/templates:
+    get:
+      tags:
+        - Sandboxes (v2)
+      summary: List all SandboxTemplates
+      description: |-
+        List all SandboxTemplates in the tenant's sandbox namespace.
+
+        This endpoint queries the database for fast performance.
+        Supports optional pagination via `limit` and `offset` query parameters.
+      operationId: list_templates_v2_sandboxes_templates_get
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            maximum: 500
+            minimum: 1
+            description: Maximum number of resources to return.
+            default: 50
+            title: Limit
+          description: Maximum number of resources to return.
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            description: >-
+              Pagination offset. Pass this value to subsequent requests to fetch
+              the next page of resources.
+            default: 0
+            title: Offset
+          description: >-
+            Pagination offset. Pass this value to subsequent requests to fetch
+            the next page of resources.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxTemplateListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - API Key: []
+        - Tenant ID: []
+        - Bearer Auth: []
+components:
+  schemas:
+    SandboxTemplateListResponse:
+      properties:
+        templates:
+          items:
+            $ref: '#/components/schemas/SandboxTemplateResponse'
+          type: array
+          title: Templates
+        offset:
+          type: integer
+          title: Offset
+          description: Pagination offset for the next page. 0 if no more results.
+          default: 0
+      type: object
+      required:
+        - templates
+      title: SandboxTemplateListResponse
+      description: Response model for listing SandboxTemplates.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SandboxTemplateResponse:
+      properties:
+        id:
+          anyOf:
+            - type: string
+              format: uuid
+            - type: 'null'
+          title: Id
+          description: Unique template identifier
+        name:
+          type: string
+          title: Name
+        image:
+          type: string
+          title: Image
+        resources:
+          anyOf:
+            - $ref: >-
+                #/components/schemas/host__api__v2__schemas__sandboxes__ResourceSpec
+            - additionalProperties: true
+              type: object
+          title: Resources
+          description: Resource limits for sandboxes created from this template
+        volume_mounts:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/VolumeMountSpec'
+              type: array
+            - items:
+                additionalProperties:
+                  type: string
+                type: object
+              type: array
+          title: Volume Mounts
+          description: Volumes mounted in sandboxes created from this template
+        proxy_config:
+          anyOf:
+            - $ref: '#/components/schemas/ProxyConfig'
+            - additionalProperties: true
+              type: object
+            - type: 'null'
+          title: Proxy Config
+          description: >-
+            Proxy configuration for injecting secrets/headers into outbound
+            HTTPS requests
+        created_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Updated At
+      type: object
+      required:
+        - name
+        - image
+        - resources
+      title: SandboxTemplateResponse
+      description: Response model for a SandboxTemplate.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+    host__api__v2__schemas__sandboxes__ResourceSpec:
+      properties:
+        cpu:
+          type: string
+          title: Cpu
+          description: CPU limit (e.g., '500m', '1', '2')
+          default: 500m
+          examples:
+            - 500m
+            - '1'
+            - '2'
+        memory:
+          type: string
+          title: Memory
+          description: Memory limit (e.g., '256Mi', '1Gi')
+          default: 512Mi
+          examples:
+            - 256Mi
+            - 512Mi
+            - 1Gi
+        storage:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Storage
+          description: Ephemeral storage limit (e.g., '1Gi'). Optional.
+          examples:
+            - 1Gi
+            - 5Gi
+      type: object
+      title: ResourceSpec
+      description: Resource specification for a sandbox.
+    VolumeMountSpec:
+      properties:
+        volume_name:
+          type: string
+          title: Volume Name
+          description: Name of the volume to mount (must match an existing volume name)
+        mount_path:
+          type: string
+          title: Mount Path
+          description: Path where the volume should be mounted in the container
+          examples:
+            - /data
+            - /mnt/storage
+            - /home/user/data
+      type: object
+      required:
+        - volume_name
+        - mount_path
+      title: VolumeMountSpec
+      description: Specification for mounting a volume in a sandbox template.
+    ProxyConfig:
+      properties:
+        rules:
+          items:
+            $ref: '#/components/schemas/ProxyRule'
+          type: array
+          minItems: 1
+          title: Rules
+          description: List of rules for header injection
+        no_proxy:
+          items:
+            type: string
+          type: array
+          title: No Proxy
+          description: >-
+            List of hosts/domains to bypass proxy entirely (e.g., ['stripe.com',
+            '*.internal.com']). Traffic to these hosts will connect directly
+            without going through the MITM proxy.
+      type: object
+      required:
+        - rules
+      title: ProxyConfig
+      description: |-
+        Proxy configuration for a sandbox template.
+
+        When proxy_config is set, a smithbox-proxy sidecar will be deployed
+        alongside the sandbox container to intercept HTTPS traffic and inject
+        headers based on the configured rules.
+    ProxyRule:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Identifier for the rule (used in logs)
+          examples:
+            - openai-api
+            - github-api
+        match_hosts:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Match Hosts
+          description: Glob patterns for hostname matching
+          examples:
+            - - api.openai.com
+            - - '*.github.com'
+              - api.github.com
+        match_paths:
+          items:
+            type: string
+          type: array
+          title: Match Paths
+          description: Glob patterns for path matching. Empty = match all paths.
+          examples:
+            - - /v1/*
+            - - /repos/*
+              - /user
+        inject_headers:
+          additionalProperties:
+            type: string
+          type: object
+          title: Inject Headers
+          description: Headers to inject. Use ${SECRET_KEY} syntax for tenant secrets.
+          examples:
+            - Authorization: Bearer ${OPENAI_API_KEY}
+        enabled:
+          type: boolean
+          title: Enabled
+          description: Whether the rule is active
+          default: true
+      type: object
+      required:
+        - name
+        - match_hosts
+        - inject_headers
+      title: ProxyRule
+      description: |-
+        A rule for injecting headers into outbound requests.
+
+        Rules match requests by host and path patterns and inject headers.
+        Secret references use ${SECRET_KEY} syntax to reference tenant secrets.
+
+````

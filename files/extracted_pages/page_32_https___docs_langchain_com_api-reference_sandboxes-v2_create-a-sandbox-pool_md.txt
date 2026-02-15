@@ -1,0 +1,265 @@
+Published Time: Thu, 12 Feb 2026 11:00:20 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Create a Sandbox Pool
+
+> Create a new Sandbox Pool in tenant's namespace.
+
+Pools pre-provision sandboxes from a template for faster claim binding.
+
+Requirements:
+- The referenced template must exist
+- The template must not have any volume mounts (volumes are stateful)
+
+Pool creation is subject to quota limits. The total resource usage
+(replicas * per-replica resources) is checked against the organization's
+quota limits.
+
+## OpenAPI
+
+````yaml https://api.host.langchain.com/openapi.json post /v2/sandboxes/pools
+openapi: 3.1.0
+info:
+  title: LangSmith Deployment Control Plane API
+  description: >
+    The LangSmith Deployment Control Plane API is used to programmatically
+    create and manage
+
+    Agent Server deployments. For example, the APIs can be orchestrated to
+
+    create custom CI/CD workflows.
+
+    ## Host
+
+    https://api.host.langchain.com
+
+    ## Authentication
+
+    To authenticate with the LangSmith Deployment Control Plane API, set the
+    `X-Api-Key` header
+
+    to a valid [LangSmith API
+    key](https://docs.langchain.com/langsmith/create-account-api-key#create-an-api-key).
+
+    ## Versioning
+
+    Each endpoint path is prefixed with a version (e.g. `v1`, `v2`).
+
+    ## Quick Start
+
+    1. Call `POST /v2/deployments` to create a new Deployment. The response body
+    contains the Deployment ID (`id`) and the ID of the latest (and first)
+    revision (`latest_revision_id`).
+
+    1. Call `GET /v2/deployments/{deployment_id}` to retrieve the Deployment.
+    Set `deployment_id` in the URL to the value of Deployment ID (`id`).
+
+    1. Poll for revision `status` until `status` is `DEPLOYED` by calling `GET
+    /v2/deployments/{deployment_id}/revisions/{latest_revision_id}`.
+
+    1. Call `PATCH /v2/deployments/{deployment_id}` to update the deployment.
+  version: 0.1.0
+servers: []
+security: []
+paths:
+  /v2/sandboxes/pools:
+    post:
+      tags:
+        - Sandboxes (v2)
+      summary: Create a Sandbox Pool
+      description: |-
+        Create a new Sandbox Pool in tenant's namespace.
+
+        Pools pre-provision sandboxes from a template for faster claim binding.
+
+        Requirements:
+        - The referenced template must exist
+        - The template must not have any volume mounts (volumes are stateful)
+
+        Pool creation is subject to quota limits. The total resource usage
+        (replicas * per-replica resources) is checked against the organization's
+        quota limits.
+      operationId: create_warmpool_v2_sandboxes_pools_post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WarmPoolCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WarmPoolResponse'
+        '400':
+          description: Bad Request - Template not found or has volumes
+          content:
+            application/json:
+              examples:
+                template_not_found:
+                  summary: Template Not Found
+                  value:
+                    detail:
+                      error: TemplateNotFound
+                      message: >-
+                        Template 'my-template' not found. Create the template
+                        first before creating a pool.
+                template_has_volumes:
+                  summary: Template Has Volumes
+                  value:
+                    detail:
+                      error: ValidationError
+                      message: >-
+                        Template 'my-template' has volumes attached. Pools only
+                        support stateless templates without volume mounts.
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              example:
+                detail:
+                  error: Conflict
+                  message: Resource already exists.
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+        '504':
+          description: Timeout waiting for pool replicas to be ready
+          content:
+            application/json:
+              example:
+                detail:
+                  error: Timeout
+                  message: >-
+                    Pool 'my-pool' did not have any ready instances within 120
+                    seconds
+      security:
+        - API Key: []
+        - Tenant ID: []
+        - Bearer Auth: []
+components:
+  schemas:
+    WarmPoolCreate:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: >-
+            Name of the pool (max 63 chars, DNS-1035 format: lowercase
+            alphanumeric and hyphens, must start with letter)
+        template_name:
+          type: string
+          title: Template Name
+          description: >-
+            Name of the SandboxTemplate to use. The template must not have any
+            volume mounts.
+        replicas:
+          type: integer
+          minimum: 1
+          title: Replicas
+          description: Number of sandboxes to pre-provision (minimum 1)
+        wait_for_ready:
+          type: boolean
+          title: Wait For Ready
+          description: >-
+            If true, wait for at least one replica to be ready before returning.
+            This ensures claims can immediately bind to the pool.
+          default: true
+        timeout:
+          anyOf:
+            - type: integer
+              maximum: 600
+              minimum: 10
+            - type: 'null'
+          title: Timeout
+          description: >-
+            Timeout in seconds when wait_for_ready is true (default: 120, max:
+            600)
+      type: object
+      required:
+        - name
+        - template_name
+        - replicas
+      title: WarmPoolCreate
+      description: |-
+        Request model for creating a Sandbox Pool.
+
+        Pools pre-provision sandboxes from a template for faster claim binding.
+        Templates with volume mounts cannot be used in pools since volumes
+        are stateful and cannot be shared across pool replicas.
+    WarmPoolResponse:
+      properties:
+        id:
+          anyOf:
+            - type: string
+              format: uuid
+            - type: 'null'
+          title: Id
+          description: Unique pool identifier
+        name:
+          type: string
+          title: Name
+        template_name:
+          type: string
+          title: Template Name
+        replicas:
+          type: integer
+          title: Replicas
+          description: Desired number of replicas
+        created_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Created At
+        updated_at:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Updated At
+      type: object
+      required:
+        - name
+        - template_name
+        - replicas
+      title: WarmPoolResponse
+      description: Response model for a Sandbox Pool.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+
+````

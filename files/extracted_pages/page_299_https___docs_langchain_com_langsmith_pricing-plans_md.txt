@@ -1,0 +1,678 @@
+Published Time: Tue, 10 Feb 2026 20:11:38 GMT
+
+LangSmith Plans and Pricing
+===============
+
+[](https://docs.langchain.com/)
+
+Products
+
+LangSmith
+
+[![Image 1](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68e8e270df09334914882b88_Frame%209.svg) Observability Debug and monitor in-depth traces](https://docs.langchain.com/langsmith/observability)[![Image 2](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68e8e270f9e8de1d368764a8_Frame%20206.svg) Evaluation Iterate on prompts and models](https://docs.langchain.com/langsmith/evaluation)[![Image 3](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68e8e2709eef27fc61465416_Frame%20100039.svg) Deployment Ship and scale agents in production](https://docs.langchain.com/langsmith/deployment)[![Image 4](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/692e7522b3ef627cb0ec1155_Centralized%20management.svg) Agent Builder New Build no-code agents](https://docs.langchain.com/langsmith/agent-builder)
+
+Open Source Frameworks
+
+[![Image 5](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68e8e27023585643370a6471_icons.svg) LangChain Quick start agents with any model provider](https://docs.langchain.com/langchain)[![Image 6](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68e8e270417338c7f027082d_d035ce400e48f9bc4dd0578d0e3e3211_icons-1.svg) LangGraph Build custom agents with low-level control](https://docs.langchain.com/langgraph)[![Image 7](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68f20863b71dbae1af829979_DeepAgents.svg) Deep Agents New Use planning, memory, and sub-agents for complex, long-running tasks](https://docs.langchain.com/oss/python/deepagents/overview#deep-agents-overview)
+
+Learn
+
+Resources
+
+[Blog](https://blog.langchain.com/)[2026 State of Agent Engineering](https://docs.langchain.com/state-of-agent-engineering)[Customer Stories](https://docs.langchain.com/customers)[Guides](https://docs.langchain.com/resources)[Changelog](https://changelog.langchain.com/)[Trust Center](https://trust.langchain.com/)[Support](http://support.langchain.com/)
+
+How-To
+
+[LangChain Academy](https://academy.langchain.com/)[YouTube](https://www.youtube.com/@LangChain)[Documentation](https://docs.langchain.com/)
+
+Community
+
+[LangSmith for Startups](https://docs.langchain.com/startups)[Events](https://luma.com/langchain?k=c)[Community](https://docs.langchain.com/community)[Community Forum](https://forum.langchain.com/)[Slack](https://docs.langchain.com/join-community)
+
+[Docs](https://docs.langchain.com/)
+
+Company
+
+[About](https://docs.langchain.com/about)[Careers](https://docs.langchain.com/careers)[Partners](https://docs.langchain.com/langchain-partner-network)
+
+[Pricing](https://docs.langchain.com/pricing)
+
+[Get a demo](https://docs.langchain.com/contact-sales)
+
+[Try LangSmith](https://smith.langchain.com/)
+
+Plans for teams of any size
+===========================
+
+###### Get all LangSmith services - pay for what you use.
+
+Developer
+
+_For solo users getting started._
+
+$0 / seat per month
+
+then pay as you go
+
+First 5k traces included, starting at $0.50 per 1k base traces thereafter.
+
+[Start for free](https://smith.langchain.com/)
+
+Get started with:
+
+Up to 5k base traces / mo, then pay-as--you-go
+
+Tracing to debug agent execution
+
+Online and offline evals
+
+Prompt Hub, Playground, and Canvas for auto improving prompts
+
+Annotation queues for human feedback
+
+Monitoring and alerting
+
+1 Agent Builder agent
+
+Up to 50 Agent Builder runs / mo
+
+Community support
+
+1 seat
+
+Plus
+
+_For teams building and deploying agents._
+
+$39 / seat per month
+
+then pay as you go
+
+First 10k traces included, starting at $0.50 per 1k base traces thereafter.
+
+[Sign up](https://smith.langchain.com/)
+
+Everything in the Developer plan, and:
+
+Up to 10k base traces / mo, then pay-as-you-go
+
+1 dev-sized agent deployment included
+
+Email support
+
+Unlimited Agent Builder agents
+
+Up to 500 Agent Builder runs / mo, then pay-as-you-go
+
+Add unlimited seats
+
+Up to 3 workspaces
+
+Enterprise
+
+_For teams with advanced hosting, security, and support needs._
+
+Custom
+
+[Contact sales](https://docs.langchain.com/contact-sales)
+
+Everything in the Plus plan, and:
+
+Alternative hosting options, including hybrid and self-hosted so data doesn’t leave your VPC
+
+Custom SSO and RBAC
+
+Acccess to deployed engineering team
+
+Support SLA
+
+Team trainings & architectural guidance
+
+Custom seats and workspaces
+
+Custom Agent Builder packages
+
+**Small team just getting started?**We offer discounted rates and credits for VC-backed startups.
+
+[LangSmith for Startups](https://docs.langchain.com/startups)
+
+Compare plans
+-------------
+
+Features
+
+Developer
+
+Plus
+
+Enterprise
+
+Pricing
+
+Users
+
+Maximum of 1 seat
+
+(free)
+
+Add unlimited seats
+
+$39 per seat/month
+
+Custom
+
+Trace volume 
+
+(Observability&Evaluation)
+
+Prices for traces vary depending on the data retention period you've set. 
+
+ 5k base traces / mo included 
+
+Pay as you go thereafter [ⓘ](https://docs.langchain.com/langsmith/pricing-plans.md#)
+
+ 10k base traces / mo included 
+
+Pay as you go thereafter [ⓘ](https://docs.langchain.com/langsmith/pricing-plans.md#)
+
+Custom
+
+Max trace ingestion and trace size 
+
+Prices for traces vary depending on the data retention period you've set. 
+
+See hourly trace ingestion and trace event limits [here](https://docs.langchain.com/langsmith/administration-overview#rate-limits).
+
+See hourly trace ingestion and trace event limits [here](https://docs.langchain.com/langsmith/administration-overview#rate-limits).
+
+Custom
+
+Deployment runs
+
+(Deployment)
+
+N/A
+
+1 free Dev deployment with unlimited deployment runs included.
+
+For additional deployments:
+
+$0.005 / deployment run
+
+Custom
+
+Uptime cost 
+
+(Deployment)
+
+N/A
+
+$0.0007 / min per Development deployment
+
+$0.0036 / min per Production deployment
+
+Custom
+
+Number of Agent Builder agents
+
+1
+
+Unlimited
+
+Unlimited
+
+Agent Builder runs
+
+50 / mo
+
+All Agent Builder runs are traced by default and count toward your plan's total.
+
+LLM usage billed separate by your model provider.
+
+500 / mo included
+
+Additional Agent Builder runs:
+
+$0.05 / Agent Builder run
+
+All Agent Builder runs are traced by default and count toward your plan’s total.
+
+LLM usage billed separate by your model provider.
+
+Custom
+
+LangSmith Observability &Evaluation:
+
+Debug, monitor, and improve your AI applications with tracing and evals
+
+Tracing
+
+![Image 8](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 9](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 10](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Monitoring
+
+![Image 11](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 12](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 13](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Insights (beta)
+
+![Image 14](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 15](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Online and offline evals
+
+![Image 16](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 17](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 18](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Dataset collection
+
+![Image 19](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 20](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 21](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Annotation queue (human feedback)
+
+![Image 22](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 23](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 24](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Prompt Hub and Playground
+
+![Image 25](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 26](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 27](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Bulk data export
+
+![Image 28](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 29](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Unlimited agents
+
+![Image 30](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 31](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+LangSmith Deployment:
+
+Deploy and manage long-running agents with our purpose-built infrastructure
+
+[LangSmith Studio](https://langchain-ai.github.io/langgraph/concepts/langgraph_studio/)
+
+![Image 32](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 33](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 34](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Expose agent as MCP server
+
+![Image 35](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 36](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 37](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Real-time streaming of intermediary steps and final output
+
+![Image 38](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 39](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 40](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Agent Authorization (beta)
+
+![Image 41](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 42](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 43](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+1-Click Deploy
+
+![Image 44](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 45](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Horizontally-scalable service for production-sized deployments
+
+![Image 46](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 47](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+[Assistants API](https://langchain-ai.github.io/langgraph/concepts/assistants/)
+
+![Image 48](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 49](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+30+API endpoints including state and memory
+
+![Image 50](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 51](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Cron scheduling
+
+![Image 52](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 53](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Authentication &authorization for LangGraph APIs
+
+![Image 54](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 55](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+LangSmith Agent Builder:
+
+Create agents for daily tasks using everyday language, not code
+
+Access to prebuilt templates
+
+![Image 56](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 57](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 58](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Add tools with remote MCP server
+
+![Image 59](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 60](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 61](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Trigger agent via API
+
+![Image 62](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 63](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 64](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Use preferred model
+
+![Image 65](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 66](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 67](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Share and clone agent templates
+
+![Image 68](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 69](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Unlimited agents
+
+![Image 70](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 71](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Hosting options:
+
+Choose where to host the LangSmith platform
+
+Platform hosting option(s)
+
+Cloud
+
+Cloud
+
+Cloud, Hybrid, or Self-Hosted
+
+Infra
+
+N/A
+
+Fully managed by LangChain
+
+Cloud: Fully managed by LangChain
+
+Hybrid: SaaS control plane, Self-hosted data plane
+
+Self-Hosted: Fully self-managed
+
+Data location
+
+N/A
+
+LangChain's Cloud (US or EU)
+
+Cloud:LangChain's Cloud (US or EU)
+
+Hybrid:LangChain's Cloud (US or EU)
+
+Self-Hosted:Your VPC
+
+Security Controls
+
+SSO
+
+Google, GitHub
+
+Custom SSO
+
+Role-Based Access Control
+
+![Image 72](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Organization Roles (User and Admin)
+
+![Image 73](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 74](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Support
+
+Community Forum
+
+![Image 75](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 76](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 77](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Email Support
+
+![Image 78](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+![Image 79](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Team trainings
+
+![Image 80](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+ Architectural guidance for your applications
+
+![Image 81](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Access to deployed engineers
+
+![Image 82](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+SLA
+
+![Image 83](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Procurement
+
+Billing
+
+Monthly, self-serve
+
+Monthly, self-serve
+
+Annual invoice
+
+Custom Terms
+
+![Image 84](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+Infosec Review
+
+![Image 85](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/68ef6cd52a7bf3defa6c0b0c_Group%207.svg)
+
+FAQs
+----
+
+#### General Questions
+
+Which plan is right for me?
+
+Our Developer plan is a great choice for personal projects. You will have 1 free seat with access to LangSmith (5k base traces/month included).
+
+‍
+
+The Plus plan is for teams that want to self-serve with moderate usage and collaboration needs. You can purchase unlimited seats with access to LangSmith (10k base traces/month included). You will be able to ship agents with our managed LangSmith Deployment service, with 1 free dev-sized deployment included.
+
+‍
+
+The Enterprise plan is for teams that need more advanced administration, security, support, or deployment options. [Contact our sales team](https://www.langchain.com/contact-sales) to learn more.
+
+Do you offer a plan for startups?
+
+Yes! We offer a Startup Plan for LangSmith, designed for early-stage companies building agentic applications. You’ll get discounted rates and generous free trace allotments to build with confidence from day one.
+
+‍
+
+‍[Apply here](https://airtable.com/app8ZrGLtHAtFVO1o/pagfLAmdTz4ep7TGu/form) to get started with startup pricing. Customers can stay on the Startup Plan for 1 year before graduating to the Plus Plan.
+
+When will I be billed?
+
+For the Developer or Plus Plan, seats are billed monthly on the 1st or pro-rated if added mid-month (no credit for removed seats); traces are billed monthly in arrears for your usage. Enterprise plans are invoiced annually upfront.
+
+Will you train on the data that I send to LangSmith?
+
+No. LangSmith does not use your data to train models. Your traces, prompts, and outputs remain private to your organization. See LangSmith [Terms of Service](https://www.langchain.com/terms-of-service) for more information.
+
+#### LangSmith Observability &Evaluation Questions
+
+What is a trace? Can it contain multiple events?
+
+A trace represents a single execution of your application—whether it’s an agent, evaluator, or playground session. It can include many individual steps, such as LLM calls and other tracked events. Here's an [example](https://smith.langchain.com/public/17c24270-9f74-47e7-b70c-d508afc448fa/r?_gl=1*h5vp1f*_gcl_au*MTU4Njc4OTgwMy4xNzQ3NzYyMjgx*_ga*MTA0MzgxMzQ2OS4xNzM3MDUyNDkw*_ga_47WX3HKKY2*czE3NDkxNTQ1NDEkbzEzNyRnMSR0MTc0OTE1Njk5MSRqMjQkbDAkaDA.) of a single trace.
+
+What is the difference between a base trace and an extended trace?
+
+Base traces have a shorter retention period of 14 days and cost $2.50 per 1k traces. Extended traces have a longer retention period of 400 days and cost $5.00 per 1k traces. You can "upgrade" base traces to extended traces at $2.50 per 1k traces.
+
+Why might I want to upgrade a base trace to an extended trace?
+
+Base traces are short-lived (14-day retention) and ideal for quick debugging or ad-hoc analysis. They’re priced for volume and short-term utility.
+
+‍
+
+Extended traces, on the other hand, are retained for 400 days and often include valuable feedback—whether from users, evaluators, or human labelers. This feedback makes them essential for ongoing improvement and model tuning (higher utility), which comes with a higher price point.
+
+‍
+
+LangSmith lets you choose the right retention for each trace, helping you balance cost and value.
+
+Why would I upgrade a base trace to an extended trace?
+
+Base traces are short-lived (14-day retention) and ideal for quick debugging or ad-hoc analysis. They’re priced for volume and short-term utility.
+
+‍
+
+Extended traces, on the other hand, are retained for 400 days and often include valuable feedback—whether from users, evaluators, or human labelers. This feedback makes them essential for ongoing improvement and model tuning (higher utility), which comes with a higher price point.
+
+‍
+
+LangSmith lets you choose the right retention for each trace, helping you balance cost and value.
+
+#### LangSmith Deployment Questions
+
+Does LangSmith Deployment include any free deployments?
+
+Plus plans include 1 free dev-sized deployment. If you spin up additional dev-sized or production-sized deployments, you’ll be charged by usage (agent runs and uptime).
+
+For my free Dev agent deployment for LangSmith Deployment, is there a cap on the number of agent runs?
+
+If you’re on the Plus plan, you get 1 free dev-sized agent deployment – all usage in this deployment will be free no matter how many agent runs you execute.
+
+How do you define agent runs?
+
+An agent run is one end-to-end invocation of a LangGraph agent deployed via LangSmith Deployment. Nodes and subgraphs within a single agent execution are not charged separately. Calls to other LangGraph agents (through RemoteGraph or the LangGraph SDK or the API directly) are charged separately, to the deployment that hosts the agent being called. An interrupt for human-in-the-loop creates a separate agent run when resuming.
+
+What does uptime mean for LangSmith Deployment usage?
+
+Uptime is the duration your deployment’s database is live and persisting state. Uptime will be tracked as soon as your deployment is live and ends when you shut it down. Dev agent deployments are typically short-lived (used during iteration, then deleted) – whereas Production agent deployments stay live and are updated via revisions (rather than being deleted).
+
+When should I use a dev-sized deployment vs. a production-sized agent deployment?
+
+We recommend using the production-sized deployment for any customer-facing agent. Dev-sized agent deployments are intended for testing and do not support horizontal scaling, backups, or performance optimizations needed in production.
+
+#### LangSmith Agent Builder Questions
+
+What is an Agent Builder run?
+
+An Agent Builder run is a single execution (a complete invocation) of an agent. Runs occur when you create, test, or run an agent. An Agent Builder run includes any message delivered to the agent through configured triggers (including third-party integrations or other connected services) as well as messages sent directly through the Agent Builder user interface (e.g., via the chat interface). An interrupt for human-in-the-loop creates a separate Agent Builder run when resuming. An execution failure does not count as an Agent Builder run.
+
+Are model costs included with Agent Builder pricing?
+
+No. Model usage is billed separately by your model provider. Agent Builder lets you choose the model you want (for example, Anthropic, OpenAI, Gemini, or another provider) and connect it using your provider API key. More information on configuring models in [our docs](https://docs.langchain.com/langsmith/agent-builder-setup#required-model-key).
+
+Are agent tools included with Agent Builder pricing?
+
+Agent Builder includes built-in tools and supports connecting third-party tools via a remote MCP server. Third-party tools typically require you to authenticate with your account, and any fees or usage charges are billed by the third-party provider. More information on setting up tool keys in [our docs](https://docs.langchain.com/langsmith/agent-builder-setup#optional-tool-keys).
+
+Are Agent Builder runs automatically traced in LangSmith, and do they count toward billing?
+
+Yes. Every Agent Builder run is automatically traced in LangSmith. These traces are attributed to the user’s account and count toward usage-based billing under the customer’s LangSmith plan.
+
+Can I self-host Agent Builder?
+
+Self-hosting for Agent Builder is currently available in Beta. [Contact our sales team](https://www.langchain.com/contact-sales) to learn more.
+
+Ready to start shipping reliable agents faster?
+-----------------------------------------------
+
+Get started with tools from the LangChain product suite for every step of the agent development lifecycle.
+
+[Get a demo](https://docs.langchain.com/contact-sales)[Try LangSmith](https://smith.langchain.com/)
+
+Products
+
+[LangChain](https://docs.langchain.com/langchain)[LangGraph](https://docs.langchain.com/langgraph)[LangSmith Observability](https://docs.langchain.com/langsmith/observability)[LangSmith Evaluation](https://docs.langchain.com/langsmith/evaluation)[LangSmith Deployment](https://docs.langchain.com/langsmith/deployment)
+
+Resources
+
+[Guides](https://docs.langchain.com/resources)[Blog](https://blog.langchain.com/)[Customer Stories](https://docs.langchain.com/customers)[LangChain Academy](https://academy.langchain.com/)[Community](https://docs.langchain.com/join-community)[Events](https://lu.ma/langchain)[Changelog](https://changelog.langchain.com/)[Docs](http://docs.langchain.com/)[Support](https://support.langchain.com/)
+
+Company
+
+[About](https://docs.langchain.com/about)[Careers](https://docs.langchain.com/careers)[X](https://twitter.com/LangChain)[LinkedIn](https://www.linkedin.com/company/langchain/)[YouTube](https://www.youtube.com/@LangChain)[Marketing Assets](https://drive.google.com/drive/folders/17xybjzmVBdsQA-VxouuGLxF6bDsHDe80?usp=sharing)[Security](https://trust.langchain.com/)
+
+Sign up for our newsletter to stay up to date
+
+Thank you! Your submission has been received!
+
+Oops! Something went wrong while submitting the form.
+
+![Image 86](https://cdn.prod.website-files.com/65b8cd72835ceeacd4449a53/65c6a38f9c53ec71f5fc73de_langchain-word.svg)
+
+[All systems operational](https://status.smith.langchain.com/)
+
+[Responsible Disclosure Policy](https://docs.langchain.com/responsible-disclosure-policy)[Privacy Policy](https://docs.langchain.com/privacy-policy)[Terms of Service](https://docs.langchain.com/terms-of-service)

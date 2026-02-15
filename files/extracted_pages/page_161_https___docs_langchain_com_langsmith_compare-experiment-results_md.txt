@@ -1,0 +1,103 @@
+Published Time: Thu, 12 Feb 2026 11:08:04 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# How to compare experiment results
+
+When you are iterating on your LLM application (such as changing the model or the prompt), you may want to compare the results of different [*experiments*](/langsmith/evaluation-concepts#experiment).
+
+LangSmith supports a comparison view that lets you hone in on key differences, regressions, and improvements between different experiments.
+
+## Open the comparison view
+
+1. To access the experiment comparison view, navigate to the **Datasets & Experiments** page.
+2. Select a dataset, which will open the **Experiments** tab.
+3. Select two or more experiments and then click **Compare**.
+
+ ![Image 1: The Experiments view in the UI with 3 experiments selected and the Compare button highlighted, in light mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/compare-select-light.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=a0afa6f50aa177479c59dfb5918e23b2) ![Image 2: The Experiments view in the UI with 3 experiments selected and the Compare button highlighted, in dark mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/compare-select-dark.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=9c03785dba917b9a9c1fde453c68a881)
+
+## Adjust the table display
+
+You can toggle between different display options on the right-hand-side bar of the **Comparing Experiments** page.
+
+ ![Image 3: Table display options, in light mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/comparison-table-display-light.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=8623c5b3ca8dd3cd5440516f6dcf5cdc) ![Image 4: Table display options, in dark mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/comparison-table-display-dark.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=2c5492dfacf70460ceb63080c901fdb9)
+
+### Filters
+
+You can apply filters to the experiment comparison view to narrow down specific examples. Common examples for filters include:
+
+* Examples that contain specific `input` / `output`.
+* Runs with status `success` or `error`.
+* Runs that take more than x seconds in `latency`.
+* Specific `metadata`, `tag`, or `feedback`.
+
+In addition to applying filters on the overall experiment view, you can apply filters on individual columns as well.
+
+ ![Image 5: Filtering on specific columns, in light mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/column-filter-light.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=90aad95f908cbd5d9498cb5abb23b8b7) ![Image 6: Filtering on specific columns, in dark mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/column-filter-dark.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=a9272e807fc99a2fe322cebd58ca77a2)
+
+### Columns
+
+You can select and hide individual feedback keys or individual metrics in the **Columns** settings to isolate the information you need in the comparison view.
+
+### **Full** vs. **Compact** view
+
+* **Full**: Toggling **Full** will show the full text of the input, output, and reference output for each run. If the output is too long to display in the table, you can click on **Expand** to view the full content.
+* **Compact**: **Compact** view displays a preview of the experiment results for each example.
+
+### Display types
+
+There are three built-in experiment views that cover several display types: **Default**, **YAML**, **JSON**.
+
+## View regressions and improvements
+
+In the comparison view, runs that *regressed* on any feedback key against your baseline experiment will be highlighted in red, while runs that *improved* will be highlighted in green. At the top of each feedback column, you can find how many runs in that experiment did better and how many did worse than your baseline experiment.
+
+Click on the regressions or improvements buttons on the top of each column to filter to the runs that regressed or improved in that specific experiment.
+
+ ![Image 7: The comparison view comparing 3 experiments with the regressions and improvements highlighted in red and green respectively, in light mode.](https://mintcdn.com/langchain-5e9cc07a/11pX4T6QLtHZGVQF/langsmith/images/regression-view-light.png?fit=max&auto=format&n=11pX4T6QLtHZGVQF&q=85&s=5565ae162dc7f2576551ccc18bbcf8b2) ![Image 8: The comparison view comparing 3 experiments with the regressions and improvements highlighted in red and green respectively, in dark mode.](https://mintcdn.com/langchain-5e9cc07a/11pX4T6QLtHZGVQF/langsmith/images/regression-view-dark.png?fit=max&auto=format&n=11pX4T6QLtHZGVQF&q=85&s=a6297e30e0fd08cfe61a30fd34ed71c7)
+
+## View side-by-side diffs
+
+When comparing two experiments, for JSON and YAML display styles, you can toggle on the experiment diff mode to compare experiment outputs. The diff mode highlights modifications between outputs, and can be particularly useful for structured output comparisons.
+
+ ![Image 9: The comparison diff mode in light.](https://mintcdn.com/langchain-5e9cc07a/fpuABY8z9_ZR4Pxw/langsmith/images/comparison-diff-view-light.png?fit=max&auto=format&n=fpuABY8z9_ZR4Pxw&q=85&s=71eb380414a78aac0f0f14a46b478004) ![Image 10: The comparison diff mode in dark.](https://mintcdn.com/langchain-5e9cc07a/fpuABY8z9_ZR4Pxw/langsmith/images/comparison-diff-view-dark.png?fit=max&auto=format&n=fpuABY8z9_ZR4Pxw&q=85&s=5fbca9137a0e4327de8c42eb709c37c2)
+
+## Update baseline experiment and metric
+
+To track regressions across experiments, you can:
+
+1. At the top of the comparison view, hovering over the experiment icons, you can select any of the experiments as the **Baseline** to be compared against. You can also add or remove experiments. By default, the first selected experiment is selected as the baseline.
+
+ ![Image 11: Configuring baseline experiment in dropdown, in light mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/comparison-baseline-light.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=bd09afe35c395ffae36ef8bb0408082d) ![Image 12: Configuring baseline experiment in dropdown, in dark mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/comparison-baseline-dark.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=938e14a5ac07041001fb6208248e0dbc)
+
+2. Within the **Feedback** columns, you can configure whether a higher score is better for each feedback key. This preference will be stored. By default, a higher score is assumed to be better.
+
+ ![Image 13: Dropdown for feedback metric column, configuring whether a higher score is better, in light mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/comparison-feedback-higher-score-light.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=52c2467c8cf572a1674eaf1bbaaac6b3) ![Image 14: Dropdown for feedback metric column, configuring whether a higher score is better, in dark mode.](https://mintcdn.com/langchain-5e9cc07a/1hHTBw6gWTjwKQ8j/langsmith/images/comparison-feedback-higher-score-dark.png?fit=max&auto=format&n=1hHTBw6gWTjwKQ8j&q=85&s=f70408e379a3e3040ba227e8ec8362e2)
+
+## Open a trace
+
+If the example you're evaluating is from an ingested [run](/langsmith/observability-concepts#runs), you can hover over the output cell and click on the trace icon to open the trace view for that run. This will open up a trace in the side panel.
+
+ ![Image 15: The View trace icon highlighted from an ingested run, light mode.](https://mintcdn.com/langchain-5e9cc07a/MXi4rlH3qEB_Xqny/langsmith/images/open-trace-light.png?fit=max&auto=format&n=MXi4rlH3qEB_Xqny&q=85&s=8d615acf16acf1c9414f6625dd877f29) ![Image 16: The View trace icon highlighted from an ingested run, dark mode.](https://mintcdn.com/langchain-5e9cc07a/MXi4rlH3qEB_Xqny/langsmith/images/open-trace-dark.png?fit=max&auto=format&n=MXi4rlH3qEB_Xqny&q=85&s=b9088c7aa7d3535c566fe062b75b590a)
+
+## Expand detailed view
+
+You can click on any cell to open up a detailed view of the experiment result on that particular example input, along with feedback keys and scores.
+
+ ![Image 17: An example in the expanded Comparing Experiments view, in light mode.](https://mintcdn.com/langchain-5e9cc07a/oxSudTqxon386S-Z/langsmith/images/expanded-view-light.png?fit=max&auto=format&n=oxSudTqxon386S-Z&q=85&s=d37947b774f3e43107b001b7b9c13b48) ![Image 18: An example in the expanded Comparing Experiments view, in dark mode.](https://mintcdn.com/langchain-5e9cc07a/oxSudTqxon386S-Z/langsmith/images/expanded-view-dark.png?fit=max&auto=format&n=oxSudTqxon386S-Z&q=85&s=39072f93437bad879677dc1018aa8f6c)
+
+## Use experiment metadata as chart labels
+
+You can configure the x-axis labels for the charts based on [experiment metadata](/langsmith/filter-experiments-ui#background-add-metadata-to-your-experiments).
+
+Select a metadata key in the **charts** dropdown to change the x-axis labels.
+
+ ![Image 19: x-axis dropdown highlighted with a list of the metadata attached to the experiment, in light mode.](https://mintcdn.com/langchain-5e9cc07a/hoejUs6daCKQE_q5/langsmith/images/metadata-in-charts-light.png?fit=max&auto=format&n=hoejUs6daCKQE_q5&q=85&s=f07e8c44d5da6d033a21a75f5b3dc158) ![Image 20: x-axis dropdown highlighted with a list of the metadata attached to the experiment, in dark mode.](https://mintcdn.com/langchain-5e9cc07a/hoejUs6daCKQE_q5/langsmith/images/metadata-in-charts-dark.png?fit=max&auto=format&n=hoejUs6daCKQE_q5&q=85&s=19f5315ea614c0721f6b70c5372e8fb6)
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/langsmith/compare-experiment-results.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

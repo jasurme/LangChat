@@ -1,0 +1,37 @@
+Published Time: Thu, 12 Feb 2026 11:59:29 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# OpenAI integrations
+
+> Integrate with OpenAI using LangChain Python.
+
+This page covers all LangChain integrations with [OpenAI](https://en.wikipedia.org/wiki/OpenAI)
+
+## Model interfaces
+
+  OpenAI chat models.   Wrapper for OpenAI chat models hosted on Azure.   OpenAI embedding models.   Wrapper for OpenAI embedding models hosted on Azure. 
+
+## Tools and toolkits
+
+  Text-to-image generation using OpenAI's Dall-E models. 
+
+## Retrievers
+
+  Retrieve real-time information; e.g., sports scores, stock prices, the latest news, etc. 
+
+## Document loaders
+
+  Load `conversations.json` from your ChatGPT data export folder. 
+
+## Other
+
+  (Legacy) OpenAI text completion models.   Wrapper for (legacy) OpenAI text completion models hosted on Azure.   Adapt LangChain models to OpenAI APIs.   Detect text that could be hateful, violent, etc. 
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/openai.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

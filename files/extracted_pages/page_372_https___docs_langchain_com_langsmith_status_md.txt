@@ -1,0 +1,163 @@
+LangSmith US Status
+===============
+
+[![Image 1: LangSmith US](https://docs.langchain.com/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fincident-io-status-page-logos%2F01HRQ8GVZ9KJ691RZY5PEDPE8B%2Flangsmith%2F61fzrpr6.png&w=384&q=75&dpl=dpl_HEHHpm3s4LiHSL97PGcsd6CGu1J4) =================================================================================================================================================================================================================================================](https://status.smith.langchain.com/)
+
+[Report a problem](mailto:support@langchain.dev)Subscribe to updates
+
+[Report a problem](mailto:support@langchain.dev)[Subscribe to updates](https://docs.langchain.com/langsmith/status.md)
+
+LangSmith US
+
+*   We’re fully operational
+
+We’re not aware of any issues affecting our systems.
+
+System status
+-------------
+
+Nov 2025-Feb 2026
+
+### LangSmith Application
+
+99.98% uptime
+
+### LangSmith Application
+
+### LangSmith API
+
+99.99% uptime
+
+### LangSmith API
+
+### LangSmith Run Ingestion
+
+99.98% uptime
+
+### LangSmith Run Ingestion
+
+### LangSmith Deployments Control Plane
+
+99.98% uptime
+
+### LangSmith Deployments Control Plane
+
+### LangSmith Deployments Data Plane
+
+99.94% uptime
+
+### LangSmith Deployments Data Plane
+
+### LangSmith Billing
+
+91.44% uptime
+
+### LangSmith Billing
+
+Calendar
+--------
+
+Feb 2026
+
+M
+
+T
+
+W
+
+T
+
+F
+
+S
+
+S
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+11
+
+12
+
+13
+
+14
+
+15
+
+16
+
+17
+
+18
+
+19
+
+20
+
+21
+
+22
+
+23
+
+24
+
+25
+
+26
+
+27
+
+28
+
+Powered by[](https://incident.io/?utm_source=langsmith-us&utm_medium=status-pages)
+
+Looking for the EU status page? Find it here: [https://eu.status.smith.langchain.com](https://eu.status.smith.langchain.com/)
+
+[Privacy policy](https://www.langchain.com/privacy-policy)
+·
+
+[Terms of service](https://www.langchain.com/terms-of-service)
+
+Fri, Nov 14, 2025
+
+[Login and Run Ingestion impacted for LangSmith SaaS](https://docs.langchain.com/incidents/01KA1K8C8N8MFJZJ2KHX0EKW7N)
+
+Fri, Nov 14, 2025
+
+No incidents
+
+Fri, Nov 14, 2025
+
+[Login and Run Ingestion impacted for LangSmith SaaS](https://docs.langchain.com/incidents/01KA1K8C8N8MFJZJ2KHX0EKW7N)
+
+Fri, Nov 14, 2025
+
+[Login and Run Ingestion impacted for LangSmith SaaS](https://docs.langchain.com/incidents/01KA1K8C8N8MFJZJ2KHX0EKW7N)
+
+Fri, Nov 14, 2025
+
+No incidents
+
+Fri, Nov 14, 2025
+
+No data available

@@ -1,0 +1,134 @@
+Published Time: Thu, 12 Feb 2026 09:36:59 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Vector store integrations
+
+> Integrate with vector stores using LangChain JavaScript.
+
+## Overview
+
+A [vector store](/oss/javascript/integrations/vectorstores) stores [embedded](/oss/javascript/integrations/text_embedding) data and performs similarity search.
+
+```mermaid  theme={null}
+flowchart LR
+
+    subgraph "📥 Indexing phase (store)"
+        A[📄 Documents] --> B[🔢 Embedding model]
+        B --> C[🔘 Embedding vectors]
+        C --> D[(Vector store)]
+    end
+
+    subgraph "📤 Query phase (retrieval)"
+        E[❓ Query text] --> F[🔢 Embedding model]
+        F --> G[🔘 Query vector]
+        G --> H[🔍 Similarity search]
+        H --> D
+        D --> I[📄 Top-k results]
+    end
+```
+
+### Interface
+
+LangChain provides a unified interface for vector stores, allowing you to:
+
+* `addDocuments` - Add documents to the store.
+* `delete` - Remove stored documents by ID.
+* `similaritySearch` - Query for semantically similar documents.
+
+This abstraction lets you switch between different implementations without altering your application logic.
+
+### Initialization
+
+Most vectorstores in LangChain accept an embedding model as an argument when initializing the vector store.
+
+```typescript  theme={null}
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { MemoryVectorStore } from "@langchain/classic/vectorstores/memory";
+
+const embeddings = new OpenAIEmbeddings({
+  model: "text-embedding-3-small",
+});
+const vectorStore = new MemoryVectorStore(embeddings);
+```
+
+### Adding documents
+
+You can add documents to the vector store by using the `addDocuments` function.
+
+```typescript  theme={null}
+import { Document } from "@langchain/core/documents";
+const document = new Document({
+  pageContent: "Hello world",
+});
+await vectorStore.addDocuments([document]);
+```
+
+### Deleting documents
+
+You can delete documents from the vector store by using the `delete` function.
+
+```typescript  theme={null}
+await vectorStore.delete({
+  filter: {
+    pageContent: "Hello world",
+  },
+});
+```
+
+### Similarity search
+
+Issue a semantic query using `similaritySearch`, which returns the closest embedded documents:
+
+```typescript  theme={null}
+const results = await vectorStore.similaritySearch("Hello world", 10);
+```
+
+Many vector stores support parameters like:
+
+* `k` — number of results to return
+* `filter` — conditional filtering based on metadata
+
+### Similarity metrics & indexing
+
+Embedding similarity may be computed using:
+
+* **Cosine similarity**
+* **Euclidean distance**
+* **Dot product**
+
+Efficient search often employs indexing methods such as HNSW (Hierarchical Navigable Small World), though specifics depend on the vector store.
+
+### Metadata filtering
+
+Filtering by metadata (e.g., source, date) can refine search results:
+
+```typescript  theme={null}
+vectorStore.similaritySearch("query", 2, { source: "tweets" });
+```
+
+ Support for metadata-based filtering varies between implementations. Check the documentation of your chosen vector store for details. 
+
+## Top integrations
+
+**Select embedding model:**
+
+  Install dependencies:  ```bash npm theme={null} npm i @langchain/openai ``` ```bash yarn theme={null} yarn add @langchain/openai ``` ```bash pnpm theme={null} pnpm add @langchain/openai ```  Add environment variables: ```bash theme={null} OPENAI_API_KEY=your-api-key ``` Instantiate the model: ```typescript theme={null} import { OpenAIEmbeddings } from "@langchain/openai"; const embeddings = new OpenAIEmbeddings({ model: "text-embedding-3-large" }); ```   Install dependencies  ```bash npm theme={null} npm i @langchain/openai ``` ```bash yarn theme={null} yarn add @langchain/openai ``` ```bash pnpm theme={null} pnpm add @langchain/openai ```  Add environment variables: ```bash theme={null} AZURE_OPENAI_API_INSTANCE_NAME= AZURE_OPENAI_API_KEY= AZURE_OPENAI_API_VERSION="2024-02-01" ``` Instantiate the model: ```typescript theme={null} import { AzureOpenAIEmbeddings } from "@langchain/openai"; const embeddings = new AzureOpenAIEmbeddings({ azureOpenAIApiEmbeddingsDeploymentName: "text-embedding-ada-002" }); ```   Install dependencies:  ```bash npm theme={null} npm i @langchain/aws ``` ```bash yarn theme={null} yarn add @langchain/aws ``` ```bash pnpm theme={null} pnpm add @langchain/aws ```  Add environment variables: ```bash theme={null} BEDROCK_AWS_REGION=your-region ``` Instantiate the model: ```typescript theme={null} import { BedrockEmbeddings } from "@langchain/aws"; const embeddings = new BedrockEmbeddings({ model: "amazon.titan-embed-text-v1" }); ```   Install dependencies:  ```bash npm theme={null} npm i @langchain/google-genai ``` ```bash yarn theme={null} yarn add @langchain/google-genai ``` ```bash pnpm theme={null} pnpm add @langchain/google-genai ```  Add environment variables: ```bash theme={null} GOOGLE_API_KEY=your-api-key ``` Instantiate the model: ```typescript theme={null} import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai"; const embeddings = new GoogleGenerativeAIEmbeddings({ model: "text-embedding-004" }); ```   Install dependencies:  ```bash npm theme={null} npm i @langchain/google-vertexai ``` ```bash yarn theme={null} yarn add @langchain/google-vertexai ``` ```bash pnpm theme={null} pnpm add @langchain/google-vertexai ```  Add environment variables: ```bash theme={null} GOOGLE_APPLICATION_CREDENTIALS=credentials.json ``` Instantiate the model: ```typescript theme={null} import { VertexAIEmbeddings } from "@langchain/google-vertexai"; const embeddings = new VertexAIEmbeddings({ model: "gemini-embedding-001" }); ```   Install dependencies:  ```bash npm theme={null} npm i @langchain/mistralai ``` ```bash yarn theme={null} yarn add @langchain/mistralai ``` ```bash pnpm theme={null} pnpm add @langchain/mistralai ```  Add environment variables: ```bash theme={null} MISTRAL_API_KEY=your-api-key ``` Instantiate the model: ```typescript theme={null} import { MistralAIEmbeddings } from "@langchain/mistralai"; const embeddings = new MistralAIEmbeddings({ model: "mistral-embed" }); ```   Install dependencies:  ```bash npm theme={null} npm i @langchain/cohere ``` ```bash yarn theme={null} yarn add @langchain/cohere ``` ```bash pnpm theme={null} pnpm add @langchain/cohere ```  Add environment variables: ```bash theme={null} COHERE_API_KEY=your-api-key ``` Instantiate the model: ```typescript theme={null} import { CohereEmbeddings } from "@langchain/cohere"; const embeddings = new CohereEmbeddings({ model: "embed-english-v3.0" }); ```   Install dependencies:  ```bash npm theme={null} npm i @langchain/ollama ``` ```bash yarn theme={null} yarn add @langchain/ollama ``` ```bash pnpm theme={null} pnpm add @langchain/ollama ```  Instantiate the model: ```typescript theme={null} import { OllamaEmbeddings } from "@langchain/ollama"; const embeddings = new OllamaEmbeddings({ model: "llama2", baseUrl: "http://localhost:11434", // Default value }); ``` 
+
+**Select vector store:**
+
+   ```bash theme={null} npm i langchain ``` ```bash yarn theme={null} yarn add langchain ``` ```bash pnpm theme={null} pnpm add langchain ```  ```typescript theme={null} import { MemoryVectorStore } from "@langchain/classic/vectorstores/memory"; const vectorStore = new MemoryVectorStore(embeddings); ```    ```bash npm theme={null} npm i @langchain/community ``` ```bash yarn theme={null} yarn add @langchain/community ``` ```bash pnpm theme={null} pnpm add @langchain/community ```  ```typescript theme={null} import { Chroma } from "@langchain/community/vectorstores/chroma"; const vectorStore = new Chroma(embeddings, { collectionName: "a-test-collection", }); ```    ```bash npm theme={null} npm i @langchain/community ``` ```bash yarn theme={null} yarn add @langchain/community ``` ```bash theme={null} pnpm add @langchain/community ```  ```typescript theme={null} import { FaissStore } from "@langchain/community/vectorstores/faiss"; const vectorStore = new FaissStore(embeddings, {}); ```    ```bash npm theme={null} npm i @langchain/mongodb ``` ```bash yarn theme={null} yarn add @langchain/mongodb ``` ```bash pnpm theme={null} pnpm add @langchain/mongodb ```  ```typescript theme={null} import { MongoDBAtlasVectorSearch } from "@langchain/mongodb" import { MongoClient } from "mongodb"; const client = new MongoClient(process.env.MONGODB_ATLAS_URI || ""); const collection = client .db(process.env.MONGODB_ATLAS_DB_NAME) .collection(process.env.MONGODB_ATLAS_COLLECTION_NAME); const vectorStore = new MongoDBAtlasVectorSearch(embeddings, { collection, indexName: "vector_index", textKey: "text", embeddingKey: "embedding", }); ```    ```bash npm theme={null} npm i @langchain/community ``` ```bash yarn theme={null} yarn add @langchain/community ``` ```bash pnpm theme={null} pnpm add @langchain/community ```  ```typescript theme={null} import { PGVectorStore } from "@langchain/community/vectorstores/pgvector"; const vectorStore = await PGVectorStore.initialize(embeddings, {}); ```    ```bash npm theme={null} npm i @langchain/pinecone ``` ```bash yarn theme={null} yarn add @langchain/pinecone ``` ```bash pnpm theme={null} pnpm add @langchain/pinecone ```  ```typescript theme={null} import { PineconeStore } from "@langchain/pinecone"; import { Pinecone as PineconeClient } from "@pinecone-database/pinecone"; const pinecone = new PineconeClient(); const vectorStore = new PineconeStore(embeddings, { pineconeIndex, maxConcurrency: 5, }); ```    ```bash npm theme={null} npm i @langchain/redis ``` ```bash yarn theme={null} yarn add @langchain/redis ``` ```bash pnpm theme={null} pnpm add @langchain/redis ```  ```typescript theme={null} import { RedisVectorStore } from "@langchain/redis"; const vectorStore = new RedisVectorStore(embeddings, { redisClient: client, indexName: "langchainjs-testing", }); ```    ```bash npm theme={null} npm i @langchain/qdrant ``` ```bash yarn theme={null} yarn add @langchain/qdrant ``` ```bash pnpm theme={null} pnpm add @langchain/qdrant ```  ```typescript theme={null} import { QdrantVectorStore } from "@langchain/qdrant"; const vectorStore = await QdrantVectorStore.fromExistingCollection(embeddings, { url: process.env.QDRANT_URL, collectionName: "langchainjs-testing", }); ```    ```bash npm theme={null} npm i @langchain/weaviate ``` ```bash yarn theme={null} yarn add @langchain/weaviate ``` ```bash pnpm theme={null} pnpm add @langchain/weaviate ```   ```typescript theme={null} import { WeaviateStore } from "@langchain/weaviate"; const vectorStore = new WeaviateStore(embeddings, { client: weaviateClient, indexName: "Langchainjs_test", }); ```  
+
+LangChain.js integrates with a variety of vector stores. You can check out a full list below:
+
+## All vector stores
+
+                                                    
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/javascript/integrations/vectorstores/index.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

@@ -1,0 +1,30 @@
+Published Time: Thu, 12 Feb 2026 11:57:06 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Install LangGraph
+
+To install the base LangGraph package:
+
+ ```bash npm theme={null} npm install @langchain/langgraph @langchain/core ``` ```bash pnpm theme={null} pnpm add @langchain/langgraph @langchain/core ``` ```bash yarn theme={null} yarn add @langchain/langgraph @langchain/core ``` ```bash bun theme={null} bun add @langchain/langgraph @langchain/core ``` 
+
+To use LangGraph you will usually want to access LLMs and define tools.
+You can do this however you see fit.
+
+One way to do this (which we will use in the docs) is to use [LangChain](/oss/javascript/langchain/overview).
+
+Install LangChain with:
+
+ ```bash npm theme={null} npm install langchain ``` ```bash pnpm theme={null} pnpm add langchain ``` ```bash yarn theme={null} yarn add langchain ``` ```bash bun theme={null} bun add langchain ``` 
+
+To work with specific LLM provider packages, you will need install them separately.
+
+Refer to the [integrations](/oss/javascript/integrations/providers/overview) page for provider-specific installation instructions.
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/install.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

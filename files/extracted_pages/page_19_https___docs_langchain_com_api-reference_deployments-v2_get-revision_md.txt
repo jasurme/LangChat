@@ -1,0 +1,278 @@
+Published Time: Thu, 12 Feb 2026 11:05:22 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Get Revision
+
+> Get a revision by ID for a deployment.
+
+## OpenAPI
+
+````yaml https://api.host.langchain.com/openapi.json get /v2/deployments/{deployment_id}/revisions/{revision_id}
+openapi: 3.1.0
+info:
+  title: LangSmith Deployment Control Plane API
+  description: >
+    The LangSmith Deployment Control Plane API is used to programmatically
+    create and manage
+
+    Agent Server deployments. For example, the APIs can be orchestrated to
+
+    create custom CI/CD workflows.
+
+    ## Host
+
+    https://api.host.langchain.com
+
+    ## Authentication
+
+    To authenticate with the LangSmith Deployment Control Plane API, set the
+    `X-Api-Key` header
+
+    to a valid [LangSmith API
+    key](https://docs.langchain.com/langsmith/create-account-api-key#create-an-api-key).
+
+    ## Versioning
+
+    Each endpoint path is prefixed with a version (e.g. `v1`, `v2`).
+
+    ## Quick Start
+
+    1. Call `POST /v2/deployments` to create a new Deployment. The response body
+    contains the Deployment ID (`id`) and the ID of the latest (and first)
+    revision (`latest_revision_id`).
+
+    1. Call `GET /v2/deployments/{deployment_id}` to retrieve the Deployment.
+    Set `deployment_id` in the URL to the value of Deployment ID (`id`).
+
+    1. Poll for revision `status` until `status` is `DEPLOYED` by calling `GET
+    /v2/deployments/{deployment_id}/revisions/{latest_revision_id}`.
+
+    1. Call `PATCH /v2/deployments/{deployment_id}` to update the deployment.
+  version: 0.1.0
+servers: []
+security: []
+paths:
+  /v2/deployments/{deployment_id}/revisions/{revision_id}:
+    get:
+      tags:
+        - Deployments (v2)
+      summary: Get Revision
+      description: Get a revision by ID for a deployment.
+      operationId: get_revision_v2_deployments__deployment_id__revisions__revision_id__get
+      parameters:
+        - name: deployment_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            title: Deployment ID
+        - name: revision_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            title: Revision ID
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Revision'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                detail: Deployment ID {deployment_id} not found.
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - API Key: []
+        - Tenant ID: []
+        - Bearer Auth: []
+components:
+  schemas:
+    Revision:
+      properties:
+        id:
+          type: string
+          format: uuid
+          title: ID
+          description: The ID of the revision.
+
+This is a read-only field.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The creation time of the revision.
+
+This is a read-only field.
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+          description: >-
+            The last update time of the revision.
+
+This is a read-only
+            field.
+        status:
+          type: string
+          enum:
+            - CREATING
+            - QUEUED
+            - AWAITING_BUILD
+            - BUILDING
+            - AWAITING_DEPLOY
+            - DEPLOYING
+            - CREATE_FAILED
+            - BUILD_FAILED
+            - DEPLOY_FAILED
+            - DEPLOYED
+            - SKIPPED
+            - INTERRUPTED
+            - UNKNOWN
+          title: Status
+          description: The status of the revision.
+
+This is a read-only field.
+        source:
+          type: string
+          enum:
+            - github
+            - external_docker
+          title: Source
+          description: >-
+            Deploy from a GitHub repository (`github`) or a Docker image
+            (`external_docker`).
+
+Deploying from GitHub is only available
+            for Cloud SaaS deployments. Deploying from a Docker image is only
+            available for self-hosted deployments. This cannot be changed once
+            the deployment is created.
+        source_revision_config:
+          $ref: '#/components/schemas/SourceRevisionConfig'
+      type: object
+      required:
+        - id
+        - created_at
+        - updated_at
+        - status
+        - source
+        - source_revision_config
+      title: Revision
+      description: Revision resource.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SourceRevisionConfig:
+      properties:
+        repo_ref:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Repo Ref
+          description: >-
+            The git ref of the repository used for the
+            deployment.
+
+Supports:
+
+- **Branches**: Specify just the
+            branch name (e.g., `main`, `develop`)
+
+- **Tags**: Specify the
+            full ref path (e.g., `refs/tags/v1.0.0`)
+
+When using a tag,
+            `source_config.build_on_push` must be set to `false` since tags are
+            immutable.
+
+When updating a deployment (`PATCH`), setting this
+            field to a non-null value will trigger creation of a new revision.
+            Only applicable for `github` source.
+        langgraph_config_path:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: LangGraph Configuration Path
+          description: >-
+            The path to the LangGraph configuration file (`langgraph.json`) used
+            for the deployment.
+
+When updating a deployment (`PATCH`),
+            setting this field to a non-null value will trigger creation of a
+            new revision. Only applicable for `github` source.
+        image_uri:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Image URI
+          description: >-
+            The URI of the Docker image used for the deployment.
+
+When
+            updating a deployment (`PATCH`), setting this field to a non-null
+            value will trigger creation of a new revision. Only applicable for
+            `external_docker` source.
+        repo_commit_sha:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Repo commit SHA
+          description: >-
+            The commit SHA of the git repository used for the
+            deployment.
+
+This is a read-only field. Only applicable for
+            `github` source.
+      type: object
+      title: SourceRevisionConfig
+      description: >-
+        Source revision configuration.
+
+        
+
+        For a `Deployment` resource, the field values refer to the latest
+        revision of the `Deployment`. For a `Revision` resource, the field
+        values refer to the `Revision` itself.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+
+````

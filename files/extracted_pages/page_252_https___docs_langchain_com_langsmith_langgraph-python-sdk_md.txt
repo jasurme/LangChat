@@ -1,0 +1,103 @@
+LangGraph overview | LangChain Reference
+===============
+- [x] - [x] 
+
+[Skip to content](https://reference.langchain.com/python/langgraph/#langgraph)
+
+[![Image 1: logo](https://reference.langchain.com/python/static/brand/reference-light.svg)![Image 2: logo](https://reference.langchain.com/python/static/brand/reference-dark.svg)](https://reference.langchain.com/python/ "LangChain Reference")
+
+ LangChain Reference 
+
+ LangGraph overview 
+
+[](https://reference.langchain.com/python/langgraph/?q= "Share")
+
+ Initializing search 
+
+[langchain-ai/docs * 236 * 1.9k](https://github.com/langchain-ai/docs "Go to repository")
+
+*   [Get started](https://reference.langchain.com/python/)
+*   [LangChain](https://reference.langchain.com/python/langchain/)
+*   [LangGraph](https://reference.langchain.com/python/langgraph/)
+*   [Deep Agents](https://reference.langchain.com/python/deepagents/)
+*   [Integrations](https://reference.langchain.com/python/integrations/)
+*   [LangSmith](https://reference.langchain.com/python/langsmith/)
+
+[![Image 3: logo](https://reference.langchain.com/python/static/brand/reference-light.svg)![Image 4: logo](https://reference.langchain.com/python/static/brand/reference-dark.svg)](https://reference.langchain.com/python/ "LangChain Reference") LangChain Reference  
+
+[langchain-ai/docs * 236 * 1.9k](https://github.com/langchain-ai/docs "Go to repository")
+
+*   [Get started](https://reference.langchain.com/python/)
+*   [LangChain](https://reference.langchain.com/python/langchain/)
+*   - [x] [LangGraph](https://reference.langchain.com/python/langgraph/)  LangGraph  
+    *   - [x]  langgraph   langgraph  
+        *   [Graphs](https://reference.langchain.com/python/langgraph/graphs/)
+        *   [Functional API](https://reference.langchain.com/python/langgraph/func/)
+        *   [Pregel](https://reference.langchain.com/python/langgraph/pregel/)
+        *   [Checkpointing](https://reference.langchain.com/python/langgraph/checkpoints/)
+        *   [Storage](https://reference.langchain.com/python/langgraph/store/)
+        *   [Caching](https://reference.langchain.com/python/langgraph/cache/)
+        *   [Types](https://reference.langchain.com/python/langgraph/types/)
+        *   [Runtime](https://reference.langchain.com/python/langgraph/runtime/)
+        *   [Config](https://reference.langchain.com/python/langgraph/config/)
+        *   [Errors](https://reference.langchain.com/python/langgraph/errors/)
+        *   [Constants](https://reference.langchain.com/python/langgraph/constants/)
+        *   [Channels](https://reference.langchain.com/python/langgraph/channels/)
+
+    *   - [x]  Prebuilt   Prebuilt  
+        *   [Agents](https://reference.langchain.com/python/langgraph/agents/)
+        *   [Supervisor](https://reference.langchain.com/python/langgraph/supervisor/)
+        *   [Swarm](https://reference.langchain.com/python/langgraph/swarm/)
+
+*   [Deep Agents](https://reference.langchain.com/python/deepagents/)
+*   [Integrations](https://reference.langchain.com/python/integrations/)
+*   [LangSmith](https://reference.langchain.com/python/langsmith/)
+
+ Table of contents  
+*   [`langgraph`](https://reference.langchain.com/python/langgraph/#langgraph)
+*   [Prebuilt components](https://reference.langchain.com/python/langgraph/#prebuilt-components)
+
+[](https://github.com/langchain-ai/docs/tree/main/reference/python/docs/langgraph/index.md "Edit this page")
+LangGraph reference
+===================
+
+[![Image 5: PyPI - Version](https://img.shields.io/pypi/v/langgraph?label=%20)](https://pypi.org/project/langgraph/#history)[![Image 6: PyPI - License](https://img.shields.io/pypi/l/langgraph)](https://opensource.org/licenses/MIT)[![Image 7: PyPI - Downloads](https://img.shields.io/pepy/dt/langgraph)](https://pypistats.org/packages/langgraph)
+
+Welcome to the LangGraph reference docs!
+
+These pages detail the core interfaces you will use when building with LangGraph. Each section covers a different part of the ecosystem.
+
+`langgraph`[¶](https://reference.langchain.com/python/langgraph/#langgraph "Copy anchor link to this section for reference")
+----------------------------------------------------------------------------------------------------------------------------
+
+The core APIs for the LangGraph open source library.
+
+*   [Graphs](https://reference.langchain.com/python/langgraph/graphs/): Main graph abstraction and usage.
+*   [Functional API](https://reference.langchain.com/python/langgraph/func/): Functional programming interface for graphs.
+*   [Pregel](https://reference.langchain.com/python/langgraph/pregel/): Pregel-inspired computation model.
+*   [Checkpointing](https://reference.langchain.com/python/langgraph/checkpoints/): Saving and restoring graph state.
+*   [Storage](https://reference.langchain.com/python/langgraph/store/): Storage backends and options.
+*   [Caching](https://reference.langchain.com/python/langgraph/cache/): Caching mechanisms for performance.
+*   [Types](https://reference.langchain.com/python/langgraph/types/): Type definitions for graph components.
+*   [Runtime](https://reference.langchain.com/python/langgraph/runtime/): Runtime configuration and options.
+*   [Config](https://reference.langchain.com/python/langgraph/config/): Configuration options.
+*   [Errors](https://reference.langchain.com/python/langgraph/errors/): Error types and handling.
+*   [Constants](https://reference.langchain.com/python/langgraph/constants/): Global constants.
+*   [Channels](https://reference.langchain.com/python/langgraph/channels/): Message passing and channels.
+
+Model Context Protocol (MCP) support
+
+To use MCP tools in your LangGraph application, check out [`langchain-mcp-adapters`](https://reference.langchain.com/python/langchain_mcp_adapters/).
+
+Prebuilt components[¶](https://reference.langchain.com/python/langgraph/#prebuilt-components "Copy anchor link to this section for reference")
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Higher-level abstractions for common workflows, agents, and other patterns.
+
+*   [Agents](https://reference.langchain.com/python/langgraph/agents/): Built-in agent patterns.
+*   [Supervisor](https://reference.langchain.com/python/langgraph/supervisor/): Orchestration and delegation.
+*   [Swarm](https://reference.langchain.com/python/langgraph/swarm/): Multi-agent collaboration.
+
+ Back to top 
+
+[](https://github.com/langchain-ai/langchain "LangChain on GitHub")[](https://www.langchain.com/join-community "LangChain Community Slack")[](https://twitter.com/LangChainAI "LangChain on Twitter / X")[](https://www.linkedin.com/company/langchain/ "LangChain on LinkedIn")[](https://www.youtube.com/@LangChain "LangChain on YouTube")

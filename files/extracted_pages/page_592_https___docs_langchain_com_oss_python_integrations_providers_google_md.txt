@@ -1,0 +1,175 @@
+Published Time: Thu, 12 Feb 2026 11:59:25 GMT
+
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.langchain.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Google integrations
+
+> Integrate with Google using LangChain Python.
+
+This page covers all LangChain integrations with [Google Gemini](https://ai.google.dev/gemini-api/docs), [Google Cloud](https://cloud.google.com/), and other Google products (such as Google Maps, YouTube, and [more](#other-google-products)).
+
+ **Unified SDK & Package Consolidation** As of `langchain-google-genai` 4.0.0, this package uses the consolidated [`google-genai`](https://googleapis.github.io/python-genai/) SDK and now supports **both the Gemini Developer API and Vertex AI** backends. The `langchain-google-vertexai` package remains supported for Vertex AI platform-specific features (Model Garden, Vector Search, evaluation services, etc.). Read the [full announcement and migration guide](https://github.com/langchain-ai/langchain-google/discussions/1422). 
+
+Not sure which package to use?
+
+  Access Google Gemini models via the **[Gemini Developer API](https://ai.google.dev/)** or **[Vertex AI](https://cloud.google.com/vertex-ai)**. The backend is selected automatically based on your configuration. * **Gemini Developer API**: Quick setup with API key, ideal for individual developers and rapid prototyping * **Vertex AI**: Enterprise features with Google Cloud integration (requires GCP project) Use the `langchain-google-genai` package for chat models, LLMs, and embeddings. [See integrations.](#google-generative-ai)   Access Vertex AI platform-specific services beyond Gemini models: Model Garden (Llama, Mistral, Anthropic), evaluation services, and specialized vision models. Use the `langchain-google-vertexai` package for platform services and specific packages (e.g., `langchain-google-community`, `langchain-google-cloud-sql-pg`) for other cloud services like databases and storage. [See integrations.](#google-cloud) 
+
+See Google's guide on [migrating from the Gemini API to Vertex AI](https://ai.google.dev/gemini-api/docs/migrate-to-cloud) for more details on the differences.
+
+ Integration packages for Gemini models and the Vertex AI platform are maintained in the [`langchain-google`](https://github.com/langchain-ai/langchain-google) repository. You can find a host of LangChain integrations with other Google APIs and services in the `langchain-google-community` package (listed on this page) and the [`googleapis`](https://github.com/orgs/googleapis/repositories?q=langchain) GitHub organization. 
+
+***
+
+## Google generative AI
+
+Access Google Gemini models via the [Gemini Developer API](https://ai.google.dev/gemini-api/docs) or [Vertex AI](https://cloud.google.com/vertex-ai) using the unified `langchain-google-genai` package.
+
+ **Package consolidation** Certain `langchain-google-vertexai` classes for Gemini models are being deprecated in favor of the unified `langchain-google-genai` package. Please migrate to the new classes. Read the [full announcement and migration guide](https://github.com/langchain-ai/langchain-google/discussions/1422). 
+
+### Chat models
+
+  Google Gemini chat models via **Gemini Developer API** or **Vertex AI**. 
+
+### LLMs
+
+  Access the same Gemini models (via **Gemini Developer API** or **Vertex AI**) using the (legacy) LLM text completion interface. 
+
+### Embedding models
+
+  Gemini embedding models via **Gemini Developer API** or **Vertex AI**. 
+
+***
+
+## Google cloud
+
+Access Vertex AI platform-specific services including Model Garden (Llama, Mistral, Anthropic), Vector Search, evaluation services, and specialized vision models.
+
+### Chat models
+
+ **For Gemini models**, use [`ChatGoogleGenerativeAI`](/oss/python/integrations/chat/google_generative_ai) from `langchain-google-genai` instead of `ChatVertexAI`. It supports both Gemini Developer API and Vertex AI backends. The classes below focus on **Vertex AI platform services** that are *not* available in the consolidated SDK. Read the [full announcement and migration guide](https://github.com/langchain-ai/langchain-google/discussions/1422). 
+
+  **Deprecated** – Use [`ChatGoogleGenerativeAI`](/oss/python/integrations/chat/google_generative_ai) for Gemini models instead.   Anthropic on Vertex AI Model Garden 
+
+  Llama on Vertex AI Model Garden ```python wrap theme={null} from langchain_google_vertexai.model_garden_maas.llama import VertexModelGardenLlama ```   Mistral on Vertex AI Model Garden ```python wrap theme={null} from langchain_google_vertexai.model_garden_maas.mistral import VertexModelGardenMistral ```   Local Gemma model loaded from HuggingFace. ```python wrap theme={null} from langchain_google_vertexai.gemma import GemmaChatLocalHF ```   Local Gemma model loaded from Kaggle. ```python wrap theme={null} from langchain_google_vertexai.gemma import GemmaChatLocalKaggle ```   Gemma on Vertex AI Model Garden ```python wrap theme={null} from langchain_google_vertexai.gemma import GemmaChatVertexAIModelGarden ```   Implementation of the Image Captioning model as a chat. ```python wrap theme={null} from langchain_google_vertexai.vision_models import VertexAIImageCaptioningChat ```   Given an image and a prompt, edit the image. Currently only supports mask-free editing. ```python wrap theme={null} from langchain_google_vertexai.vision_models import VertexAIImageEditorChat ```   Generates an image from a prompt. ```python wrap theme={null} from langchain_google_vertexai.vision_models import VertexAIImageGeneratorChat ```   Chat implementation of a visual QnA model. ```python wrap theme={null} from langchain_google_vertexai.vision_models import VertexAIVisualQnAChat ``` 
+
+### LLMs
+
+(legacy) string-in, string-out LLM interface.
+
+  Access Gemini, and hundreds of OSS models via Vertex AI Model Garden service.   **Deprecated** – Use [`GoogleGenerativeAI`](/oss/python/integrations/llms/google_generative_ai) for Gemini models instead. 
+
+Gemma:
+
+  Local Gemma model loaded from HuggingFace. ```python wrap theme={null} from langchain_google_vertexai.gemma import GemmaLocalHF ```   Local Gemma model loaded from Kaggle. ```python wrap theme={null} from langchain_google_vertexai.gemma import GemmaLocalKaggle ```   ```python wrap theme={null} from langchain_google_vertexai.gemma import GemmaVertexAIModelGarden ```   Implementation of the Image Captioning model as an LLM. ```python wrap theme={null} from langchain_google_vertexai.vision_models import VertexAIImageCaptioning ``` 
+
+### Embedding models
+
+  **Deprecated** – Use [`GenerativeAIEmbeddings`](/oss/python/integrations/text_embedding/google_generative_ai) instead. 
+
+### Document loaders
+
+Load documents from various Google Cloud sources.
+
+  Google Cloud AlloyDB is a fully managed PostgreSQL-compatible database service.   Google Cloud BigQuery is a serverless data warehouse.   Google Cloud Bigtable is a scalable, fully managed key-value and wide-column store ideal for fast access to structured, semi-structured, or unstructured data.   Google Cloud SQL for MySQL is a fully-managed MySQL database service.   Google Cloud SQL for SQL Server is a fully-managed SQL Server database service.   Google Cloud SQL for PostgreSQL is a fully-managed PostgreSQL database service.   Google Cloud Storage is a managed service for storing unstructured data.   Google Cloud Storage is a managed service for storing unstructured data.   Google El Carro Oracle Operator runs Oracle databases in Kubernetes.   Google Cloud Firestore is a NoSQL document database.   Google Cloud Firestore in Datastore mode   Google Cloud Memorystore for Redis is a fully managed Redis service.   Google Cloud Spanner is a fully managed, globally distributed relational database service.   Google Cloud Speech-to-Text transcribes audio files. 
+
+ Load data using Google Cloud Vision API. ```python theme={null} from langchain_google_community.vision import CloudVisionLoader ``` 
+
+### Document transformers
+
+Transform documents using Google Cloud services.
+
+  Transform unstructured data from documents into structured data, making it easier to understand, analyze, and consume.   Translate text and HTML with the Google Cloud Translation API. 
+
+### Vector stores
+
+Store and search vectors using Google Cloud databases and Vertex AI Vector Search.
+
+  Google Cloud AlloyDB is a fully managed relational database service that offers high performance, seamless integration, and impressive scalability on Google Cloud. AlloyDB is 100% compatible with PostgreSQL.   BigQuery vector search lets you use GoogleSQL to do semantic search, using vector indexes for fast but approximate results, or using brute force for exact results.   Vector store using Memorystore for Redis   Vector store using Cloud Spanner   Vector store using Cloud Bigtable   Vector store using Firestore   Vector store using Cloud SQL for MySQL   Vector store using Cloud SQL for PostgreSQL.   Formerly known as Vertex AI Matching Engine, provides a low latency vector database. These vector databases are commonly referred to as vector similarity-matching or an approximate nearest neighbor (ANN) service.   Vector search using Datastore for document storage. 
+
+### Retrievers
+
+Retrieve information using Google Cloud services.
+
+  Build generative AI powered search engines using Vertex AI Search   Search, store, and manage documents using Document AI Warehouse. 
+
+```python Other retrievers theme={null}
+from langchain_google_community import VertexAIMultiTurnSearchRetriever
+from langchain_google_community import VertexAISearchRetriever
+from langchain_google_community import VertexAISearchSummaryTool
+```
+
+### Tools
+
+Integrate agents with various Google Cloud services.
+
+  Google Cloud Text-to-Speech synthesizes natural-sounding speech with 100+ voices in multiple languages. 
+
+### Callbacks
+
+Track LLM/Chat model usage.
+
+  Callback Handler that tracks `VertexAI` usage info. ```python wrap theme={null} from langchain_google_vertexai.callbacks import VertexAICallbackHandler ```   See the [documentation](/oss/python/integrations/callbacks/google_bigquery) for more details. ```python wrap theme={null} from langchain_google_community.callbacks.bigquery_callback import BigQueryCallbackHandler ``` 
+
+### Evaluators
+
+Evaluate model outputs using Vertex AI.
+
+  Pair-wise evaluation using Vertex AI models. ```python wrap theme={null} from langchain_google_vertexai.evaluators.evaluation import VertexPairWiseStringEvaluator ```   Evaluate a single prediction string using Vertex AI models. ```python wrap theme={null} from langchain_google_vertexai.evaluators.evaluation import VertexStringEvaluator ``` 
+
+***
+
+## Other Google products
+
+Integrations with various Google services beyond the core Cloud Platform.
+
+### Document loaders
+
+  Google Drive file storage. Currently supports Google Docs. 
+
+### Vector stores
+
+  ScaNN is a method for efficient vector similarity search at scale. 
+
+### Retrievers
+
+  Retrieve documents from Google Drive. 
+
+### Tools
+
+  Perform web searches using Google Custom Search Engine (CSE).   Tools for interacting with Google Drive.   Query financial data.   Query job listings.   Perform visual searches.   Search for places information.   Search academic papers.   Query Google Trends data. 
+
+### MCP
+
+  Simple and efficient way to connect to your databases, including those on Google Cloud like Cloud SQL and AlloyDB 
+
+### Toolkits
+
+Collections of tools for specific Google services.
+
+  Toolkit to create, get, search, and send emails using the Gmail API. 
+
+### Chat loaders
+
+  Load chat history from Gmail threads. 
+
+***
+
+## 3rd party integrations
+
+Access Google services via unofficial third-party APIs.
+
+### Search
+
+  searchapi.io provides API access to Google search results, YouTube, and more.   SerpApi provides API access to Google search results.   serper.dev provides API access to Google search results.   cloro provides API access to Google Search results, with AI Overview support. 
+
+### YouTube
+
+  Search YouTube videos without the official API.   Download audio from YouTube videos.   Load video transcripts. 
+
+***
+
+ [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/python/integrations/providers/google.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose). 
+
+ [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.

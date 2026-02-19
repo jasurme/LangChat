@@ -1,3 +1,22 @@
+# Virtual Environment
 .venv/
+venv/
+
+# IDE
 .vscode/
+
+# Environment Variables
 .env
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Vercel
+.vercel

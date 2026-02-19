@@ -25,9 +25,38 @@
         /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar {
             -ms-overflow-style: none;
-            /* IE and Edge */
             scrollbar-width: none;
-            /* Firefox */
+        }
+
+        /* Sidebar Transitions */
+        #sidebar {
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        #main-content {
+            transition: margin-left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Sidebar collapsed state */
+        .sidebar-collapsed {
+            width: 60px !important;
+        }
+
+        .sidebar-expanded {
+            width: 280px !important;
+        }
+
+        /* Chat item hover effect */
+        .chat-item {
+            transition: background-color 0.2s ease;
+        }
+
+        .chat-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-item.active {
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
         /* Markdown Styling */
@@ -198,47 +227,122 @@
 
 <body class="bg-[#Fdfbf7] text-stone-800 font-sans h-screen flex flex-col overflow-hidden selection:bg-stone-200">
 
-    <div id="chat-container"
-        class="flex-1 overflow-y-auto w-full max-w-3xl mx-auto px-4 pt-10 pb-32 opacity-0 transition-opacity duration-700 ease-apple no-scrollbar">
-    </div>
+    <!-- Top Header Bar -->
+    <header
+        class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-stone-200 flex items-center justify-between px-4 z-50">
+        <div class="flex items-center gap-3">
+            <button id="sidebar-toggle" class="p-2 hover:bg-stone-100 rounded-lg transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+            <h1 class="text-xl font-semibold tracking-tight text-stone-900">LangChat</h1>
+        </div>
+        <button id="new-chat-btn"
+            class="flex items-center gap-2 px-4 py-2 bg-stone-900 hover:bg-stone-700 text-white rounded-lg transition-colors text-sm font-medium">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            New Chat
+        </button>
+    </header>
 
-    <div id="hero-section"
-        class="absolute inset-0 flex flex-col items-center justify-center pb-48 transition-all duration-700 ease-apple z-0">
+    <!-- Sidebar -->
+    <aside id="sidebar"
+        class="fixed top-14 left-0 bottom-0 bg-[#1e1e1e] text-white sidebar-expanded overflow-hidden z-40">
+        <div class="h-full flex flex-col">
+            <!-- Search Bar -->
+            <div id="sidebar-content" class="p-4">
+                <div class="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor"
+                        class="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                    <input type="text" id="search-threads" placeholder="Search threads..."
+                        class="w-full bg-[#2a2a2a] border border-[#3a3a3a] text-white text-sm rounded-lg pl-9 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-stone-500 placeholder:text-gray-500">
+                </div>
+            </div>
 
-        <div class="mb-60 text-center opacity-100 transition-opacity duration-500" id="hero-text">
-            <h1 class="text-4xl font-semibold tracking-tight text-stone-900 mb-2">How can I help?</h1>
-            <p class="text-stone-500">Ask anything.</p>
+            <!-- Chat History -->
+            <div id="chat-history" class="flex-1 overflow-y-auto no-scrollbar px-4 pb-4">
+                <div class="space-y-1">
+                    <div class="chat-item px-3 py-2 rounded-lg cursor-pointer">
+                        <div class="text-sm font-medium text-white truncate">Agent Tool Creation</div>
+                        <div class="text-xs text-gray-400 mt-0.5">Yesterday</div>
+                    </div>
+                    <div class="chat-item px-3 py-2 rounded-lg cursor-pointer">
+                        <div class="text-sm font-medium text-white truncate">InMemoryStore Usage</div>
+                        <div class="text-xs text-gray-400 mt-0.5">2 days ago</div>
+                    </div>
+                    <div class="chat-item px-3 py-2 rounded-lg cursor-pointer">
+                        <div class="text-sm font-medium text-white truncate">Hello there</div>
+                        <div class="text-xs text-gray-400 mt-0.5">2 days ago</div>
+                    </div>
+                    <div class="chat-item px-3 py-2 rounded-lg cursor-pointer">
+                        <div class="text-sm font-medium text-white truncate">Musk LangChain Use</div>
+                        <div class="text-xs text-gray-400 mt-0.5">3 days ago</div>
+                    </div>
+                    <div class="chat-item px-3 py-2 rounded-lg cursor-pointer">
+                        <div class="text-sm font-medium text-white truncate">Database Schema Design</div>
+                        <div class="text-xs text-gray-400 mt-0.5">4 days ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div id="main-content" class="flex-1 flex flex-col pt-14 ml-[280px] transition-all duration-300 ease-apple">
+
+        <div id="chat-container"
+            class="flex-1 overflow-y-auto w-full max-w-3xl mx-auto px-4 pt-10 pb-32 opacity-0 transition-opacity duration-700 ease-apple no-scrollbar">
         </div>
 
-    </div>
+        <div id="hero-section"
+            class="absolute inset-0 flex flex-col items-center justify-center pb-48 transition-all duration-700 ease-apple z-0 mt-14">
 
-    <div id="input-wrapper"
-        class="absolute inset-0 flex items-center justify-center transition-all duration-700 ease-apple z-10 p-4">
-        <div class="w-full max-w-2xl relative">
+            <div class="mb-60 text-center opacity-100 transition-opacity duration-500" id="hero-text">
+                <h1 class="text-4xl font-semibold tracking-tight text-stone-900 mb-2">How can I help?</h1>
+                <p class="text-stone-500">Ask anything.</p>
+            </div>
 
-            <form id="chat-form" class="relative group" onsubmit="handleFirstMessage(event)">
-                <input type="text" id="user-input"
-                    class="w-full bg-white border border-stone-200 text-stone-800 text-lg rounded-[2rem] px-6 py-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] focus:outline-none focus:ring-2 focus:ring-stone-200 focus:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 placeholder:text-stone-400"
-                    placeholder="ask..." autocomplete="off">
+        </div>
 
-                <button type="submit"
-                    class="absolute right-2 top-2 bottom-2 bg-stone-900 hover:bg-stone-700 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200 disabled:opacity-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
-                    </svg>
-                </button>
-            </form>
+        <div id="input-wrapper"
+            class="absolute inset-0 flex items-center justify-center transition-all duration-700 ease-apple z-10 p-4 mt-14">
+            <div class="w-full max-w-2xl relative">
 
-            <div class="text-center mt-4 text-xs text-stone-400 opacity-0 transition-opacity duration-700"
-                id="footer-text">
-                Ask...
+                <form id="chat-form" class="relative group" onsubmit="handleFirstMessage(event)">
+                    <input type="text" id="user-input"
+                        class="w-full bg-white border border-stone-200 text-stone-800 text-lg rounded-[2rem] px-6 py-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] focus:outline-none focus:ring-2 focus:ring-stone-200 focus:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 placeholder:text-stone-400"
+                        placeholder="ask..." autocomplete="off">
+
+                    <button type="submit"
+                        class="absolute right-2 top-2 bottom-2 bg-stone-900 hover:bg-stone-700 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200 disabled:opacity-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                        </svg>
+                    </button>
+                </form>
+
+                <div class="text-center mt-4 text-xs text-stone-400 opacity-0 transition-opacity duration-700"
+                    id="footer-text">
+                    Ask...
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         let hasStarted = false;
+        let sidebarExpanded = true;
         const chatContainer = document.getElementById('chat-container');
         const heroSection = document.getElementById('hero-section');
         const heroText = document.getElementById('hero-text');
@@ -246,6 +350,52 @@
         const footerText = document.getElementById('footer-text');
         const chatForm = document.getElementById('chat-form');
         const userInput = document.getElementById('user-input');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const mainContent = document.getElementById('main-content');
+        const newChatBtn = document.getElementById('new-chat-btn');
+        const sidebarContent = document.getElementById('sidebar-content');
+        const chatHistory = document.getElementById('chat-history');
+
+        // Sidebar Toggle
+        sidebarToggle.addEventListener('click', () => {
+            sidebarExpanded = !sidebarExpanded;
+            if (sidebarExpanded) {
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                mainContent.style.marginLeft = '280px';
+                sidebarContent.style.opacity = '1';
+                chatHistory.style.opacity = '1';
+            } else {
+                sidebar.classList.remove('sidebar-expanded');
+                sidebar.classList.add('sidebar-collapsed');
+                mainContent.style.marginLeft = '60px';
+                sidebarContent.style.opacity = '0';
+                chatHistory.style.opacity = '0';
+            }
+        });
+
+        // New Chat Button
+        newChatBtn.addEventListener('click', () => {
+            // TODO: Call backend API to create new chat session
+            // For now, just reload the page
+            window.location.reload();
+        });
+
+        // Search Threads
+        const searchInput = document.getElementById('search-threads');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const chatItems = document.querySelectorAll('.chat-item');
+            chatItems.forEach(item => {
+                const title = item.querySelector('.text-sm').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
 
         async function handleFirstMessage(event) {
             event.preventDefault();
@@ -260,11 +410,7 @@
                 heroText.style.opacity = '0';
 
                 // Move input wrapper to bottom
-                // We change alignment from center to flex-end
-                // 1. REMOVE 'items-center' (vertical), but KEEP 'justify-center' (horizontal)
                 inputWrapper.classList.remove('items-center', 'absolute', 'inset-0');
-
-                // 2. ADD fixed positioning at the bottom
                 inputWrapper.classList.add('fixed', 'bottom-0', 'w-full', 'pb-8', 'z-20');
 
                 // Reveal chat container and footer
@@ -283,7 +429,7 @@
 
             // 3. Send to Backend API
             addLoadingIndicator();
-            const startTime = Date.now(); // Track start time
+            const startTime = Date.now();
 
             try {
                 const response = await fetch('/', {
@@ -299,8 +445,8 @@
                 }
 
                 const data = await response.json();
-                const endTime = Date.now(); // Track end time
-                const responseTime = ((endTime - startTime) / 1000).toFixed(2); // Convert to seconds
+                const endTime = Date.now();
+                const responseTime = ((endTime - startTime) / 1000).toFixed(2);
 
                 removeLoadingIndicator();
                 addMessageToChat('bot', data.response || "No response received.", responseTime);
@@ -321,21 +467,17 @@
             contentContainer.className = `flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[90%]`;
 
             const bubble = document.createElement('div');
-            // User: Dark Stone, Bot: Transparent/Text only (Steve Jobs style) or Light Stone
             if (isUser) {
                 bubble.className = "bg-[#f4f2eb] text-stone-900 px-5 py-3 rounded-2xl leading-relaxed";
                 bubble.innerText = text;
             } else {
                 bubble.className = "text-stone-800 px-0 py-3 leading-relaxed font-normal markdown-content";
-                // Parse markdown for bot responses
                 bubble.innerHTML = marked.parse(text);
 
-                // Apply syntax highlighting to code blocks
                 bubble.querySelectorAll('pre code').forEach((block) => {
                     hljs.highlightElement(block);
                 });
 
-                // Add copy buttons to code blocks
                 bubble.querySelectorAll('pre').forEach((pre) => {
                     const copyBtn = document.createElement('button');
                     copyBtn.className = 'code-copy-btn';
@@ -367,7 +509,6 @@
             actionButtons.className = 'action-buttons';
 
             if (isUser) {
-                // User message: only copy button (on the right)
                 actionButtons.innerHTML = `
                     <button class="action-btn copy-btn" title="Copy">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -376,7 +517,6 @@
                     </button>
                 `;
             } else {
-                // Bot message: copy, thumbs up, thumbs down (on the left)
                 actionButtons.innerHTML = `
                     <button class="action-btn copy-btn" title="Copy">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

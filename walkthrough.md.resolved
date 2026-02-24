@@ -1,0 +1,134 @@
+# LangChat — Full Project Walkthrough
+
+## Overview
+
+**LangChat** is a **RAG (Retrieval-Augmented Generation) chatbot** for LangChain documentation. Users ask questions in a chat UI, the system retrieves relevant documentation chunks from a Pinecone vector database, and GPT-4o-mini generates answers grounded in those docs.
+
+**Stack**: FastAPI + Jinja2 backend · Tailwind CSS + Vanilla JS frontend · OpenAI (embeddings + chat) · Pinecone vector DB · Vercel deployment
+
+---
+
+## Architecture
+
+```mermaid
+graph LR
+    A["Browser (index.html)"] -->|POST /| B["FastAPI (main.py)"]
+    B -->|vectorize query| C["OpenAI Embeddings (chatgpt.py)"]
+    B -->|similarity search| D["Pinecone (pineconedb.py)"]
+    D -->|top 3 docs| B
+    B -->|prompt + context| E["GPT-4o-mini (chatgpt.py)"]
+    E -->|answer| B
+    B -->|JSON response| A
+```
+
+---
+
+## Directory Structure
+
+| Path | Purpose |
+|---|---|
+| [main.py](file:///c:/Users/user/Desktop/jasur/LangChat/main.py) | FastAPI app — two routes: `GET /` (serve UI) and `POST /` (RAG pipeline) |
+| [templates/index.html](file:///c:/Users/user/Desktop/jasur/LangChat/templates/index.html) | **Single-page chat UI** (613 lines) — Tailwind CSS, inline `<style>`, inline `<script>` |
+| [static/style.css](file:///c:/Users/user/Desktop/jasur/LangChat/static/style.css) | Empty file (all CSS is inline in the HTML) |
+| [llms/chatgpt.py](file:///c:/Users/user/Desktop/jasur/LangChat/llms/chatgpt.py) | OpenAI integration — [ask_chatgpt()](file:///c:/Users/user/Desktop/jasur/LangChat/llms/chatgpt.py#9-17) for chat, [vectorize()](file:///c:/Users/user/Desktop/jasur/LangChat/llms/chatgpt.py#18-23) for embeddings |
+| [llms/gemini.py](file:///c:/Users/user/Desktop/jasur/LangChat/llms/gemini.py) | Google Gemini integration — [ask_gemini()](file:///c:/Users/user/Desktop/jasur/LangChat/llms/gemini.py#7-21) (not used in main app currently) |
+| [vectordb/pineconedb.py](file:///c:/Users/user/Desktop/jasur/LangChat/vectordb/pineconedb.py) | Pinecone client & index connection |
+| [database/db.py](file:///c:/Users/user/Desktop/jasur/LangChat/database/db.py) | SQLAlchemy engine (PostgreSQL?) — not actively used in chat flow |
+| [utils/models.py](file:///c:/Users/user/Desktop/jasur/LangChat/utils/models.py) | Pydantic models: [UserInput](file:///c:/Users/user/Desktop/jasur/LangChat/utils/models.py#8-10), [ExtractLinks](file:///c:/Users/user/Desktop/jasur/LangChat/utils/models.py#4-6) |
+| [preprocessing/extract_links.py](file:///c:/Users/user/Desktop/jasur/LangChat/preprocessing/extract_links.py) | Data pipeline — scrapes LangChain docs via Jina Reader API |
+| [files/llms.txt](file:///c:/Users/user/Desktop/jasur/LangChat/files/llms.txt) | Raw link list (85KB) — source for the scraping pipeline |
+| `files/extracted_pages/` | 678 scraped documentation pages used as RAG knowledge base |
+| [vercel.json](file:///c:/Users/user/Desktop/jasur/LangChat/vercel.json) | Vercel deployment config — routes all traffic to `main.py` |
+
+---
+
+## Frontend / UI Deep Dive
+
+### Tech Stack
+- **Tailwind CSS** via CDN (`cdn.tailwindcss.com`)
+- **marked.js** for Markdown → HTML rendering of bot responses
+- **highlight.js** for code syntax highlighting (GitHub Dark theme)
+- All JavaScript is **inline** in `<script>` tags (no build tools, no bundler)
+
+### Layout Structure
+The UI has 3 major sections:
+
+1. **Top Header Bar** (`<header>`) — Fixed at top, contains:
+   - Sidebar toggle hamburger button (`#sidebar-toggle`)
+   - "LangChat" brand title
+   - "New Chat" button (`#new-chat-btn`) — currently just reloads page
+
+2. **Sidebar** (`#sidebar`) — Dark sidebar (`#1e1e1e`), contains:
+   - Search bar (`#search-threads`) — filters chat history items client-side
+   - Chat history list — **hardcoded/static** placeholder items (not from backend)
+   - Collapsible: toggles between 280px (expanded) and 60px (collapsed)
+
+3. **Main Content** (`#main-content`) — The chat area:
+   - **Hero section** (`#hero-section`) — "How can I help?" landing state
+   - **Chat container** (`#chat-container`) — Scrollable message list
+   - **Input wrapper** (`#input-wrapper`) — Center-screen initially, snaps to bottom after first message
+
+### UI State Machine
+```mermaid
+stateDiagram-v2
+    [*] --> HeroState: Page load
+    HeroState --> ChatState: First message sent
+    
+    state HeroState {
+        note right: Input centered\nHero text visible\nChat container hidden
+    }
+    
+    state ChatState {
+        note right: Input pinned to bottom\nHero hidden\nChat container visible
+    }
+```
+
+### Key JavaScript Functions
+
+| Function | Purpose |
+|---|---|
+| `handleFirstMessage(event)` | Main handler — transitions UI from hero→chat state, sends POST to `/`, displays response |
+| `addMessageToChat(role, text, responseTime)` | Creates message bubble — user messages get beige bg, bot messages get markdown rendering + syntax highlighting |
+| `addLoadingIndicator()` | Shows animated "Thinking..." text |
+| `removeLoadingIndicator()` | Removes the loading indicator |
+
+### Interactive Features
+- **Copy buttons** on code blocks (appears on hover)
+- **Like/Dislike buttons** on bot messages (toggle state, no backend persistence)
+- **Copy button** on all messages
+- **Response time display** on bot messages (e.g., "2.34s")
+- **Sidebar search** — filters chat history by title text
+
+### Design System
+- **Color palette**: Stone/warm gray tones (`bg-[#Fdfbf7]`, stone-800, stone-200, etc.)
+- **Animations**: Custom cubic-bezier easing (`cubic-bezier(0.25, 1, 0.5, 1)`) — "Apple-esque"
+- **Markdown styling**: Custom CSS for headers, code blocks, lists, blockquotes
+- **Scrollbar**: Hidden via CSS (`.no-scrollbar`)
+
+---
+
+## Backend Flow (POST /)
+
+1. Receive user input as JSON `{ "user_input": "..." }`
+2. **Vectorize** the query using OpenAI `text-embedding-3-large`
+3. **Query Pinecone** index (namespace: `all_webpages`, top_k: 3)
+4. **Read matched files** from `files/extracted_pages/` on disk
+5. **Build prompt** with retrieved context + user question
+6. **Call GPT-4o-mini** via `ask_chatgpt()` — structured output using Pydantic
+7. Return `{ "response": "..." }`
+
+---
+
+## Current Gaps & TODOs
+
+| Area | Gap |
+|---|---|
+| **Chat history** | Sidebar shows hardcoded items — no backend persistence or retrieval |
+| **New Chat** | Just reloads the page — no session management |
+| **Static files** | FastAPI doesn't mount `static/` directory (no `StaticFiles` middleware) |
+| **style.css** | Empty — all CSS is inline. Could be extracted for maintainability |
+| **Gemini** | `gemini.py` exists but isn't used anywhere in the app |
+| **Database** | `db.py` sets up a SQLAlchemy engine but no tables/models — likely planned for chat persistence |
+| **Like/Dislike** | UI-only, no feedback sent to backend |
+| **Mobile responsive** | Sidebar doesn't collapse automatically on small screens |
+| **Error handling** | Minimal — just displays error text in chat |

@@ -1,23 +1,13 @@
-# Web Framework
 fastapi
 uvicorn[standard]
 jinja2
-
-# OpenAI Integration
 openai
-
-# Google Gemini Integration
 google-genai
-
-# Vector Database
 pinecone
-
-# Web Scraping & Search
+sqlalchemy
 tavily-python
 requests
 
-# Environment Variables
 python-dotenv
 
-# Data Validation
 pydantic

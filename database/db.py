@@ -1,16 +1,17 @@
-import os
-from dotenv import load_dotenv
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, Column, String, Text, DateTime, Integer
+from sqlalchemy.orm import declarative_base
+from datetime import datetime
 
-load_dotenv()
+engine = create_engine('sqlite:///LangChatHistory.db')
 
-engine = create_engine(
-    os.environ["DATABASE_URL"],
-    pool_pre_ping=True,
-    pool_size=5,
-    max_overflow=10,
-)
+Base = declarative_base()
 
-with engine.connect() as conn:
-    version = conn.execute(text("SELECT version()")).scalar_one()
-    print(version)
+class ChatHistory(Base):
+    __tablename__ = 'chat_history'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    session_id = Column(String(100), index=True, nullable=False)
+    role = Column(String(20), nullable=False)
+    content = Column(Text, nullable=False)
+    timestamp = Column(DateTime, default=datetime.now)
+
+Base.metadata.create_all(engine)

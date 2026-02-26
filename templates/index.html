@@ -34,6 +34,12 @@
         }
 
         /* Markdown content — must be CSS since it targets rendered HTML from marked.js */
+        .markdown-content {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
         .markdown-content h1,
         .markdown-content h2,
         .markdown-content h3 {
@@ -41,6 +47,8 @@
             margin-top: 1.5em;
             margin-bottom: 0.5em;
             color: #1c1917;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .markdown-content h1 {
@@ -58,6 +66,9 @@
         .markdown-content p {
             margin-bottom: 1em;
             line-height: 1.7;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         .markdown-content code {
@@ -67,6 +78,9 @@
             font-size: 0.9em;
             font-family: 'Monaco', 'Courier New', monospace;
             color: #dc2626;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-all;
         }
 
         .markdown-content pre {
@@ -74,8 +88,11 @@
             padding: 1em;
             border-radius: 0.5rem;
             overflow-x: auto;
+            overflow-y: visible;
             margin: 1em 0;
             position: relative;
+            max-width: 100%;
+            box-sizing: border-box;
         }
 
         .markdown-content pre code {
@@ -83,6 +100,24 @@
             padding: 0;
             color: #d4d4d4;
             font-size: 0.875em;
+            display: block;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .markdown-content li {
+            margin-bottom: 0.5em;
+            word-wrap: break-word;
+            overflow-wrap: break-word
+
+        .markdown-content pre code::-moz-selection {
+            background-color: #0ea5e9;
+            color: #ffffff;
         }
 
         .markdown-content ul,
@@ -111,6 +146,24 @@
 
 <body class="bg-[#fdfbf7] text-stone-800 font-sans h-screen flex flex-col overflow-hidden selection:bg-stone-200">
 
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black/70 z-[300] flex items-center justify-center opacity-100 pointer-events-auto transition-opacity duration-300">
+        <div id="login-box" class="bg-white rounded-2xl p-8 max-w-[400px] w-[90%] shadow-2xl">
+            <h2 class="text-2xl font-semibold text-stone-900 mb-2">Welcome to LangChat</h2>
+            <p class="text-stone-500 text-sm mb-6">Enter a unique username to get started</p>
+            <form id="login-form" onsubmit="handleLoginSubmit(event)">
+                <input type="text" id="login-username" 
+                    class="w-full border border-stone-300 text-stone-800 text-base rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent transition-all placeholder:text-stone-400"
+                    placeholder="Enter username..." autocomplete="off" required minlength="3">
+                <div id="login-error" class="text-red-600 text-sm mb-4 h-5"></div>
+                <button type="submit" class="w-full bg-stone-900 hover:bg-stone-700 text-white font-medium py-3 rounded-lg transition-colors mb-3">
+                    Get Started
+                </button>
+            </form>
+            <p class="text-xs text-stone-400 text-center">Your username identifies your chats. Choose something unique.</p>
+        </div>
+    </div>
+
     <!-- Top Header Bar -->
     <header
         class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-stone-200 flex items-center justify-between px-4 z-50">
@@ -124,14 +177,24 @@
             </button>
             <h1 class="text-xl font-semibold tracking-tight text-stone-900">LangChat</h1>
         </div>
-        <button id="new-chat-btn"
-            class="flex items-center gap-2 px-4 py-2 bg-stone-900 hover:bg-stone-700 text-white rounded-lg transition-colors text-sm font-medium">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            New Chat
-        </button>
+        <div class="flex items-center gap-3">
+            <span id="username-display" class="text-sm text-stone-600 font-medium"></span>
+            <button id="new-chat-btn"
+                class="flex items-center gap-2 px-4 py-2 bg-stone-900 hover:bg-stone-700 text-white rounded-lg transition-colors text-sm font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                New Chat
+            </button>
+            <button id="logout-btn" class="px-3 py-2 text-stone-600 hover:bg-stone-100 rounded-lg transition-colors text-sm font-medium"
+                title="Logout">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3h12.75" />
+                </svg>
+            </button>
+        </div>
     </header>
 
     <!-- Sidebar -->
@@ -164,11 +227,11 @@
 
     <!-- Main Content Area -->
     <div id="main-content"
-        class="h-screen flex flex-col pt-14 ml-[280px] transition-all duration-300 ease-apple relative">
+        class="h-screen flex flex-col pt-14 ml-[280px] transition-all duration-300 ease-apple relative overflow-hidden">
 
         <!-- Chat messages -->
         <div id="chat-container"
-            class="flex-1 min-h-0 overflow-y-auto w-full max-w-3xl mx-auto px-4 pt-10 pb-40 opacity-0 transition-opacity duration-700 ease-apple no-scrollbar">
+            class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden w-full max-w-3xl mx-auto px-4 pt-10 pb-40 opacity-0 transition-opacity duration-700 ease-apple no-scrollbar">
         </div>
 
         <!-- Hero section -->
@@ -187,7 +250,7 @@
                 <form id="chat-form" class="relative group" onsubmit="handleMessage(event)">
                     <input type="text" id="user-input"
                         class="w-full bg-white border border-stone-200 text-stone-800 text-lg rounded-[2rem] px-6 py-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] focus:outline-none focus:ring-2 focus:ring-stone-200 focus:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 placeholder:text-stone-400"
-                        placeholder="ask..." autocomplete="off">
+                        placeholder="ask..." autocomplete="off" maxlength="400">
                     <button type="submit"
                         class="absolute right-2 top-2 bottom-2 bg-stone-900 hover:bg-stone-700 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200 disabled:opacity-50">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -197,6 +260,13 @@
                         </svg>
                     </button>
                 </form>
+                <div class="flex justify-between items-center mt-3 text-xs text-stone-400">
+                    <div class="flex gap-4">
+                        <span id="char-count">0 / 400</span>
+                        <span id="messages-remaining" class="font-medium"></span>
+                    </div>
+                    <div id="char-warning" class="text-red-500 opacity-0 transition-opacity duration-200"></div>
+                </div>
                 <div class="text-center mt-4 text-xs text-stone-400 opacity-0 transition-opacity duration-700"
                     id="footer-text">Ask...</div>
             </div>
@@ -228,8 +298,16 @@
         let sessionsCache = [];
         let activeDropdown = null;
         let pendingDeleteSessionId = null;
+        let currentUsername = null;
 
         // ==================== DOM ELEMENTS ====================
+        const loginModal = document.getElementById('login-modal');
+        const loginForm = document.getElementById('login-form');
+        const loginUsername = document.getElementById('login-username');
+        const loginError = document.getElementById('login-error');
+        const usernameDisplay = document.getElementById('username-display');
+        const logoutBtn = document.getElementById('logout-btn');
+        
         const chatContainer = document.getElementById('chat-container');
         const heroSection = document.getElementById('hero-section');
         const heroText = document.getElementById('hero-text');
@@ -237,6 +315,9 @@
         const footerText = document.getElementById('footer-text');
         const chatForm = document.getElementById('chat-form');
         const userInput = document.getElementById('user-input');
+        const charCount = document.getElementById('char-count');
+        const charWarning = document.getElementById('char-warning');
+        const messagesRemaining = document.getElementById('messages-remaining');
         const sidebar = document.getElementById('sidebar');
         const sidebarToggle = document.getElementById('sidebar-toggle');
         const mainContent = document.getElementById('main-content');
@@ -249,6 +330,192 @@
         const deleteModalTitle = document.getElementById('delete-modal-title');
         const modalCancelBtn = document.getElementById('modal-cancel-btn');
         const modalDeleteBtn = document.getElementById('modal-delete-btn');
+
+        // ==================== LOGIN MANAGEMENT ====================
+        async function handleLoginSubmit(event) {
+            event.preventDefault();
+            const username = loginUsername.value.trim();
+            
+            // Frontend validation
+            if (!username) {
+                loginError.textContent = 'Username cannot be empty';
+                loginUsername.focus();
+                return;
+            }
+            
+            if (username.length < 3) {
+                loginError.textContent = 'Username must be at least 3 characters long';
+                loginUsername.focus();
+                return;
+            }
+            
+            if (username.length > 50) {
+                loginError.textContent = 'Username must be 50 characters or less';
+                loginUsername.focus();
+                return;
+            }
+            
+            if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+                loginError.textContent = 'Username can only contain letters, numbers, hyphens, and underscores';
+                loginUsername.focus();
+                return;
+            }
+            
+            loginError.textContent = '';
+            const btn = loginForm.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Loading...';
+            
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    // Handle error responses from backend
+                    loginError.textContent = data.detail || data.message || 'Registration failed';
+                    btn.disabled = false;
+                    btn.textContent = 'Get Started';
+                    return;
+                }
+                
+                if (!data.success) {
+                    loginError.textContent = data.message || 'Registration failed';
+                    btn.disabled = false;
+                    btn.textContent = 'Get Started';
+                    return;
+                }
+                
+                // Store username in localStorage
+                localStorage.setItem('langhchat_username', username);
+                currentUsername = username;
+                
+                // Hide login modal
+                loginModal.classList.add('opacity-0', 'pointer-events-none');
+                loginModal.style.display = 'none';
+                
+                // Update header
+                usernameDisplay.textContent = `@${username}`;
+                
+                // Initialize character counter
+                updateCharCount();
+                
+                // Focus on input
+                setTimeout(() => userInput.focus(), 100);
+                
+            } catch (error) {
+                loginError.textContent = 'Error: Unable to connect to server';
+                console.error('Login error:', error);
+                btn.disabled = false;
+                btn.textContent = 'Get Started';
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('langhchat_username');
+            currentUsername = null;
+            location.reload();
+        }
+        
+        // ==================== USERNAME VALIDATION ====================
+        function validateUsername(username) {
+            if (!username) {
+                return { valid: false, message: 'Username cannot be empty' };
+            }
+            if (username.length < 3) {
+                return { valid: false, message: `Username must be at least 3 characters (${username.length}/3)` };
+            }
+            if (username.length > 50) {
+                return { valid: false, message: 'Username must be 50 characters or less' };
+            }
+            if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
+                return { valid: false, message: 'Only letters, numbers, hyphens, and underscores allowed' };
+            }
+            return { valid: true, message: '✓ Username valid' };
+        }
+        
+        // Real-time validation feedback
+        loginUsername.addEventListener('input', (e) => {
+            const username = e.target.value.trim();
+            const validation = validateUsername(username);
+            
+            if (username === '') {
+                loginError.textContent = '';
+            } else {
+                loginError.textContent = validation.message;
+                loginError.className = validation.valid 
+                    ? 'text-green-600 text-sm mb-4 h-5' 
+                    : 'text-red-600 text-sm mb-4 h-5';
+            }
+            
+            // Disable submit button if invalid
+            const btn = loginForm.querySelector('button[type="submit"]');
+            btn.disabled = !validation.valid || username === '';
+        });
+        
+        function checkAuth() {
+            const stored = localStorage.getItem('langhchat_username');
+            if (stored) {
+                currentUsername = stored;
+                loginModal.style.display = 'none';
+                loginModal.classList.add('opacity-0', 'pointer-events-none');
+                usernameDisplay.textContent = `@${stored}`;
+                loadRemainingMessages();
+                return true;
+            } else {
+                loginModal.style.display = 'flex';
+                loginModal.classList.remove('opacity-0', 'pointer-events-none');
+                loginUsername.focus();
+                return false;
+            }
+        }
+
+        // ==================== LOAD REMAINING MESSAGES ====================
+        async function loadRemainingMessages() {
+            try {
+                const url = new URL('/remaining_messages', window.location.origin);
+                url.searchParams.append('username', currentUsername);
+                const resp = await fetch(url);
+                if (!resp.ok) throw new Error('Failed');
+                const data = await resp.json();
+                messagesRemaining.textContent = `${data.remaining} messages left today`;
+                messagesRemaining.className = data.remaining <= 2 ? 'font-medium text-red-500' : 'text-stone-400';
+            } catch (e) {
+                console.error('Error loading remaining messages:', e);
+            }
+        }
+
+        // ==================== CHARACTER COUNTER ====================
+        function updateCharCount() {
+            const len = userInput.value.trim().length;
+            const submitBtn = chatForm.querySelector('button[type="submit"]');
+            charCount.textContent = `${len} / 400`;
+            
+            // Disable submit button if message is empty or too long
+            submitBtn.disabled = len === 0 || len > 400;
+            
+            if (len === 0) {
+                charCount.classList.remove('text-orange-500', 'text-red-500');
+                charWarning.classList.add('opacity-0');
+            } else if (len > 350 && len <= 390) {
+                charCount.classList.add('text-orange-500');
+                charCount.classList.remove('text-red-500');
+                charWarning.textContent = `${400 - len} chars left`;
+                charWarning.classList.remove('opacity-0');
+            } else if (len > 390) {
+                charCount.classList.add('text-red-500');
+                charCount.classList.remove('text-orange-500');
+                charWarning.textContent = 'Nearly at limit!';
+                charWarning.classList.remove('opacity-0');
+            } else {
+                charCount.classList.remove('text-orange-500', 'text-red-500');
+                charWarning.classList.add('opacity-0');
+            }
+        }
 
         // ==================== UTILITY: UUID ====================
         function generateUUID() {
@@ -283,7 +550,9 @@
         // ==================== SIDEBAR: LOAD SESSIONS ====================
         async function loadSessions() {
             try {
-                const resp = await fetch('/sessions');
+                const url = new URL('/sessions', window.location.origin);
+                url.searchParams.append('username', currentUsername);
+                const resp = await fetch(url);
                 if (!resp.ok) throw new Error('Failed');
                 sessionsCache = await resp.json();
                 renderSessions(sessionsCache);
@@ -408,7 +677,9 @@
             if (currentSessionId === sessionId) startNewChat();
 
             try {
-                await fetch(`/delete_chat/${sessionId}`, { method: 'DELETE' });
+                const url = new URL(`/delete_chat/${sessionId}`, window.location.origin);
+                url.searchParams.append('username', currentUsername);
+                await fetch(url, { method: 'DELETE' });
             } catch (e) {
                 console.error('Error deleting session:', e);
             }
@@ -428,7 +699,9 @@
             chatContainer.innerHTML = '';
 
             try {
-                const resp = await fetch(`/get_history/${sessionId}`);
+                const url = new URL(`/get_history/${sessionId}`, window.location.origin);
+                url.searchParams.append('username', currentUsername);
+                const resp = await fetch(url);
                 if (!resp.ok) throw new Error('Failed');
                 const messages = await resp.json();
                 messages.forEach(msg => addMessageToChat(msg.role === 'user' ? 'user' : 'bot', msg.content));
@@ -498,7 +771,16 @@
         async function handleMessage(event) {
             event.preventDefault();
             const message = userInput.value.trim();
-            if (!message) return;
+            
+            if (!message) {
+                console.warn('Cannot send empty message');
+                return;
+            }
+            
+            if (message.length > 400) {
+                console.warn('Message too long');
+                return;
+            }
 
             const isNewSession = !currentSessionId;
             if (isNewSession) currentSessionId = generateUUID();
@@ -506,6 +788,7 @@
             transitionToChatState();
             addMessageToChat('user', message);
             userInput.value = '';
+            updateCharCount();
 
             addLoadingIndicator();
             const startTime = Date.now();
@@ -514,10 +797,18 @@
                 const response = await fetch('/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_input: message, session_id: currentSessionId })
+                    body: JSON.stringify({ user_input: message, session_id: currentSessionId, username: currentUsername })
                 });
 
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    if (response.status === 429) {
+                        removeLoadingIndicator();
+                        addMessageToChat('bot', `⏰ ${errorData.detail}`);
+                        return;
+                    }
+                    throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+                }
 
                 const data = await response.json();
                 const responseTime = ((Date.now() - startTime) / 1000).toFixed(2);
@@ -526,6 +817,8 @@
 
                 removeLoadingIndicator();
                 addMessageToChat('bot', data.response || "No response received.", responseTime);
+
+                loadRemainingMessages();
 
                 const title = message.length > 60 ? message.substring(0, 60) : message;
                 upsertSessionInSidebar(currentSessionId, isNewSession ? title : null);
@@ -663,6 +956,13 @@
             }
         });
 
+        // ==================== AUTH HANDLERS ====================
+        loginForm.addEventListener('submit', handleLoginSubmit);
+        logoutBtn.addEventListener('click', logout);
+
+        // ==================== CHARACTER COUNTER ====================
+        userInput.addEventListener('input', updateCharCount);
+
         // ==================== NEW CHAT ====================
         newChatBtn.addEventListener('click', () => startNewChat());
 
@@ -674,8 +974,10 @@
 
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
-            loadSessions();
-            userInput.focus();
+            if (checkAuth()) {
+                loadSessions();
+                userInput.focus();
+            }
         });
     </script>
 </body>

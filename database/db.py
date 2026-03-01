@@ -1,8 +1,11 @@
 from sqlalchemy import create_engine, Column, String, Text, DateTime, Integer, ForeignKey, inspect, text
 from sqlalchemy.orm import declarative_base
 from datetime import datetime
+import os
 
-engine = create_engine('sqlite:///LangChatHistory.db')
+IS_VERCEL = os.getenv("VERCEL", False)
+DB_PATH = "/tmp/LangChatHistory.db" if IS_VERCEL else "LangChatHistory.db"
+engine = create_engine(f'sqlite:///{DB_PATH}')
 
 Base = declarative_base()
 

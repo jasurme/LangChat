@@ -4,7 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="LangChat — AI-powered assistant for LangChain documentation. Ask questions and get grounded answers.">
+    <meta name="theme-color" content="#1c1917">
     <title>LangChat</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='20' width='100' height='100' fill='%231c1917'/><text x='50' y='68' font-size='55' text-anchor='middle' fill='white' font-family='system-ui' font-weight='600'>L</text></svg>">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -17,27 +24,19 @@
             }
         }
     </script>
-    <!-- Markdown Parser -->
+
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Syntax Highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
     <style>
-        /* Only styles impossible to do with Tailwind */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Markdown content — must be CSS since it targets rendered HTML from marked.js */
         .markdown-content {
             word-wrap: break-word;
             overflow-wrap: break-word;
-            word-break: break-word;
         }
 
         .markdown-content h1,
@@ -47,28 +46,15 @@
             margin-top: 1.5em;
             margin-bottom: 0.5em;
             color: #1c1917;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
-        .markdown-content h1 {
-            font-size: 1.5em;
-        }
-
-        .markdown-content h2 {
-            font-size: 1.3em;
-        }
-
-        .markdown-content h3 {
-            font-size: 1.15em;
-        }
+        .markdown-content h1 { font-size: 1.5em; }
+        .markdown-content h2 { font-size: 1.3em; }
+        .markdown-content h3 { font-size: 1.15em; }
 
         .markdown-content p {
             margin-bottom: 1em;
             line-height: 1.7;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            word-break: break-word;
         }
 
         .markdown-content code {
@@ -78,8 +64,6 @@
             font-size: 0.9em;
             font-family: 'Monaco', 'Courier New', monospace;
             color: #dc2626;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
             word-break: break-all;
         }
 
@@ -88,7 +72,6 @@
             padding: 1em;
             border-radius: 0.5rem;
             overflow-x: auto;
-            overflow-y: visible;
             margin: 1em 0;
             position: relative;
             max-width: 100%;
@@ -101,24 +84,18 @@
             color: #d4d4d4;
             font-size: 0.875em;
             display: block;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
             white-space: pre-wrap;
+            word-break: break-all;
         }
 
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .markdown-content li {
-            margin-bottom: 0.5em;
-            word-wrap: break-word;
-            overflow-wrap: break-word
-
+        .markdown-content pre code::selection,
         .markdown-content pre code::-moz-selection {
             background-color: #0ea5e9;
             color: #ffffff;
         }
+
+        .markdown-content ul { list-style-type: disc; }
+        .markdown-content ol { list-style-type: decimal; }
 
         .markdown-content ul,
         .markdown-content ol {
@@ -128,11 +105,17 @@
 
         .markdown-content li {
             margin-bottom: 0.5em;
+            line-height: 1.6;
         }
 
         .markdown-content a {
             color: #2563eb;
             text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        .markdown-content a:hover {
+            color: #1d4ed8;
         }
 
         .markdown-content blockquote {
@@ -141,85 +124,239 @@
             color: #57534e;
             margin: 1em 0;
         }
+
+        .markdown-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+            display: block;
+            overflow-x: auto;
+        }
+
+        .markdown-content th,
+        .markdown-content td {
+            border: 1px solid #d6d3d1;
+            padding: 0.5em 0.75em;
+            text-align: left;
+        }
+
+        .markdown-content th {
+            background: #f5f5f4;
+            font-weight: 600;
+        }
+
+        .markdown-content tr:nth-child(even) {
+            background: #fafaf9;
+        }
+
+        .markdown-content hr {
+            border: none;
+            border-top: 1px solid #e7e5e4;
+            margin: 1.5em 0;
+        }
+
+        .markdown-content img {
+            max-width: 100%;
+            border-radius: 0.5rem;
+        }
+
+        /* Textarea auto-resize */
+        #user-input {
+            field-sizing: content;
+            min-height: 52px;
+            max-height: 160px;
+        }
+
+        /* Toast animations */
+        @keyframes toast-in {
+            from { transform: translateY(1rem); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes toast-out {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(1rem); opacity: 0; }
+        }
+        .toast-enter { animation: toast-in 0.25s ease-out; }
+        .toast-exit { animation: toast-out 0.2s ease-in forwards; }
+
+        /* Streaming cursor */
+        @keyframes cursor-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .streaming-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background: #78716c;
+            vertical-align: text-bottom;
+            margin-left: 1px;
+            border-radius: 1px;
+            animation: cursor-blink 0.7s step-end infinite;
+        }
+
+        /* Loading dots */
+        @keyframes dot-bounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-6px); }
+        }
+        .loading-dot {
+            animation: dot-bounce 1.2s ease-in-out infinite;
+        }
+        .loading-dot:nth-child(2) { animation-delay: 0.15s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Skeleton pulse for session loading */
+        @keyframes skeleton-pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        .skeleton { animation: skeleton-pulse 1.5s ease-in-out infinite; }
+
+        /* Mobile sidebar */
+        @media (max-width: 767px) {
+            #sidebar {
+                transform: translateX(-100%);
+                width: 280px !important;
+                top: 0 !important;
+                z-index: 60 !important;
+                padding-top: 3.5rem;
+            }
+            #sidebar.sidebar-open {
+                transform: translateX(0);
+            }
+            #main-content {
+                margin-left: 0 !important;
+            }
+        }
+
+        /* Focus visible for keyboard users */
+        :focus-visible {
+            outline: 2px solid #78716c;
+            outline-offset: 2px;
+        }
+
+        /* Accessible screen-reader only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
     </style>
 </head>
 
 <body class="bg-[#fdfbf7] text-stone-800 font-sans h-screen flex flex-col overflow-hidden selection:bg-stone-200">
 
+    <noscript>
+        <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:system-ui;color:#44403c;text-align:center;padding:2rem;">
+            <p>JavaScript is required to use LangChat. Please enable it in your browser settings.</p>
+        </div>
+    </noscript>
+
+    <!-- Screen reader announcements -->
+    <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
     <!-- Login Modal -->
-    <div id="login-modal" class="fixed inset-0 bg-black/70 z-[300] flex items-center justify-center opacity-100 pointer-events-auto transition-opacity duration-300">
-        <div id="login-box" class="bg-white rounded-2xl p-8 max-w-[400px] w-[90%] shadow-2xl">
-            <h2 class="text-2xl font-semibold text-stone-900 mb-2">Welcome to LangChat</h2>
-            <p class="text-stone-500 text-sm mb-6">Enter a unique username to get started</p>
-            <form id="login-form" onsubmit="handleLoginSubmit(event)">
-                <input type="text" id="login-username" 
-                    class="w-full border border-stone-300 text-stone-800 text-base rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent transition-all placeholder:text-stone-400"
-                    placeholder="Enter username..." autocomplete="off" required minlength="3">
-                <div id="login-error" class="text-red-600 text-sm mb-4 h-5"></div>
-                <button type="submit" class="w-full bg-stone-900 hover:bg-stone-700 text-white font-medium py-3 rounded-lg transition-colors mb-3">
-                    Get Started
+    <div id="login-modal" class="fixed inset-0 bg-black/70 z-[300] flex items-center justify-center opacity-100 pointer-events-auto transition-opacity duration-300"
+         role="dialog" aria-modal="true" aria-labelledby="login-heading">
+        <div id="login-box" class="bg-white rounded-2xl p-8 max-w-[420px] w-[90%] shadow-2xl">
+            <h2 id="login-heading" class="text-2xl font-semibold text-stone-900 mb-1">Welcome to LangChat</h2>
+            <p id="login-subtitle" class="text-stone-500 text-sm mb-6">Sign in to your account</p>
+            <form id="login-form" novalidate>
+                <label for="login-username" class="sr-only">Username</label>
+                <input type="text" id="login-username"
+                    class="w-full border border-stone-300 text-stone-800 text-base rounded-lg px-4 py-3 mb-3 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent transition-all placeholder:text-stone-400"
+                    placeholder="Username" autocomplete="username" required minlength="3" maxlength="50"
+                    pattern="^[a-zA-Z0-9_-]+$" aria-describedby="login-error">
+
+                <label for="login-password" class="sr-only">Password</label>
+                <input type="password" id="login-password"
+                    class="w-full border border-stone-300 text-stone-800 text-base rounded-lg px-4 py-3 mb-3 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent transition-all placeholder:text-stone-400"
+                    placeholder="Password" autocomplete="current-password" required minlength="6" maxlength="128">
+
+                <div id="confirm-password-wrap" class="hidden">
+                    <label for="login-confirm-password" class="sr-only">Confirm password</label>
+                    <input type="password" id="login-confirm-password"
+                        class="w-full border border-stone-300 text-stone-800 text-base rounded-lg px-4 py-3 mb-3 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent transition-all placeholder:text-stone-400"
+                        placeholder="Confirm password" autocomplete="new-password" minlength="6" maxlength="128">
+                </div>
+
+                <div id="login-error" class="text-red-600 text-sm mb-3 min-h-[1.25rem]" role="alert" aria-live="polite"></div>
+                <button type="submit" id="login-submit-btn"
+                    class="w-full bg-stone-900 hover:bg-stone-700 text-white font-medium py-3 rounded-lg transition-colors mb-3 disabled:opacity-50 disabled:cursor-not-allowed">
+                    Sign In
                 </button>
             </form>
-            <p class="text-xs text-stone-400 text-center">Your username identifies your chats. Choose something unique.</p>
+            <p class="text-sm text-stone-500 text-center">
+                <span id="login-toggle-text">Don't have an account?</span>
+                <button id="login-toggle-btn" class="text-stone-900 font-semibold ml-1 hover:underline">Create one</button>
+            </p>
         </div>
     </div>
 
     <!-- Top Header Bar -->
-    <header
-        class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-stone-200 flex items-center justify-between px-4 z-50">
+    <header class="fixed top-0 left-0 right-0 h-14 bg-white border-b border-stone-200 flex items-center justify-between px-4 z-50">
         <div class="flex items-center gap-3">
-            <button id="sidebar-toggle" class="p-2 hover:bg-stone-100 rounded-lg transition-colors">
+            <button id="sidebar-toggle" class="p-2 hover:bg-stone-100 rounded-lg transition-colors" aria-label="Toggle sidebar">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    stroke="currentColor" class="w-5 h-5" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
             </button>
             <h1 class="text-xl font-semibold tracking-tight text-stone-900">LangChat</h1>
         </div>
-        <div class="flex items-center gap-3">
-            <span id="username-display" class="text-sm text-stone-600 font-medium"></span>
+        <div class="flex items-center gap-2 sm:gap-3">
+            <span id="username-display" class="text-sm text-stone-600 font-medium hidden sm:inline"></span>
             <button id="new-chat-btn"
-                class="flex items-center gap-2 px-4 py-2 bg-stone-900 hover:bg-stone-700 text-white rounded-lg transition-colors text-sm font-medium">
+                class="flex items-center gap-2 px-3 sm:px-4 py-2 bg-stone-900 hover:bg-stone-700 text-white rounded-lg transition-colors text-sm font-medium"
+                aria-label="Start new chat">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" class="w-4 h-4">
+                    stroke="currentColor" class="w-4 h-4" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
-                New Chat
+                <span class="hidden sm:inline">New Chat</span>
             </button>
-            <button id="logout-btn" class="px-3 py-2 text-stone-600 hover:bg-stone-100 rounded-lg transition-colors text-sm font-medium"
-                title="Logout">
+            <button id="logout-btn" class="px-2 sm:px-3 py-2 text-stone-600 hover:bg-stone-100 rounded-lg transition-colors text-sm font-medium"
+                aria-label="Log out">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                    stroke="currentColor" class="w-5 h-5">
+                    stroke="currentColor" class="w-5 h-5" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3h12.75" />
                 </svg>
             </button>
         </div>
     </header>
 
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-black/50 z-[55] hidden transition-opacity duration-300" aria-hidden="true"></div>
+
     <!-- Sidebar -->
     <aside id="sidebar"
-        class="fixed top-14 left-0 bottom-0 bg-[#1e1e1e] text-white w-[280px] overflow-hidden z-40 transition-all duration-300 ease-apple">
+        class="fixed top-14 left-0 bottom-0 bg-[#1e1e1e] text-white w-[280px] overflow-hidden z-40 transition-all duration-300 ease-apple"
+        role="navigation" aria-label="Chat history">
         <div class="h-full flex flex-col">
-            <!-- Search Bar -->
             <div id="sidebar-content" class="p-4 transition-opacity duration-300">
                 <div class="relative">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                        stroke="currentColor" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        stroke="currentColor" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
+                    <label for="search-threads" class="sr-only">Search conversations</label>
                     <input type="text" id="search-threads" placeholder="Search threads..."
                         class="w-full bg-[#2a2a2a] border border-[#3a3a3a] text-white text-sm rounded-lg pl-9 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-stone-500 placeholder:text-gray-500">
                 </div>
             </div>
 
-            <!-- Chat History -->
-            <div id="chat-history"
-                class="flex-1 overflow-y-auto no-scrollbar px-4 pb-4 transition-opacity duration-300">
-                <div id="sessions-list" class="space-y-1">
-                    <div class="text-center text-gray-500 text-[0.8rem] py-8 px-4 leading-relaxed" id="empty-msg">No
-                        conversations yet.<br>Start a new chat!</div>
+            <div id="chat-history" class="flex-1 overflow-y-auto no-scrollbar px-4 pb-4 transition-opacity duration-300">
+                <div id="sessions-list" class="space-y-1" role="list">
+                    <div class="text-center text-gray-500 text-[0.8rem] py-8 px-4 leading-relaxed" id="empty-msg">
+                        No conversations yet.<br>Start a new chat!
+                    </div>
                 </div>
             </div>
         </div>
@@ -227,19 +364,20 @@
 
     <!-- Main Content Area -->
     <div id="main-content"
-        class="h-screen flex flex-col pt-14 ml-[280px] transition-all duration-300 ease-apple relative overflow-hidden">
+        class="h-screen flex flex-col pt-14 ml-0 md:ml-[280px] transition-all duration-300 ease-apple relative overflow-hidden">
 
         <!-- Chat messages -->
         <div id="chat-container"
-            class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden w-full max-w-3xl mx-auto px-4 pt-10 pb-40 opacity-0 transition-opacity duration-700 ease-apple no-scrollbar">
+            class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden w-full max-w-3xl mx-auto px-4 pt-10 pb-48 opacity-0 transition-opacity duration-700 ease-apple no-scrollbar scroll-smooth"
+            role="log" aria-label="Chat messages" aria-live="polite">
         </div>
 
         <!-- Hero section -->
         <div id="hero-section"
             class="absolute inset-0 flex flex-col items-center justify-center pb-48 transition-all duration-700 ease-apple z-0 mt-14">
-            <div class="mb-60 text-center transition-opacity duration-500" id="hero-text">
-                <h2 class="text-4xl font-semibold tracking-tight text-stone-900 mb-2">How can I help?</h2>
-                <p class="text-stone-500">Ask anything.</p>
+            <div class="mb-60 text-center transition-opacity duration-500 px-4" id="hero-text">
+                <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight text-stone-900 mb-2">How can I help?</h2>
+                <p class="text-stone-500">Ask anything about LangChain.</p>
             </div>
         </div>
 
@@ -247,16 +385,17 @@
         <div id="input-wrapper"
             class="absolute inset-0 flex items-center justify-center transition-all duration-700 ease-apple z-10 p-4 mt-14">
             <div class="w-full max-w-2xl relative">
-                <form id="chat-form" class="relative group" onsubmit="handleMessage(event)">
-                    <input type="text" id="user-input"
-                        class="w-full bg-white border border-stone-200 text-stone-800 text-lg rounded-[2rem] px-6 py-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] focus:outline-none focus:ring-2 focus:ring-stone-200 focus:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 placeholder:text-stone-400"
-                        placeholder="ask..." autocomplete="off" maxlength="400">
-                    <button type="submit"
-                        class="absolute right-2 top-2 bottom-2 bg-stone-900 hover:bg-stone-700 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200 disabled:opacity-50">
+                <form id="chat-form" class="relative group">
+                    <label for="user-input" class="sr-only">Message</label>
+                    <textarea id="user-input" rows="1"
+                        class="w-full bg-white border border-stone-200 text-stone-800 text-base rounded-2xl pl-5 pr-14 py-3.5 shadow-[0_8px_30px_rgb(0,0,0,0.04)] focus:outline-none focus:ring-2 focus:ring-stone-200 focus:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-300 placeholder:text-stone-400 resize-none overflow-y-auto no-scrollbar"
+                        placeholder="Ask about LangChain..." autocomplete="off" maxlength="400"></textarea>
+                    <button type="submit" id="submit-btn"
+                        class="absolute right-2.5 bottom-2.5 bg-stone-900 hover:bg-stone-700 text-white rounded-full w-10 h-10 flex items-center justify-center transition-colors duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
+                        aria-label="Send message" disabled>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                            stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                            stroke="currentColor" class="w-5 h-5" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                         </svg>
                     </button>
                 </form>
@@ -265,20 +404,21 @@
                         <span id="char-count">0 / 400</span>
                         <span id="messages-remaining" class="font-medium"></span>
                     </div>
-                    <div id="char-warning" class="text-red-500 opacity-0 transition-opacity duration-200"></div>
+                    <div id="char-warning" class="text-red-500 opacity-0 transition-opacity duration-200" aria-live="polite"></div>
                 </div>
                 <div class="text-center mt-4 text-xs text-stone-400 opacity-0 transition-opacity duration-700"
-                    id="footer-text">Ask...</div>
+                    id="footer-text">LangChat can make mistakes. Verify important information.</div>
             </div>
         </div>
     </div>
 
     <!-- Delete Confirmation Modal -->
     <div id="delete-modal"
-        class="fixed inset-0 bg-black/60 z-[200] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200">
+        class="fixed inset-0 bg-black/60 z-[200] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-200"
+        role="dialog" aria-modal="true" aria-labelledby="delete-modal-heading">
         <div id="delete-modal-box"
             class="bg-[#2f2f2f] border border-[#424242] rounded-2xl p-6 max-w-[400px] w-[90%] scale-95 transition-transform duration-200">
-            <h3 class="text-[#e5e7eb] text-lg font-semibold mb-3">Delete chat?</h3>
+            <h3 id="delete-modal-heading" class="text-[#e5e7eb] text-lg font-semibold mb-3">Delete chat?</h3>
             <p class="text-[#9ca3af] text-sm leading-relaxed mb-5">This will delete <strong id="delete-modal-title"
                     class="text-[#e5e7eb]"></strong>.</p>
             <div class="flex justify-end gap-2">
@@ -290,242 +430,100 @@
         </div>
     </div>
 
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-5 z-[400] flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Offline Banner -->
+    <div id="offline-banner" class="fixed top-14 left-0 right-0 bg-amber-500 text-white text-center text-sm py-2 z-[100] hidden transition-all duration-300" role="alert">
+        You are offline. Reconnecting...
+    </div>
+
     <script>
+        'use strict';
+
+        // ==================== CONFIGURATION ====================
+        const MAX_MESSAGE_LENGTH = 400;
+        const DAILY_LIMIT = 4;
+        const TOKEN_KEY = 'langchat_token';
+        const USERNAME_KEY = 'langchat_username';
+        // Clean up legacy keys
+        try { localStorage.removeItem('langhchat_username'); } catch {}
+
         // ==================== STATE ====================
         let hasStarted = false;
-        let sidebarExpanded = true;
+        let sidebarExpanded = window.innerWidth >= 768;
         let currentSessionId = null;
         let sessionsCache = [];
         let activeDropdown = null;
         let pendingDeleteSessionId = null;
         let currentUsername = null;
+        let isSubmitting = false;
+        let sessionsLoaded = false;
+        let remainingMessages = DAILY_LIMIT;
+        let activeAbortController = null;
 
         // ==================== DOM ELEMENTS ====================
-        const loginModal = document.getElementById('login-modal');
-        const loginForm = document.getElementById('login-form');
-        const loginUsername = document.getElementById('login-username');
-        const loginError = document.getElementById('login-error');
-        const usernameDisplay = document.getElementById('username-display');
-        const logoutBtn = document.getElementById('logout-btn');
-        
-        const chatContainer = document.getElementById('chat-container');
-        const heroSection = document.getElementById('hero-section');
-        const heroText = document.getElementById('hero-text');
-        const inputWrapper = document.getElementById('input-wrapper');
-        const footerText = document.getElementById('footer-text');
-        const chatForm = document.getElementById('chat-form');
-        const userInput = document.getElementById('user-input');
-        const charCount = document.getElementById('char-count');
-        const charWarning = document.getElementById('char-warning');
-        const messagesRemaining = document.getElementById('messages-remaining');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarToggle = document.getElementById('sidebar-toggle');
-        const mainContent = document.getElementById('main-content');
-        const newChatBtn = document.getElementById('new-chat-btn');
-        const sidebarContent = document.getElementById('sidebar-content');
-        const chatHistoryEl = document.getElementById('chat-history');
-        const sessionsList = document.getElementById('sessions-list');
-        const deleteModal = document.getElementById('delete-modal');
-        const deleteModalBox = document.getElementById('delete-modal-box');
-        const deleteModalTitle = document.getElementById('delete-modal-title');
-        const modalCancelBtn = document.getElementById('modal-cancel-btn');
-        const modalDeleteBtn = document.getElementById('modal-delete-btn');
+        const $ = (id) => document.getElementById(id);
 
-        // ==================== LOGIN MANAGEMENT ====================
-        async function handleLoginSubmit(event) {
-            event.preventDefault();
-            const username = loginUsername.value.trim();
-            
-            // Frontend validation
-            if (!username) {
-                loginError.textContent = 'Username cannot be empty';
-                loginUsername.focus();
-                return;
-            }
-            
-            if (username.length < 3) {
-                loginError.textContent = 'Username must be at least 3 characters long';
-                loginUsername.focus();
-                return;
-            }
-            
-            if (username.length > 50) {
-                loginError.textContent = 'Username must be 50 characters or less';
-                loginUsername.focus();
-                return;
-            }
-            
-            if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
-                loginError.textContent = 'Username can only contain letters, numbers, hyphens, and underscores';
-                loginUsername.focus();
-                return;
-            }
-            
-            loginError.textContent = '';
-            const btn = loginForm.querySelector('button[type="submit"]');
-            btn.disabled = true;
-            btn.textContent = 'Loading...';
-            
-            try {
-                const response = await fetch('/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username })
-                });
-                
-                const data = await response.json();
-                
-                if (!response.ok) {
-                    // Handle error responses from backend
-                    loginError.textContent = data.detail || data.message || 'Registration failed';
-                    btn.disabled = false;
-                    btn.textContent = 'Get Started';
-                    return;
-                }
-                
-                if (!data.success) {
-                    loginError.textContent = data.message || 'Registration failed';
-                    btn.disabled = false;
-                    btn.textContent = 'Get Started';
-                    return;
-                }
-                
-                // Store username in localStorage
-                localStorage.setItem('langhchat_username', username);
-                currentUsername = username;
-                
-                // Hide login modal
-                loginModal.classList.add('opacity-0', 'pointer-events-none');
-                loginModal.style.display = 'none';
-                
-                // Update header
-                usernameDisplay.textContent = `@${username}`;
-                
-                // Initialize character counter
-                updateCharCount();
-                
-                // Focus on input
-                setTimeout(() => userInput.focus(), 100);
-                
-            } catch (error) {
-                loginError.textContent = 'Error: Unable to connect to server';
-                console.error('Login error:', error);
-                btn.disabled = false;
-                btn.textContent = 'Get Started';
-            }
-        }
-        
-        function logout() {
-            localStorage.removeItem('langhchat_username');
-            currentUsername = null;
-            location.reload();
-        }
-        
-        // ==================== USERNAME VALIDATION ====================
-        function validateUsername(username) {
-            if (!username) {
-                return { valid: false, message: 'Username cannot be empty' };
-            }
-            if (username.length < 3) {
-                return { valid: false, message: `Username must be at least 3 characters (${username.length}/3)` };
-            }
-            if (username.length > 50) {
-                return { valid: false, message: 'Username must be 50 characters or less' };
-            }
-            if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
-                return { valid: false, message: 'Only letters, numbers, hyphens, and underscores allowed' };
-            }
-            return { valid: true, message: '✓ Username valid' };
-        }
-        
-        // Real-time validation feedback
-        loginUsername.addEventListener('input', (e) => {
-            const username = e.target.value.trim();
-            const validation = validateUsername(username);
-            
-            if (username === '') {
-                loginError.textContent = '';
-            } else {
-                loginError.textContent = validation.message;
-                loginError.className = validation.valid 
-                    ? 'text-green-600 text-sm mb-4 h-5' 
-                    : 'text-red-600 text-sm mb-4 h-5';
-            }
-            
-            // Disable submit button if invalid
-            const btn = loginForm.querySelector('button[type="submit"]');
-            btn.disabled = !validation.valid || username === '';
-        });
-        
-        function checkAuth() {
-            const stored = localStorage.getItem('langhchat_username');
-            if (stored) {
-                currentUsername = stored;
-                loginModal.style.display = 'none';
-                loginModal.classList.add('opacity-0', 'pointer-events-none');
-                usernameDisplay.textContent = `@${stored}`;
-                loadRemainingMessages();
-                return true;
-            } else {
-                loginModal.style.display = 'flex';
-                loginModal.classList.remove('opacity-0', 'pointer-events-none');
-                loginUsername.focus();
-                return false;
-            }
-        }
+        const loginModal = $('login-modal');
+        const loginForm = $('login-form');
+        const loginUsername = $('login-username');
+        const loginPassword = $('login-password');
+        const loginConfirmPassword = $('login-confirm-password');
+        const confirmPasswordWrap = $('confirm-password-wrap');
+        const loginError = $('login-error');
+        const loginSubtitle = $('login-subtitle');
+        const loginSubmitBtn = $('login-submit-btn');
+        const loginToggleText = $('login-toggle-text');
+        const loginToggleBtn = $('login-toggle-btn');
+        const usernameDisplay = $('username-display');
+        const logoutBtn = $('logout-btn');
+        const chatContainer = $('chat-container');
+        const heroSection = $('hero-section');
+        const heroText = $('hero-text');
+        const inputWrapper = $('input-wrapper');
+        const footerText = $('footer-text');
+        const chatForm = $('chat-form');
+        const userInput = $('user-input');
+        const submitBtn = $('submit-btn');
+        const charCount = $('char-count');
+        const charWarning = $('char-warning');
+        const messagesRemaining = $('messages-remaining');
+        const sidebar = $('sidebar');
+        const sidebarToggle = $('sidebar-toggle');
+        const sidebarBackdrop = $('sidebar-backdrop');
+        const mainContent = $('main-content');
+        const newChatBtn = $('new-chat-btn');
+        const sidebarContent = $('sidebar-content');
+        const chatHistoryEl = $('chat-history');
+        const sessionsList = $('sessions-list');
+        const deleteModal = $('delete-modal');
+        const deleteModalBox = $('delete-modal-box');
+        const deleteModalTitle = $('delete-modal-title');
+        const modalCancelBtn = $('modal-cancel-btn');
+        const modalDeleteBtn = $('modal-delete-btn');
+        const offlineBanner = $('offline-banner');
+        const srAnnouncer = $('sr-announcer');
 
-        // ==================== LOAD REMAINING MESSAGES ====================
-        async function loadRemainingMessages() {
-            try {
-                const url = new URL('/remaining_messages', window.location.origin);
-                url.searchParams.append('username', currentUsername);
-                const resp = await fetch(url);
-                if (!resp.ok) throw new Error('Failed');
-                const data = await resp.json();
-                messagesRemaining.textContent = `${data.remaining} messages left today`;
-                messagesRemaining.className = data.remaining <= 2 ? 'font-medium text-red-500' : 'text-stone-400';
-            } catch (e) {
-                console.error('Error loading remaining messages:', e);
-            }
-        }
+        // ==================== SVG ICONS ====================
+        const ICONS = {
+            clipboard: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block align-middle" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/></svg>`,
+            check: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block align-middle" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>`,
+            thumbUp: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block align-middle" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5.004 9.5H5.25m.5 1.5v8.5"/></svg>`,
+            thumbDown: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block align-middle" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7.498 15.25H4.372c-1.026 0-1.945-.694-2.054-1.715a12.137 12.137 0 0 1-.068-1.285c0-2.848.992-5.464 2.649-7.521C5.287 4.247 5.886 4 6.504 4h4.016a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23h1.294M7.498 15.25c.618 0 .991.724.725 1.282A7.471 7.471 0 0 0 7.5 19.75 2.25 2.25 0 0 0 9.75 22a.75.75 0 0 0 .75-.75v-.633c0-.573.11-1.14.322-1.672.304-.76.93-1.33 1.653-1.715a9.04 9.04 0 0 0 2.86-2.4c.498-.634 1.226-1.08 2.032-1.08h.384m-10.253 1.5H9.7m8.075-9.75c.01.05.027.1.05.148.593 1.2.925 2.55.925 3.977 0 1.487-.36 2.89-.999 4.125m.023-8.25c-.076-.365.183-.75.575-.75h.908c.889 0 1.713.518 1.972 1.368.339 1.11.521 2.287.521 3.507 0 1.553-.295 3.036-.831 4.398-.306.774-1.086 1.227-1.923 1.227h-.24"/></svg>`,
+            send: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" /></svg>`,
+            stop: `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>`,
+        };
 
-        // ==================== CHARACTER COUNTER ====================
-        function updateCharCount() {
-            const len = userInput.value.trim().length;
-            const submitBtn = chatForm.querySelector('button[type="submit"]');
-            charCount.textContent = `${len} / 400`;
-            
-            // Disable submit button if message is empty or too long
-            submitBtn.disabled = len === 0 || len > 400;
-            
-            if (len === 0) {
-                charCount.classList.remove('text-orange-500', 'text-red-500');
-                charWarning.classList.add('opacity-0');
-            } else if (len > 350 && len <= 390) {
-                charCount.classList.add('text-orange-500');
-                charCount.classList.remove('text-red-500');
-                charWarning.textContent = `${400 - len} chars left`;
-                charWarning.classList.remove('opacity-0');
-            } else if (len > 390) {
-                charCount.classList.add('text-red-500');
-                charCount.classList.remove('text-orange-500');
-                charWarning.textContent = 'Nearly at limit!';
-                charWarning.classList.remove('opacity-0');
-            } else {
-                charCount.classList.remove('text-orange-500', 'text-red-500');
-                charWarning.classList.add('opacity-0');
-            }
-        }
-
-        // ==================== UTILITY: UUID ====================
+        // ==================== UTILITIES ====================
         function generateUUID() {
+            if (crypto.randomUUID) return crypto.randomUUID();
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
                 const r = Math.random() * 16 | 0;
                 return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
             });
         }
 
-        // ==================== UTILITY: RELATIVE TIME ====================
         function relativeTime(isoString) {
             if (!isoString) return '';
             const diffMs = Date.now() - new Date(isoString);
@@ -536,31 +534,358 @@
             if (mins < 60) return `${mins}m ago`;
             if (hrs < 24) return `${hrs}h ago`;
             if (days === 1) return 'Yesterday';
-            if (days < 7) return `${days} days ago`;
+            if (days < 7) return `${days}d ago`;
             if (days < 30) return `${Math.floor(days / 7)}w ago`;
             return new Date(isoString).toLocaleDateString();
         }
 
         function escapeHtml(str) {
-            const d = document.createElement('div');
-            d.textContent = str;
-            return d.innerHTML;
+            const el = document.createElement('span');
+            el.textContent = str;
+            return el.innerHTML;
         }
 
-        // ==================== SIDEBAR: LOAD SESSIONS ====================
-        async function loadSessions() {
+        function debounce(fn, ms) {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => fn(...args), ms);
+            };
+        }
+
+        function isMobile() {
+            return window.innerWidth < 768;
+        }
+
+        // ==================== SAFE STORAGE ====================
+        const storage = {
+            get(key) {
+                try { return localStorage.getItem(key); }
+                catch { return null; }
+            },
+            set(key, val) {
+                try { localStorage.setItem(key, val); }
+                catch { /* private browsing or quota exceeded */ }
+            },
+            remove(key) {
+                try { localStorage.removeItem(key); }
+                catch { /* noop */ }
+            }
+        };
+
+        // ==================== TOAST NOTIFICATIONS ====================
+        function showToast(message, type = 'info', duration = 4000) {
+            const container = $('toast-container');
+            const toast = document.createElement('div');
+
+            const colors = {
+                error: 'bg-red-600',
+                success: 'bg-stone-800',
+                info: 'bg-stone-700',
+            };
+
+            toast.className = `pointer-events-auto px-4 py-3 rounded-xl text-white text-sm shadow-lg max-w-[360px] toast-enter ${colors[type] || colors.info}`;
+            toast.setAttribute('role', 'alert');
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            const dismiss = () => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-exit');
+                toast.addEventListener('animationend', () => toast.remove(), { once: true });
+            };
+
+            const timeout = setTimeout(dismiss, duration);
+            toast.addEventListener('click', () => { clearTimeout(timeout); dismiss(); });
+        }
+
+        // ==================== MARKDOWN CONFIGURATION ====================
+        DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+            if (node.tagName === 'A') {
+                node.setAttribute('target', '_blank');
+                node.setAttribute('rel', 'noopener noreferrer');
+            }
+        });
+
+        marked.use({ breaks: true, gfm: true });
+
+        function renderMarkdown(text) {
+            const rawHtml = marked.parse(text);
+            return DOMPurify.sanitize(rawHtml, {
+                ADD_ATTR: ['target', 'rel'],
+            });
+        }
+
+        // ==================== ONLINE / OFFLINE ====================
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                offlineBanner.classList.add('hidden');
+            } else {
+                offlineBanner.classList.remove('hidden');
+            }
+        }
+
+        window.addEventListener('online', () => {
+            updateOnlineStatus();
+            showToast('Back online', 'success', 2000);
+        });
+        window.addEventListener('offline', updateOnlineStatus);
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && currentUsername) loadRemainingMessages();
+        });
+
+        // ==================== API HELPER ====================
+        function authHeaders() {
+            const token = storage.get(TOKEN_KEY);
+            return token ? { 'Authorization': `Bearer ${token}` } : {};
+        }
+
+        async function apiFetch(url, options = {}) {
+            if (!navigator.onLine) {
+                throw new Error('You are offline. Please check your connection.');
+            }
+            options.headers = { ...options.headers, ...authHeaders() };
+            const resp = await fetch(url, options);
+            if (resp.status === 401) {
+                storage.remove(TOKEN_KEY);
+                storage.remove(USERNAME_KEY);
+                currentUsername = null;
+                location.reload();
+                return;
+            }
+            if (!resp.ok) {
+                const data = await resp.json().catch(() => ({}));
+                const err = new Error(data.detail || data.message || `Request failed (${resp.status})`);
+                err.status = resp.status;
+                err.data = data;
+                throw err;
+            }
+            return resp.json();
+        }
+
+        // ==================== AUTH ====================
+        let isSignUpMode = false;
+
+        function toggleAuthMode() {
+            isSignUpMode = !isSignUpMode;
+            loginError.textContent = '';
+            loginPassword.value = '';
+            loginConfirmPassword.value = '';
+
+            if (isSignUpMode) {
+                loginSubtitle.textContent = 'Create a new account';
+                loginSubmitBtn.textContent = 'Create Account';
+                loginToggleText.textContent = 'Already have an account?';
+                loginToggleBtn.textContent = 'Sign in';
+                confirmPasswordWrap.classList.remove('hidden');
+                loginPassword.setAttribute('autocomplete', 'new-password');
+            } else {
+                loginSubtitle.textContent = 'Sign in to your account';
+                loginSubmitBtn.textContent = 'Sign In';
+                loginToggleText.textContent = "Don't have an account?";
+                loginToggleBtn.textContent = 'Create one';
+                confirmPasswordWrap.classList.add('hidden');
+                loginPassword.setAttribute('autocomplete', 'current-password');
+            }
+        }
+
+        function validateAuthForm() {
+            const username = loginUsername.value.trim();
+            const password = loginPassword.value;
+
+            if (!username) return 'Username is required';
+            if (username.length < 3) return 'Username must be at least 3 characters';
+            if (username.length > 50) return 'Username must be 50 characters or less';
+            if (!/^[a-zA-Z0-9_-]+$/.test(username)) return 'Only letters, numbers, hyphens, underscores';
+            if (!password) return 'Password is required';
+            if (password.length < 6) return 'Password must be at least 6 characters';
+
+            if (isSignUpMode) {
+                const confirm = loginConfirmPassword.value;
+                if (password !== confirm) return 'Passwords do not match';
+            }
+
+            return null;
+        }
+
+        async function handleLoginSubmit(event) {
+            event.preventDefault();
+            const error = validateAuthForm();
+            if (error) {
+                loginError.textContent = error;
+                return;
+            }
+
+            loginError.textContent = '';
+            const originalText = loginSubmitBtn.textContent;
+            loginSubmitBtn.disabled = true;
+            loginSubmitBtn.textContent = isSignUpMode ? 'Creating...' : 'Signing in...';
+
+            const endpoint = isSignUpMode ? '/register' : '/login';
+            const body = {
+                username: loginUsername.value.trim(),
+                password: loginPassword.value,
+            };
+
             try {
-                const url = new URL('/sessions', window.location.origin);
-                url.searchParams.append('username', currentUsername);
-                const resp = await fetch(url);
-                if (!resp.ok) throw new Error('Failed');
-                sessionsCache = await resp.json();
+                const resp = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+
+                const data = await resp.json();
+
+                if (!resp.ok) {
+                    loginError.textContent = data.detail || 'Something went wrong';
+                    loginSubmitBtn.disabled = false;
+                    loginSubmitBtn.textContent = originalText;
+                    return;
+                }
+
+                storage.set(TOKEN_KEY, data.token);
+                storage.set(USERNAME_KEY, data.username);
+                currentUsername = data.username;
+
+                loginModal.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => { loginModal.style.display = 'none'; }, 300);
+
+                usernameDisplay.textContent = `@${data.username}`;
+                updateCharCount();
+                loadSessions();
+                loadRemainingMessages();
+                setTimeout(() => userInput.focus(), 150);
+
+            } catch (error) {
+                loginError.textContent = 'Unable to connect to server';
+                loginSubmitBtn.disabled = false;
+                loginSubmitBtn.textContent = originalText;
+            }
+        }
+
+        function logout() {
+            storage.remove(TOKEN_KEY);
+            storage.remove(USERNAME_KEY);
+            currentUsername = null;
+            location.reload();
+        }
+
+        function decodeToken(token) {
+            try {
+                return JSON.parse(atob(token.split('.')[1]));
+            } catch { return null; }
+        }
+
+        function checkAuth() {
+            const token = storage.get(TOKEN_KEY);
+            if (!token) {
+                loginModal.style.display = 'flex';
+                loginModal.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => loginUsername.focus(), 100);
+                return false;
+            }
+
+            const payload = decodeToken(token);
+            if (!payload || (payload.exp && Date.now() >= payload.exp * 1000)) {
+                storage.remove(TOKEN_KEY);
+                storage.remove(USERNAME_KEY);
+                loginModal.style.display = 'flex';
+                loginModal.classList.remove('opacity-0', 'pointer-events-none');
+                setTimeout(() => loginUsername.focus(), 100);
+                return false;
+            }
+
+            currentUsername = payload.username || storage.get(USERNAME_KEY);
+            loginModal.style.display = 'none';
+            loginModal.classList.add('opacity-0', 'pointer-events-none');
+            usernameDisplay.textContent = `@${currentUsername}`;
+            loadRemainingMessages();
+            return true;
+        }
+
+        // ==================== REMAINING MESSAGES ====================
+        async function loadRemainingMessages() {
+            try {
+                const data = await apiFetch('/remaining_messages');
+                remainingMessages = data.remaining;
+            } catch {
+                // keep current value on failure
+            }
+            applyRemainingMessagesUI();
+        }
+
+        function applyRemainingMessagesUI() {
+            const atLimit = remainingMessages <= 0;
+            messagesRemaining.textContent = atLimit
+                ? 'Daily limit reached'
+                : `${remainingMessages} message${remainingMessages === 1 ? '' : 's'} left today`;
+            messagesRemaining.className = remainingMessages <= 2 ? 'font-medium text-red-500' : 'font-medium text-stone-400';
+            updateCharCount();
+        }
+
+        // ==================== CHARACTER COUNTER ====================
+        function updateCharCount() {
+            const len = userInput.value.trim().length;
+            charCount.textContent = `${len} / ${MAX_MESSAGE_LENGTH}`;
+            submitBtn.disabled = len === 0 || len > MAX_MESSAGE_LENGTH || isSubmitting || remainingMessages <= 0;
+
+            if (len === 0 || len <= 350) {
+                charCount.classList.remove('text-orange-500', 'text-red-500');
+                charWarning.classList.add('opacity-0');
+            } else if (len <= 390) {
+                charCount.classList.add('text-orange-500');
+                charCount.classList.remove('text-red-500');
+                charWarning.textContent = `${MAX_MESSAGE_LENGTH - len} chars left`;
+                charWarning.classList.remove('opacity-0');
+            } else {
+                charCount.classList.add('text-red-500');
+                charCount.classList.remove('text-orange-500');
+                charWarning.textContent = 'Nearly at limit!';
+                charWarning.classList.remove('opacity-0');
+            }
+        }
+
+        // ==================== TEXTAREA AUTO-RESIZE ====================
+        function autoResizeTextarea() {
+            userInput.style.height = 'auto';
+            userInput.style.height = Math.min(userInput.scrollHeight, 160) + 'px';
+        }
+
+        function resetTextarea() {
+            userInput.value = '';
+            userInput.style.height = '';
+            updateCharCount();
+        }
+
+        // ==================== SESSIONS ====================
+        async function loadSessions() {
+            if (!currentUsername) return;
+
+            if (!sessionsLoaded) {
+                sessionsList.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="h-10 bg-white/5 rounded-lg skeleton"></div>
+                        <div class="h-10 bg-white/5 rounded-lg skeleton"></div>
+                        <div class="h-10 bg-white/5 rounded-lg skeleton"></div>
+                    </div>`;
+            }
+
+            try {
+                const data = await apiFetch('/sessions');
+                sessionsCache = data;
+                sessionsLoaded = true;
                 renderSessions(sessionsCache);
-            } catch (e) { console.error('Error loading sessions:', e); }
+            } catch (e) {
+                if (!sessionsLoaded) {
+                    sessionsList.innerHTML = '<div class="text-center text-gray-500 text-[0.8rem] py-8 px-4">Failed to load chats</div>';
+                }
+            }
         }
 
         function renderSessions(sessions) {
             sessionsList.innerHTML = '';
+
             if (sessions.length === 0) {
                 sessionsList.innerHTML = '<div class="text-center text-gray-500 text-[0.8rem] py-8 px-4 leading-relaxed">No conversations yet.<br>Start a new chat!</div>';
                 return;
@@ -569,22 +894,25 @@
             sessions.forEach(session => {
                 const item = document.createElement('div');
                 const isActive = session.session_id === currentSessionId;
-                item.className = `relative px-3 py-2 rounded-lg cursor-pointer transition-colors duration-200 group ${isActive ? 'bg-white/[0.08]' : 'hover:bg-white/[0.05]'}`;
+                item.className = `relative px-3 py-2.5 rounded-lg cursor-pointer transition-colors duration-200 group ${isActive ? 'bg-white/[0.08]' : 'hover:bg-white/[0.05]'}`;
                 item.dataset.sessionId = session.session_id;
+                item.setAttribute('role', 'listitem');
+                item.setAttribute('tabindex', '0');
+                item.setAttribute('aria-current', isActive ? 'true' : 'false');
 
-                const title = session.title.length > 50 ? session.title.substring(0, 50) + '…' : session.title;
+                const title = session.title.length > 50 ? session.title.substring(0, 50) + '...' : session.title;
 
                 item.innerHTML = `
                     <div class="text-sm font-medium text-white truncate pr-7">${escapeHtml(title)}</div>
                     <div class="text-xs text-gray-400 mt-0.5">${relativeTime(session.last_active)}</div>
-                    <button class="absolute right-1.5 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-white/10 text-gray-400 hover:text-gray-200 transition-all duration-150 menu-trigger" title="Options">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                    <button class="absolute right-1.5 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 focus:opacity-100 p-1.5 rounded hover:bg-white/10 text-gray-400 hover:text-gray-200 transition-all duration-150 menu-trigger" aria-label="Options for ${escapeHtml(title)}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                         </svg>
                     </button>
                     <div class="dropdown-menu absolute right-0 top-full mt-1 bg-[#2f2f2f] border border-[#424242] rounded-xl p-1 min-w-[160px] z-[100] shadow-[0_8px_24px_rgba(0,0,0,0.4)] opacity-0 scale-95 -translate-y-1 pointer-events-none transition-all duration-150">
-                        <button class="flex items-center gap-2.5 w-full px-3 py-2 rounded-md text-[0.85rem] text-red-400 hover:bg-red-500/10 transition-colors" data-action="delete">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 shrink-0">
+                        <button class="flex items-center gap-2.5 w-full px-3 py-2 rounded-md text-[0.85rem] text-red-400 hover:bg-red-500/10 transition-colors" data-action="delete" aria-label="Delete ${escapeHtml(title)}">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 shrink-0" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                             </svg>
                             Delete
@@ -592,14 +920,18 @@
                     </div>
                 `;
 
-                // Click to load session
-                item.addEventListener('click', (e) => {
+                const onSelect = (e) => {
                     if (e.target.closest('.menu-trigger') || e.target.closest('.dropdown-menu')) return;
                     closeAllDropdowns();
                     loadSession(session.session_id);
+                    if (isMobile()) closeMobileSidebar();
+                };
+
+                item.addEventListener('click', onSelect);
+                item.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect(e); }
                 });
 
-                // Three-dot menu
                 const menuTrigger = item.querySelector('.menu-trigger');
                 const dropdown = item.querySelector('.dropdown-menu');
                 menuTrigger.addEventListener('click', (e) => {
@@ -607,7 +939,6 @@
                     toggleDropdown(menuTrigger, dropdown);
                 });
 
-                // Delete option
                 item.querySelector('[data-action="delete"]').addEventListener('click', (e) => {
                     e.stopPropagation();
                     closeAllDropdowns();
@@ -640,20 +971,18 @@
             activeDropdown = null;
         }
 
-        document.addEventListener('click', (e) => {
-            if (activeDropdown && !e.target.closest('.menu-trigger') && !e.target.closest('.dropdown-menu')) {
-                closeAllDropdowns();
-            }
-        });
+        // ==================== DELETE MODAL ====================
+        let deleteModalTrigger = null;
 
-        // ==================== DELETE CONFIRMATION MODAL ====================
         function showDeleteModal(sessionId, title) {
             pendingDeleteSessionId = sessionId;
+            deleteModalTrigger = document.activeElement;
             deleteModalTitle.textContent = title;
             deleteModal.classList.remove('opacity-0', 'pointer-events-none');
             deleteModal.classList.add('opacity-100', 'pointer-events-auto');
             deleteModalBox.classList.remove('scale-95');
             deleteModalBox.classList.add('scale-100');
+            modalCancelBtn.focus();
         }
 
         function hideDeleteModal() {
@@ -662,14 +991,11 @@
             deleteModalBox.classList.remove('scale-100');
             deleteModalBox.classList.add('scale-95');
             pendingDeleteSessionId = null;
+            if (deleteModalTrigger) {
+                deleteModalTrigger.focus();
+                deleteModalTrigger = null;
+            }
         }
-
-        modalCancelBtn.addEventListener('click', hideDeleteModal);
-        deleteModal.addEventListener('click', (e) => { if (e.target === deleteModal) hideDeleteModal(); });
-        modalDeleteBtn.addEventListener('click', () => {
-            if (pendingDeleteSessionId) confirmDeleteSession(pendingDeleteSessionId);
-            hideDeleteModal();
-        });
 
         async function confirmDeleteSession(sessionId) {
             sessionsCache = sessionsCache.filter(s => s.session_id !== sessionId);
@@ -677,49 +1003,52 @@
             if (currentSessionId === sessionId) startNewChat();
 
             try {
-                const url = new URL(`/delete_chat/${sessionId}`, window.location.origin);
-                url.searchParams.append('username', currentUsername);
-                await fetch(url, { method: 'DELETE' });
-            } catch (e) {
-                console.error('Error deleting session:', e);
+                await fetch(`/delete_chat/${sessionId}`, {
+                    method: 'DELETE',
+                    headers: authHeaders(),
+                });
+                showToast('Chat deleted', 'success', 2000);
+            } catch {
+                showToast('Failed to delete chat', 'error');
             }
         }
 
-        // ==================== SIDEBAR: LOAD A SESSION ====================
+        // ==================== LOAD SESSION ====================
         async function loadSession(sessionId) {
+            abortActiveStream();
             currentSessionId = sessionId;
 
-            // Highlight active
             document.querySelectorAll('[data-session-id]').forEach(el => {
-                el.classList.toggle('bg-white/[0.08]', el.dataset.sessionId === sessionId);
-                el.classList.toggle('hover:bg-white/[0.05]', el.dataset.sessionId !== sessionId);
+                const isActive = el.dataset.sessionId === sessionId;
+                el.classList.toggle('bg-white/[0.08]', isActive);
+                el.classList.toggle('hover:bg-white/[0.05]', !isActive);
+                el.setAttribute('aria-current', isActive ? 'true' : 'false');
             });
 
             transitionToChatState();
             chatContainer.innerHTML = '';
 
             try {
-                const url = new URL(`/get_history/${sessionId}`, window.location.origin);
-                url.searchParams.append('username', currentUsername);
-                const resp = await fetch(url);
-                if (!resp.ok) throw new Error('Failed');
-                const messages = await resp.json();
+                const messages = await apiFetch(`/get_history/${sessionId}`);
                 messages.forEach(msg => addMessageToChat(msg.role === 'user' ? 'user' : 'bot', msg.content));
-                scrollToBottom();
-            } catch (e) {
-                console.error('Error loading session:', e);
-                addMessageToChat('bot', 'Error loading conversation history.');
+                scrollToBottom(true);
+            } catch {
+                addMessageToChat('bot', 'Failed to load conversation history. Please try again.');
             }
         }
 
-        // ==================== SIDEBAR: UPSERT SESSION ====================
+        // ==================== UPSERT SESSION IN SIDEBAR ====================
         function upsertSessionInSidebar(sessionId, title) {
             const existing = sessionsCache.find(s => s.session_id === sessionId);
             if (existing) {
                 existing.last_active = new Date().toISOString();
-                existing.title = title || existing.title;
+                if (title) existing.title = title;
             } else {
-                sessionsCache.unshift({ session_id: sessionId, title: title || 'New Chat', last_active: new Date().toISOString() });
+                sessionsCache.unshift({
+                    session_id: sessionId,
+                    title: title || 'New Chat',
+                    last_active: new Date().toISOString(),
+                });
             }
             sessionsCache.sort((a, b) => new Date(b.last_active) - new Date(a.last_active));
             renderSessions(sessionsCache);
@@ -747,85 +1076,314 @@
             heroText.style.opacity = '1';
             inputWrapper.classList.remove('absolute', 'bottom-0', 'left-0', 'right-0', 'pb-8', 'z-20');
             inputWrapper.classList.add('items-center', 'absolute', 'inset-0');
-            userInput.value = '';
+            resetTextarea();
+        }
+
+        function abortActiveStream() {
+            if (activeAbortController) {
+                activeAbortController.abort();
+                activeAbortController = null;
+            }
         }
 
         function startNewChat() {
+            abortActiveStream();
             currentSessionId = null;
             resetToHeroState();
             document.querySelectorAll('[data-session-id]').forEach(el => {
                 el.classList.remove('bg-white/[0.08]');
                 el.classList.add('hover:bg-white/[0.05]');
+                el.setAttribute('aria-current', 'false');
             });
             userInput.focus();
         }
 
-        // ==================== SCROLL FIX ====================
-        function scrollToBottom() {
+        // ==================== SIDEBAR TOGGLE ====================
+        function openMobileSidebar() {
+            sidebar.classList.add('sidebar-open');
+            sidebarBackdrop.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            sidebarToggle.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeMobileSidebar() {
+            sidebar.classList.remove('sidebar-open');
+            sidebarBackdrop.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            sidebarToggle.setAttribute('aria-expanded', 'false');
+        }
+
+        function toggleSidebar() {
+            if (isMobile()) {
+                sidebar.classList.contains('sidebar-open') ? closeMobileSidebar() : openMobileSidebar();
+            } else {
+                sidebarExpanded = !sidebarExpanded;
+                if (sidebarExpanded) {
+                    sidebar.style.width = '280px';
+                    mainContent.style.marginLeft = '280px';
+                    sidebarContent.style.opacity = '1';
+                    chatHistoryEl.style.opacity = '1';
+                } else {
+                    sidebar.style.width = '0px';
+                    mainContent.style.marginLeft = '0px';
+                    sidebarContent.style.opacity = '0';
+                    chatHistoryEl.style.opacity = '0';
+                }
+                sidebarToggle.setAttribute('aria-expanded', sidebarExpanded ? 'true' : 'false');
+            }
+        }
+
+        // ==================== SCROLL ====================
+        let userHasScrolledUp = false;
+
+        chatContainer.addEventListener('scroll', () => {
+            const distanceFromBottom = chatContainer.scrollHeight - chatContainer.scrollTop - chatContainer.clientHeight;
+            userHasScrolledUp = distanceFromBottom > 80;
+        });
+
+        function scrollToBottom(force = false) {
+            if (!force && userHasScrolledUp) return;
             requestAnimationFrame(() => {
-                chatContainer.scrollTop = chatContainer.scrollHeight;
+                chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
             });
         }
 
-        // ==================== SEND MESSAGE ====================
+        // ==================== SEND MESSAGE (STREAMING) ====================
+        function setSubmitButtonMode(mode) {
+            if (mode === 'stop') {
+                submitBtn.innerHTML = ICONS.stop;
+                submitBtn.disabled = false;
+                submitBtn.setAttribute('aria-label', 'Stop generating');
+                submitBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+                submitBtn.classList.remove('bg-stone-900', 'hover:bg-stone-700');
+            } else {
+                submitBtn.innerHTML = ICONS.send;
+                submitBtn.setAttribute('aria-label', 'Send message');
+                submitBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                submitBtn.classList.add('bg-stone-900', 'hover:bg-stone-700');
+            }
+        }
+
         async function handleMessage(event) {
             event.preventDefault();
             const message = userInput.value.trim();
-            
-            if (!message) {
-                console.warn('Cannot send empty message');
-                return;
-            }
-            
-            if (message.length > 400) {
-                console.warn('Message too long');
-                return;
-            }
+
+            if (!message || message.length > MAX_MESSAGE_LENGTH || isSubmitting || remainingMessages <= 0) return;
+            userHasScrolledUp = false;
+
+            isSubmitting = true;
+            submitBtn.disabled = true;
 
             const isNewSession = !currentSessionId;
             if (isNewSession) currentSessionId = generateUUID();
 
+            activeAbortController = new AbortController();
+            setSubmitButtonMode('stop');
+            submitBtn.onclick = () => activeAbortController?.abort();
+
             transitionToChatState();
             addMessageToChat('user', message);
-            userInput.value = '';
-            updateCharCount();
+            resetTextarea();
 
             addLoadingIndicator();
             const startTime = Date.now();
 
+            let streamBubble = null;
+            let fullText = '';
+
             try {
-                const response = await fetch('/', {
+                const response = await fetch('/chat', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ user_input: message, session_id: currentSessionId, username: currentUsername })
+                    headers: { 'Content-Type': 'application/json', ...authHeaders() },
+                    body: JSON.stringify({
+                        user_input: message,
+                        session_id: currentSessionId,
+                    }),
+                    signal: activeAbortController.signal,
                 });
 
+                removeLoadingIndicator();
+
                 if (!response.ok) {
-                    const errorData = await response.json();
+                    const errorData = await response.json().catch(() => ({}));
                     if (response.status === 429) {
-                        removeLoadingIndicator();
-                        addMessageToChat('bot', `⏰ ${errorData.detail}`);
-                        return;
+                        remainingMessages = 0;
+                        applyRemainingMessagesUI();
+                        addMessageToChat('bot', errorData.detail || 'Daily message limit reached.');
+                    } else {
+                        addMessageToChat('bot', 'Something went wrong. Please try again.');
+                        showToast(errorData.detail || `Request failed (${response.status})`, 'error');
                     }
-                    throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+                    return;
                 }
 
-                const data = await response.json();
-                const responseTime = ((Date.now() - startTime) / 1000).toFixed(2);
+                streamBubble = createBotStream();
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
 
-                if (data.session_id) currentSessionId = data.session_id;
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
 
-                removeLoadingIndicator();
-                addMessageToChat('bot', data.response || "No response received.", responseTime);
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop();
 
+                    for (const line of lines) {
+                        if (!line.startsWith('data: ')) continue;
+                        try {
+                            const data = JSON.parse(line.slice(6));
+                            if (data.token) {
+                                fullText += data.token;
+                                streamBubble.update(fullText);
+                            } else if (data.done) {
+                                if (data.session_id) currentSessionId = data.session_id;
+                            } else if (data.error) {
+                                streamBubble.finalize(fullText || 'An error occurred during generation.');
+                                showToast(data.error, 'error');
+                                return;
+                            }
+                        } catch { /* skip malformed SSE lines */ }
+                    }
+                }
+
+                const responseTime = ((Date.now() - startTime) / 1000).toFixed(1);
+                streamBubble.finalize(fullText || 'No response received.', responseTime);
+                srAnnouncer.textContent = 'LangChat responded';
+
+                remainingMessages = Math.max(0, remainingMessages - 1);
+                applyRemainingMessagesUI();
                 loadRemainingMessages();
 
                 const title = message.length > 60 ? message.substring(0, 60) : message;
                 upsertSessionInSidebar(currentSessionId, isNewSession ? title : null);
+
             } catch (error) {
                 removeLoadingIndicator();
-                addMessageToChat('bot', `Error: ${error.message}. Please check the console.`);
-                console.error('Chat API Error:', error);
+
+                if (error.name === 'AbortError') {
+                    if (streamBubble) streamBubble.finalize(fullText || 'Generation stopped.');
+                } else {
+                    if (streamBubble) {
+                        streamBubble.finalize(fullText || 'Connection lost.');
+                    } else {
+                        addMessageToChat('bot', 'Connection error. Please try again.');
+                    }
+                    showToast(error.message || 'Network error', 'error');
+                }
+            } finally {
+                isSubmitting = false;
+                activeAbortController = null;
+                setSubmitButtonMode('send');
+                submitBtn.onclick = null;
+                updateCharCount();
+            }
+        }
+
+        // ==================== STREAMING BOT BUBBLE ====================
+        function createBotStream() {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'flex w-full mb-6 justify-start group/msg';
+
+            const container = document.createElement('div');
+            container.className = 'flex flex-col items-start max-w-[90%] sm:max-w-[85%]';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'text-stone-800 py-3 leading-relaxed font-normal markdown-content';
+
+            const cursor = document.createElement('span');
+            cursor.className = 'streaming-cursor';
+
+            bubble.appendChild(cursor);
+            container.appendChild(bubble);
+            wrapper.appendChild(container);
+            chatContainer.appendChild(wrapper);
+            scrollToBottom(true);
+
+            let rafId = null;
+
+            return {
+                update(text) {
+                    if (rafId !== null) cancelAnimationFrame(rafId);
+                    rafId = requestAnimationFrame(() => {
+                        bubble.innerHTML = renderMarkdown(text);
+                        bubble.appendChild(cursor);
+                        scrollToBottom();
+                        rafId = null;
+                    });
+                },
+
+                finalize(text, responseTime) {
+                    if (rafId !== null) cancelAnimationFrame(rafId);
+                    cursor.remove();
+
+                    bubble.innerHTML = renderMarkdown(text);
+                    finalizeBotBubble(bubble, container, text, responseTime);
+                    scrollToBottom();
+                },
+            };
+        }
+
+        function finalizeBotBubble(bubble, container, text, responseTime) {
+            bubble.querySelectorAll('pre code').forEach(block => {
+                try { hljs.highlightElement(block); } catch {}
+            });
+
+            bubble.querySelectorAll('pre').forEach(pre => {
+                pre.setAttribute('tabindex', '0');
+                const btn = document.createElement('button');
+                btn.className = 'absolute top-2 right-2 bg-white/10 border border-white/20 rounded-md px-2 py-1 cursor-pointer opacity-0 hover:bg-white/20 focus:opacity-100 transition-all duration-200 text-[#d4d4d4] text-xs';
+                btn.setAttribute('aria-label', 'Copy code');
+                btn.innerHTML = ICONS.clipboard;
+
+                pre.addEventListener('mouseenter', () => { btn.style.opacity = '1'; });
+                pre.addEventListener('mouseleave', () => { if (document.activeElement !== btn) btn.style.opacity = '0'; });
+
+                btn.addEventListener('click', () => copyToClipboard(pre.querySelector('code')?.textContent || '', btn));
+                pre.appendChild(btn);
+            });
+
+            const actions = document.createElement('div');
+            actions.className = 'flex gap-1 mt-2 opacity-0 group-hover/msg:opacity-100 focus-within:opacity-100 transition-opacity duration-200';
+            actions.innerHTML = `
+                <button class="action-copy border border-stone-200 rounded-md px-2 py-1 text-stone-400 hover:bg-stone-100 hover:border-stone-300 transition-all text-sm cursor-pointer" aria-label="Copy response">${ICONS.clipboard}</button>
+                <button class="action-like border border-stone-200 rounded-md px-2 py-1 text-stone-400 hover:bg-stone-100 hover:border-stone-300 transition-all text-sm cursor-pointer" aria-label="Good response">${ICONS.thumbUp}</button>
+                <button class="action-dislike border border-stone-200 rounded-md px-2 py-1 text-stone-400 hover:bg-stone-100 hover:border-stone-300 transition-all text-sm cursor-pointer" aria-label="Bad response">${ICONS.thumbDown}</button>
+            `;
+
+            actions.querySelector('.action-copy').addEventListener('click', function () {
+                copyToClipboard(text, this);
+            });
+
+            const likeBtn = actions.querySelector('.action-like');
+            const dislikeBtn = actions.querySelector('.action-dislike');
+
+            likeBtn.addEventListener('click', () => {
+                const on = likeBtn.classList.toggle('text-green-500');
+                likeBtn.classList.toggle('border-green-500', on);
+                likeBtn.classList.toggle('bg-green-50', on);
+                likeBtn.setAttribute('aria-pressed', on);
+                dislikeBtn.classList.remove('text-red-500', 'border-red-500', 'bg-red-50');
+                dislikeBtn.setAttribute('aria-pressed', 'false');
+            });
+
+            dislikeBtn.addEventListener('click', () => {
+                const on = dislikeBtn.classList.toggle('text-red-500');
+                dislikeBtn.classList.toggle('border-red-500', on);
+                dislikeBtn.classList.toggle('bg-red-50', on);
+                dislikeBtn.setAttribute('aria-pressed', on);
+                likeBtn.classList.remove('text-green-500', 'border-green-500', 'bg-green-50');
+                likeBtn.setAttribute('aria-pressed', 'false');
+            });
+
+            container.appendChild(actions);
+
+            if (responseTime) {
+                const time = document.createElement('div');
+                time.className = 'text-xs text-stone-400 mt-1.5';
+                time.textContent = `${responseTime}s`;
+                container.appendChild(time);
             }
         }
 
@@ -836,88 +1394,46 @@
             wrapper.className = `flex w-full mb-6 ${isUser ? 'justify-end' : 'justify-start'} group/msg`;
 
             const container = document.createElement('div');
-            container.className = `flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[90%]`;
+            container.className = `flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[90%] sm:max-w-[85%]`;
 
             const bubble = document.createElement('div');
             if (isUser) {
-                bubble.className = 'bg-[#f4f2eb] text-stone-900 px-5 py-3 rounded-2xl leading-relaxed';
-                bubble.innerText = text;
+                bubble.className = 'bg-[#f4f2eb] text-stone-900 px-5 py-3 rounded-2xl leading-relaxed whitespace-pre-wrap';
+                bubble.textContent = text;
             } else {
                 bubble.className = 'text-stone-800 py-3 leading-relaxed font-normal markdown-content';
-                bubble.innerHTML = marked.parse(text);
-
-                // Syntax highlighting
-                bubble.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
-
-                // Copy buttons on code blocks
-                bubble.querySelectorAll('pre').forEach(pre => {
-                    const btn = document.createElement('button');
-                    btn.className = 'absolute top-2 right-2 bg-white/10 border border-white/20 rounded-md px-2 py-1 cursor-pointer opacity-0 hover:bg-white/20 transition-all duration-200 text-[#d4d4d4] text-xs';
-                    btn.innerHTML = clipboardIcon;
-
-                    // Show on hover
-                    pre.addEventListener('mouseenter', () => btn.style.opacity = '1');
-                    pre.addEventListener('mouseleave', () => btn.style.opacity = '0');
-
-                    btn.addEventListener('click', () => {
-                        navigator.clipboard.writeText(pre.querySelector('code').textContent);
-                        btn.innerHTML = checkIcon;
-                        setTimeout(() => { btn.innerHTML = clipboardIcon; }, 1500);
-                    });
-                    pre.appendChild(btn);
-                });
+                bubble.innerHTML = renderMarkdown(text);
             }
 
             container.appendChild(bubble);
 
-            // Action buttons
-            const actions = document.createElement('div');
-            actions.className = 'flex gap-1 mt-2 opacity-0 group-hover/msg:opacity-100 transition-opacity duration-200';
-
             if (isUser) {
-                actions.innerHTML = `<button class="action-copy border border-stone-200 rounded-md px-2 py-1 text-stone-400 hover:bg-stone-100 hover:border-stone-300 transition-all text-sm cursor-pointer">${clipboardIcon}</button>`;
+                const actions = document.createElement('div');
+                actions.className = 'flex gap-1 mt-2 opacity-0 group-hover/msg:opacity-100 focus-within:opacity-100 transition-opacity duration-200';
+                actions.innerHTML = `<button class="action-copy border border-stone-200 rounded-md px-2 py-1 text-stone-400 hover:bg-stone-100 hover:border-stone-300 transition-all text-sm cursor-pointer" aria-label="Copy message">${ICONS.clipboard}</button>`;
+                actions.querySelector('.action-copy').addEventListener('click', function () {
+                    copyToClipboard(text, this);
+                });
+                container.appendChild(actions);
             } else {
-                actions.innerHTML = `
-                    <button class="action-copy border border-stone-200 rounded-md px-2 py-1 text-stone-400 hover:bg-stone-100 hover:border-stone-300 transition-all text-sm cursor-pointer">${clipboardIcon}</button>
-                    <button class="action-like border border-stone-200 rounded-md px-2 py-1 text-stone-400 hover:bg-stone-100 hover:border-stone-300 transition-all text-sm cursor-pointer">${thumbUpIcon}</button>
-                    <button class="action-dislike border border-stone-200 rounded-md px-2 py-1 text-stone-400 hover:bg-stone-100 hover:border-stone-300 transition-all text-sm cursor-pointer">${thumbDownIcon}</button>
-                `;
-            }
-
-            // Copy message text
-            actions.querySelector('.action-copy').addEventListener('click', function () {
-                navigator.clipboard.writeText(text);
-                this.innerHTML = checkIcon;
-                setTimeout(() => { this.innerHTML = clipboardIcon; }, 1500);
-            });
-
-            // Like / Dislike toggles
-            if (!isUser) {
-                const likeBtn = actions.querySelector('.action-like');
-                const dislikeBtn = actions.querySelector('.action-dislike');
-                likeBtn.addEventListener('click', () => {
-                    const on = likeBtn.classList.toggle('text-green-500'); likeBtn.classList.toggle('border-green-500', on); likeBtn.classList.toggle('bg-green-50', on);
-                    dislikeBtn.classList.remove('text-red-500', 'border-red-500', 'bg-red-50');
-                });
-                dislikeBtn.addEventListener('click', () => {
-                    const on = dislikeBtn.classList.toggle('text-red-500'); dislikeBtn.classList.toggle('border-red-500', on); dislikeBtn.classList.toggle('bg-red-50', on);
-                    likeBtn.classList.remove('text-green-500', 'border-green-500', 'bg-green-50');
-                });
-            }
-
-            container.appendChild(actions);
-
-            // Response time
-            if (!isUser && responseTime) {
-                const time = document.createElement('div');
-                time.className = 'text-xs text-stone-400 mt-2 text-right';
-                time.textContent = `${responseTime}s`;
-                container.appendChild(time);
+                finalizeBotBubble(bubble, container, text, responseTime);
             }
 
             wrapper.appendChild(container);
             chatContainer.appendChild(wrapper);
-            scrollToBottom();
+            scrollToBottom(isUser);
+        }
+
+        // ==================== CLIPBOARD ====================
+        async function copyToClipboard(text, button) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const original = button.innerHTML;
+                button.innerHTML = ICONS.check;
+                setTimeout(() => { button.innerHTML = original; }, 1500);
+            } catch {
+                showToast('Failed to copy to clipboard', 'error', 2500);
+            }
         }
 
         // ==================== LOADING INDICATOR ====================
@@ -925,58 +1441,121 @@
             const div = document.createElement('div');
             div.id = 'loading-bubble';
             div.className = 'flex w-full mb-6 justify-start';
-            div.innerHTML = '<div class="text-stone-400 py-2 animate-pulse">Thinking...</div>';
+            div.setAttribute('role', 'status');
+            div.setAttribute('aria-label', 'Thinking');
+            div.innerHTML = `
+                <div class="flex items-center gap-1.5 py-3 px-1">
+                    <span class="w-2 h-2 bg-stone-400 rounded-full loading-dot"></span>
+                    <span class="w-2 h-2 bg-stone-400 rounded-full loading-dot"></span>
+                    <span class="w-2 h-2 bg-stone-400 rounded-full loading-dot"></span>
+                </div>`;
             chatContainer.appendChild(div);
-            scrollToBottom();
+            scrollToBottom(true);
         }
 
         function removeLoadingIndicator() {
-            document.getElementById('loading-bubble')?.remove();
+            $('loading-bubble')?.remove();
         }
 
-        // ==================== SVG ICON CONSTANTS ====================
-        const clipboardIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block align-middle"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/></svg>`;
-        const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block align-middle"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>`;
-        const thumbUpIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block align-middle"><path stroke-linecap="round" stroke-linejoin="round" d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5.004 9.5H5.25m.5 1.5v8.5"/></svg>`;
-        const thumbDownIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block align-middle"><path stroke-linecap="round" stroke-linejoin="round" d="M7.498 15.25H4.372c-1.026 0-1.945-.694-2.054-1.715a12.137 12.137 0 0 1-.068-1.285c0-2.848.992-5.464 2.649-7.521C5.287 4.247 5.886 4 6.504 4h4.016a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23h1.294M7.498 15.25c.618 0 .991.724.725 1.282A7.471 7.471 0 0 0 7.5 19.75 2.25 2.25 0 0 0 9.75 22a.75.75 0 0 0 .75-.75v-.633c0-.573.11-1.14.322-1.672.304-.76.93-1.33 1.653-1.715a9.04 9.04 0 0 0 2.86-2.4c.498-.634 1.226-1.08 2.032-1.08h.384m-10.253 1.5H9.7m8.075-9.75c.01.05.027.1.05.148.593 1.2.925 2.55.925 3.977 0 1.487-.36 2.89-.999 4.125m.023-8.25c-.076-.365.183-.75.575-.75h.908c.889 0 1.713.518 1.972 1.368.339 1.11.521 2.287.521 3.507 0 1.553-.295 3.036-.831 4.398-.306.774-1.086 1.227-1.923 1.227h-.24"/></svg>`;
-
-        // ==================== SIDEBAR TOGGLE ====================
-        sidebarToggle.addEventListener('click', () => {
-            sidebarExpanded = !sidebarExpanded;
-            if (sidebarExpanded) {
-                sidebar.style.width = '280px';
-                mainContent.style.marginLeft = '280px';
-                sidebarContent.style.opacity = '1';
-                chatHistoryEl.style.opacity = '1';
-            } else {
-                sidebar.style.width = '60px';
-                mainContent.style.marginLeft = '60px';
-                sidebarContent.style.opacity = '0';
-                chatHistoryEl.style.opacity = '0';
+        // ==================== KEYBOARD SHORTCUTS ====================
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (deleteModal.classList.contains('opacity-100')) {
+                    hideDeleteModal();
+                } else if (isMobile() && sidebar.classList.contains('sidebar-open')) {
+                    closeMobileSidebar();
+                } else if (activeDropdown) {
+                    closeAllDropdowns();
+                }
             }
         });
 
-        // ==================== AUTH HANDLERS ====================
-        loginForm.addEventListener('submit', handleLoginSubmit);
-        logoutBtn.addEventListener('click', logout);
-
-        // ==================== CHARACTER COUNTER ====================
-        userInput.addEventListener('input', updateCharCount);
-
-        // ==================== NEW CHAT ====================
-        newChatBtn.addEventListener('click', () => startNewChat());
-
-        // ==================== SEARCH ====================
-        document.getElementById('search-threads').addEventListener('input', (e) => {
-            const q = e.target.value.toLowerCase();
-            renderSessions(q ? sessionsCache.filter(s => s.title.toLowerCase().includes(q)) : sessionsCache);
+        // Trap focus inside login modal when visible
+        loginModal.addEventListener('keydown', (e) => {
+            if (e.key !== 'Tab' || loginModal.style.display === 'none') return;
+            const focusable = loginModal.querySelectorAll('input, button:not([disabled])');
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
         });
+
+        // ==================== EVENT LISTENERS ====================
+        loginForm.addEventListener('submit', handleLoginSubmit);
+        loginToggleBtn.addEventListener('click', toggleAuthMode);
+        logoutBtn.addEventListener('click', logout);
+        newChatBtn.addEventListener('click', startNewChat);
+        sidebarToggle.addEventListener('click', toggleSidebar);
+        sidebarBackdrop.addEventListener('click', closeMobileSidebar);
+
+        chatForm.addEventListener('submit', handleMessage);
+
+        userInput.addEventListener('input', () => {
+            updateCharCount();
+            autoResizeTextarea();
+        });
+
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                if (!submitBtn.disabled) chatForm.requestSubmit();
+            }
+        });
+
+        document.getElementById('search-threads').addEventListener('input', debounce((e) => {
+            const q = e.target.value.toLowerCase().trim();
+            renderSessions(q ? sessionsCache.filter(s => s.title.toLowerCase().includes(q)) : sessionsCache);
+        }, 200));
+
+        modalCancelBtn.addEventListener('click', hideDeleteModal);
+        deleteModal.addEventListener('click', (e) => { if (e.target === deleteModal) hideDeleteModal(); });
+        modalDeleteBtn.addEventListener('click', () => {
+            if (pendingDeleteSessionId) confirmDeleteSession(pendingDeleteSessionId);
+            hideDeleteModal();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (activeDropdown && !e.target.closest('.menu-trigger') && !e.target.closest('.dropdown-menu')) {
+                closeAllDropdowns();
+            }
+        });
+
+        // Handle window resize for sidebar state
+        window.addEventListener('resize', debounce(() => {
+            if (!isMobile()) {
+                closeMobileSidebar();
+                if (sidebarExpanded) {
+                    sidebar.style.width = '280px';
+                    mainContent.style.marginLeft = '280px';
+                }
+            } else {
+                sidebar.style.width = '';
+                mainContent.style.marginLeft = '';
+            }
+        }, 150));
 
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', () => {
+            updateOnlineStatus();
+
+            if (isMobile()) {
+                sidebarExpanded = false;
+                sidebar.style.width = '';
+                mainContent.style.marginLeft = '';
+            } else {
+                sidebar.style.width = '280px';
+                mainContent.style.marginLeft = '280px';
+            }
+            sidebarToggle.setAttribute('aria-expanded', (!isMobile() && sidebarExpanded) ? 'true' : 'false');
+
             if (checkAuth()) {
                 loadSessions();
-                userInput.focus();
+                setTimeout(() => userInput.focus(), 100);
             }
         });
     </script>

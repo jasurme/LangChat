@@ -7,8 +7,7 @@ class ExtractLinks(BaseModel):
 class UserInput(BaseModel):
     user_input: str
     session_id: Optional[str] = None
-    username: str
-    
+
     @validator('user_input')
     def validate_message_length(cls, v):
         if not v or len(v.strip()) == 0:
@@ -19,7 +18,8 @@ class UserInput(BaseModel):
 
 class RegisterRequest(BaseModel):
     username: str
-    
+    password: str
+
     @validator('username')
     def validate_username(cls, v):
         if not v or len(v.strip()) == 0:
@@ -33,7 +33,22 @@ class RegisterRequest(BaseModel):
             raise ValueError('Username can only contain letters, numbers, hyphens, and underscores')
         return v
 
-class VerifyResponse(BaseModel):
+    @validator('password')
+    def validate_password(cls, v):
+        if not v or len(v.strip()) == 0:
+            raise ValueError('Password cannot be empty')
+        if len(v) < 6:
+            raise ValueError('Password must be at least 6 characters')
+        if len(v) > 128:
+            raise ValueError('Password must be 128 characters or less')
+        return v
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+class AuthResponse(BaseModel):
     success: bool
-    user_id: Optional[int] = None
+    token: Optional[str] = None
+    username: Optional[str] = None
     message: str

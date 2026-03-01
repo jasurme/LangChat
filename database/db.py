@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, String, Text, DateTime, Integer, ForeignKey
+from sqlalchemy import create_engine, Column, String, Text, DateTime, Integer, ForeignKey, inspect, text
 from sqlalchemy.orm import declarative_base
 from datetime import datetime
 
@@ -10,6 +10,7 @@ class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String(100), unique=True, nullable=False, index=True)
+    password_hash = Column(String(255), nullable=True)
     created_at = Column(DateTime, default=datetime.now)
 
 class ChatHistory(Base):
@@ -22,3 +23,11 @@ class ChatHistory(Base):
     timestamp = Column(DateTime, default=datetime.now)
 
 Base.metadata.create_all(engine)
+
+inspector = inspect(engine)
+if 'users' in inspector.get_table_names():
+    columns = [c['name'] for c in inspector.get_columns('users')]
+    if 'password_hash' not in columns:
+        with engine.connect() as conn:
+            conn.execute(text("ALTER TABLE users ADD COLUMN password_hash VARCHAR(255)"))
+            conn.commit()

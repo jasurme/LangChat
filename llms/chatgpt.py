@@ -15,6 +15,16 @@ async def ask_chatgpt(user_prompt:str ='why you arent sleeping?', structured_cla
 
     return resp.output_parsed if structured_class else resp.output_parsed.response
 
+def stream_chatgpt(prompt, model='gpt-4o-mini'):
+    stream = gpt_client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": prompt}],
+        stream=True,
+    )
+    for chunk in stream:
+        if chunk.choices and chunk.choices[0].delta.content:
+            yield chunk.choices[0].delta.content
+
 def vectorize(query: str):
     return gpt_client.embeddings.create(
         model='text-embedding-3-large',

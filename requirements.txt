@@ -7,7 +7,7 @@ pinecone
 sqlalchemy
 tavily-python
 requests
-
 python-dotenv
-
 pydantic
+bcrypt
+PyJWT
